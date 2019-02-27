@@ -1,13 +1,13 @@
 # encoding: utf-8
 """
-To protect and serve
+_units: To protect constants and serve unit conversions
 CDW 2019
 """
 
 
 def poise(input_in_poise):
-    """Convert the input viscosity, in poise, to g/nm"""
-    return input_in_poise * 10 ** -7
+    """Convert the input viscosity, in poise, to g/nm*s"""
+    return input_in_poise / 10 ** -7
 
 
 def joules(input_in_joules):
@@ -17,7 +17,7 @@ def joules(input_in_joules):
 
 def milliseconds(input_in_ms):
     """Convert time, in ms, to seconds"""
-    return milliseconds * 0.001
+    return input_in_ms * 0.001
 
 
 class constants:
