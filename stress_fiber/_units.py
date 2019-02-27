@@ -24,10 +24,4 @@ class constants:
     temperature = 288  # Standard temperature, K
     eta = poise(0.0114)  # Viscosity of water at 288K
     timestep = milliseconds(1)  # 1ms timestep
-
-    @property
-    def boltzmann(self):
-        """Boltzman constant in pN*nm/K"""
-        boltzmann = 1.38 * 10 ** -23  # In J/K
-        boltzmann = joules(boltzmann)  # Now pN*nm/K
-        return boltzmann
+    boltzmann = joules(1.38 * 10 ** -23)  # From J/K to pN*nm/K
