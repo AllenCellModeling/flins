@@ -7,7 +7,7 @@ CDW 2019
 
 def poise(input_in_poise):
     """Convert the input viscosity, in poise, to g/nm*s"""
-    return input_in_poise / 10 ** -7
+    return input_in_poise * 10 ** -7
 
 
 def joules(input_in_joules):
