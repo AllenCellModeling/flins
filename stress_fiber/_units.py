@@ -25,3 +25,5 @@ class constants:
     eta = poise(0.0114)  # Viscosity of water at 288K
     timestep = milliseconds(1)  # 1ms timestep
     boltzmann = joules(1.38 * 10 ** -23)  # From J/K to pN*nm/K
+    kT = boltzmann * temperature
+    avogadro = 6.022 * 10**23
