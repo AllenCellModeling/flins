@@ -6,42 +6,91 @@ CDW 2019
 
 import numpy as np
 
+import matplotlib.pyplot as plt
+import matplotlib
+import matplotlib.patches
+
+
+class BindingSite:
+    """An actin binding site"""
+
+    def __init__(self, filament, index):
+        self.filament = filament
+        self.index = index
+        self.xlinker = None
+
+    @property
+    def x(self):
+        return self.filament.sites_x[self.index]
+
+
 class Actin:
-    """An actin filament, in all its glory. 
-    """
-    def __init__(self, loc, act_pair):
-        """Create an actin filament
-        Parameters
-        ----------
-        loc: float
-            The x location of our actin fil.
-        act_pair: int
-            The number of actin pairs making up the filament, to start. If
-            positive then the filament is facing to the right, if negative then
-            facing to the left. 
-        """
-        self.loc = loc
-        self.act_pair = act_pair
+    """A 1D actin"""
+
+    def __init__(self, x, n, t):
+        """An actin at x with n pairs of g-actin on tract t"""
+        self.x = x
+        self.pairs = n
         # Calculate actin rise and run, store for later use
         # Numbers derived from Howard, 2001, page 125
-        monomers_per_polymer = 26
-        polymer_base_length = 72.0
-        polymer_base_turns = 12.0
-        rev = 2*np.pi    
-        self._pitch = polymer_base_turns * rev / monomers_per_polymer
-        self._rise = polymer_base_length / monomers_per_polymer
+        mon_per_poly = 26  # number of g-actin in a thin filament section
+        poly_base_length = 72.0  # length of thin filament section in nm
+        poly_base_turns = 12.0  # rotations, given two start
+        rev = 2 * np.pi  # a single revolution
+        self._pitch = poly_base_turns * rev / mon_per_poly  # rad/actin pair
+        self._rise = poly_base_length / mon_per_poly  # nm / actin pair
+        # Create the binding sites
+        self.sites_x = [x + i * self._rise for i in range(n)]
+        self.sites = [BindingSite(self, index) for index in range(n)]
 
     @property
     def length(self):
-        """How long are you in nm?"""
-        return abs(self.act_pair * self._rise)
+        """How long are you?"""
+        return abs(self.pairs * self._rise)
 
     @property
     def bounds(self):
-        """Where do you go from and to?"""
-        return (self.loc, self.loc + self.act_pair * self._rise)
+        """How far do you extend?"""
+        return (self.x, self.x + self.length)
 
-    def lengthen_shorten(self):
-        """TODO, also to derive from Howard, 2001"""
+    def nearest(self, x):
+        """What is the nearest site to the given location"""
+        return self.sites[np.argmin(np.abs(np.subtract(x, self.sites_x)))]
+
+    @property
+    def force(self):
+        """Let's assume that the filament is really stiff, like really 
+        stiff, and then find the total force on it.
+        """
+        sites = filter(lambda s: s.xlinker is not None, self.sites)
+        force = np.sum([site.xlinker.force for site in sites])
+        return force
+
+    def diffuse(self):
+        """Move around a bit"""
         raise NotImplementedError
 
+    def plot(self, ax=None, show=False, y=0):
+        """Plot this fil"""
+        if ax is None:
+            fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+            ax.axis("off")
+            ax.set(
+                xlim=self.bounds,
+                ylim=(y - 2 * self._rise, y + 2 * self._rise),
+                aspect=1,
+            )
+        circ = lambda x, y: matplotlib.patches.CirclePolygon(
+            (x, y),
+            radius=0.66 * self._rise,
+            resolution=20,
+            facecolor="skyblue",
+            edgecolor="royalblue",
+        )
+        # Work through each site pair
+        for x in [s.x for s in self.sites]:
+            ax.add_patch(circ(x + self._rise * 0.1, y + 0.5 * self._rise))
+            ax.add_patch(circ(x - self._rise * 0.1, y - 0.5 * self._rise))
+        if show:
+            plt.show()
+        return ax
