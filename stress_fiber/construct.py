@@ -28,7 +28,8 @@ def create_test_world(radius, span, n_actin, n_actinin):
             actinins.append(AlphaActinin(np.random.rand() * (span - 10), tract))
         tract.actin = actins
         tract.actinin = actinins
-    return tractspace
+    world = World(tractspace)
+    return world
 
 class World:
     """Keep track of a tract space, simulation time, and metadata"""
