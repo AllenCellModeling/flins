@@ -23,7 +23,13 @@ class BindingSite:
 
     @property
     def x(self):
+        """Where are you at? Referenced from parent actin."""
         return self.filament.sites_x[self.index]
+
+    @property
+    def bound(self):
+        """Are you bound?"""
+        return self.xlinker is None
 
 
 class Actin:
@@ -52,9 +58,14 @@ class Actin:
         return abs(self.pairs * self._rise)
 
     @property
-    def bounds(self):
+    def boundaries(self):
         """How far do you extend?"""
         return (self.x, self.x + self.length)
+
+    @property
+    def bound(self):
+        """Do you have any attached binding sites?"""
+        return any([bs.bound for bs in self.sites])
 
     def nearest(self, x):
         """What is the nearest site to the given location"""
@@ -83,7 +94,7 @@ class Actin:
             fig, ax = plt.subplots(1, 1, figsize=(8, 8))
             ax.axis("off")
             ax.set(
-                xlim=self.bounds,
+                xlim=self.boundaries,
                 ylim=(y - 2 * self._rise, y + 2 * self._rise),
                 aspect=1,
             )
