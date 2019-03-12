@@ -184,10 +184,10 @@ class AlphaActinin:
 
     def __init__(self, x, t):
         """An α-actinin head at location x in tract t"""
-        self.heads = [ActininHead(self, 0), ActininHead(self, 1)]
+        self.spring = Spring(3.75, 36)  # See class doc for sources
         self.x = x
         self.tract = t
-        self.spring = Spring(3.75, 36)  # See class doc for sources
+        self.heads = [ActininHead(self, 0), ActininHead(self, 1)]
 
     @property
     def bound(self):
