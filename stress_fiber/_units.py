@@ -12,11 +12,13 @@ def poise(input_in_poise):
 
 def joules(input_in_joules):
     """Convert energy, in joules, to pN*nm"""
-    return input_in_joules * 10**21
+    return input_in_joules * 10 ** 21
+
 
 def kcal(input_in_kcal):
     """Convert energy, in kcal, to pN*nm"""
-    return input_in_kcal * 4.184 * 10**24
+    return input_in_kcal * 4.184 * 10 ** 24
+
 
 def milliseconds(input_in_ms):
     """Convert time, in ms, to seconds"""

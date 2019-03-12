@@ -6,7 +6,7 @@ CDW 2019
 
 from . import space
 from .actin import Actin
-from .alpha_actinin import Alpha_actinin
+from .alpha_actinin import AlphaActinin
 
 import numpy as np
 
@@ -41,7 +41,7 @@ class World:
     def step(self):
         """Step forward one tick"""
         self.time += 1
-        for tract in tractspace.all_tracts:
+        for tract in self.tractspace.all_tracts:
             all_mols = tract.actin + tract.actinin
             for mol in np.random.permutation(all_mols):
                 mol.step()

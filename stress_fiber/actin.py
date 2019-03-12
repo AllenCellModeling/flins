@@ -11,6 +11,7 @@ import matplotlib
 import matplotlib.patches
 
 
+
 class BindingSite:
     """An actin binding site"""
 
@@ -32,7 +33,7 @@ class Actin:
         self.x = x
         self.pairs = n
         # Calculate actin rise and run, store for later use
-        # Numbers derived from Howard, 2001, page 125
+        # Numbers derived from Howard (2001), Pg 125
         mon_per_poly = 26  # number of g-actin in a thin filament section
         poly_base_length = 72.0  # length of thin filament section in nm
         poly_base_turns = 12.0  # rotations, given two start
