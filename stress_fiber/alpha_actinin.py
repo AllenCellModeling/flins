@@ -72,14 +72,14 @@ class ActininHead:
         """Maybe bind? Can't say for sure."""
         actin_bs = self.nearest_binding_site
         rate = self._r12(abs(actin_bs.x - self.x))
-        prob = rate * _units.constants.timestep
+        prob = rate * _units.world.timestep
         if prob > np.random.rand():
             self.binding_site = actin_bs
 
     def _unbind_or_not(self):
         """Maybe unbind? Can't say for sure."""
         rate = self._r21()
-        prob = rate * _units.constants.timestep
+        prob = rate * _units.world.timestep
         if prob > np.random.rand():
             self.binding_site = None
 
