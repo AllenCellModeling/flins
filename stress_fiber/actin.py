@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 import matplotlib.patches
 
+from . import _diffuse
 
 
 class BindingSite:
@@ -40,6 +41,7 @@ class Actin:
         rev = 2 * np.pi  # a single revolution
         self._pitch = poly_base_turns * rev / mon_per_poly  # rad/actin pair
         self._rise = poly_base_length / mon_per_poly  # nm / actin pair
+        self._radius = 3  # nm, Howard (2001), Pg 121
         # Create the binding sites
         self.sites_x = [x + i * self._rise for i in range(n)]
         self.sites = [BindingSite(self, index) for index in range(n)]
@@ -68,8 +70,12 @@ class Actin:
         return force
 
     def diffuse(self):
-        """Move around a bit"""
-        raise NotImplementedError
+        """Move around a bit, see AlphaActinin.diffuse for more explanation"""
+        L, r = self.length, self._radius
+        f_drag = _diffuse.Drag.Cylinder.long_axis_translation(L, r)
+        dx = _diffuse.Dx(f_drag)
+        self.x += d_x
+        return d_x
 
     def plot(self, ax=None, show=False, y=0):
         """Plot this fil"""

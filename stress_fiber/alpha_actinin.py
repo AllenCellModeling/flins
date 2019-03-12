@@ -9,6 +9,7 @@ import numpy as np
 
 from ._spring import Spring
 from . import _units
+from . import _diffuse
 
 
 class ActininHead:
@@ -213,38 +214,18 @@ class AlphaActinin:
         We know the approximate dimensions of the α-actinin backbone are 24-36
         nm by 0.5-6.5 nm as specified in [Sjöblom_2008]_ and [Ribeiro_2014]_. We
         treat this as an ellipsoid of radii 18 by 3 nm to account for the heads
-        at either end. From the Einstein-Smoluchowski relation via [Berg_1983]_
-        we have the diffusion coefficient for a particle subject to a viscous
-        drag, :math:`f` as :math:`D=kT/f`. Further, from the same source we have
-        the drag on an ellipsoidal particle along the long axis (:math:`a`) as
-        :math:`f=\frac{4 \pi \eta a}{\ln 2a/b - 1/2}`. This gives us a diffusion
-        coefficient of
-
-        .. math:: D = \frac{kT (\ln \frac{2a}{b} - \frac{1}{2})}{4 \pi \eta a}
-
-        Where :math:`\eta` is the coefficient of viscosity for water, 0.0114
-        poise at 288K. We add a correction factor of 1/3.2 to account for the
-        difference in diffusion between water and eukaryotic cytoplasm
-        [Swaminathan_1997].
+        at either end. 
 
         An alternate treatment would be to use the Stoke's radius for actinin
         described in [BNID:104395]
 
         .. [Sjöblom_2008] https://dx.doi.org/10.1007/s00018-008-8080-8
         .. [Ribeiro_2014] https://dx.doi.org/10.1016%2Fj.cell.2014.10.056
-        .. [Berg_1983] https://press.princeton.edu/titles/112.html
-        .. [Swaminathan_1997] https://doi.org/10.1016/S0006-3495(97)78835-0
         .. [BNID:104395] https://bionumbers.hms.harvard.edu/bionumber.aspx?id=104395
         """
-        # NOTE This is checked well at this time, CDW20190221
-        a, b = 18, 3
-        eta = _units.constants.eta
-        kT = _units.constants.kT
-        f_drag = (4 * np.pi * eta * a) / (np.log(2 * a / b) - 0.5)
-        D = kT / f_drag  # Einstein-Smoluchowski relation for diffusion constant
-        D *= 1 / 3.2  # Correction factor for diffusion in cytoplasm
-        t = _units.constants.timestep
-        std_dev = np.sqrt(2 * D * t)
-        d_x = np.random.normal(0, std_dev)
+        # NB This is checked well at this time, CDW20190221
+        b, a = 18, 3
+        f_drag = _diffuse.Drag.Ellipsoid.long_axis_translation(b, a)
+        d_x = _diffuse.Dx(f_drag)
         self.x += d_x
         return d_x
