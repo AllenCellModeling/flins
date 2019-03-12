@@ -74,6 +74,7 @@ class ActininHead:
         rate = self._r12(abs(actin_bs.x - self.x))
         prob = rate * _units.world.timestep
         if prob > np.random.rand():
+            actin_bs.xlinker = self
             self.binding_site = actin_bs
 
     def _unbind_or_not(self):
@@ -81,6 +82,7 @@ class ActininHead:
         rate = self._r21()
         prob = rate * _units.world.timestep
         if prob > np.random.rand():
+            self.binding_site.xlinker = None
             self.binding_site = None
 
     def _r12(self, dist):
