@@ -27,7 +27,7 @@ class Spring:
         self._normalize = sqrt(2 * pi * kT / self.k)
         self._stand_dev = sqrt(kT / self.k)  # of segment values
 
-    def energy(self, x):
+    def energy(self, length):
         """Given a current length/angle, return stored energy
 
         Takes:
@@ -35,7 +35,14 @@ class Spring:
         Returns:
             energy: the energy required to achieve the given value
         """
-        return 0.5 * self.k * m.pow((x - self.rest), 2)
+        return 0.5 * self.k * m.pow((length - self.rest), 2)
+
+    def force(self, length):
+        """Given a current length/angle, return the force/torque.
+        This is given signs as though the spring is attached at origin 
+        and we are looking at the force needed to hold the spring in place.
+        """
+        return self.k * (length - self.rest)
 
     def bop_dx(self):
         """Bop for a displacement from rest length
