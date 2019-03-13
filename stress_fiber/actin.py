@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 import matplotlib.patches
 
+from . import _units
 from . import _diffuse
 
 
@@ -29,7 +30,7 @@ class BindingSite:
     @property
     def bound(self):
         """Are you bound?"""
-        return self.xlinker is None
+        return self.xlinker is not None
 
 
 class Actin:
@@ -77,14 +78,14 @@ class Actin:
         stiff, and then find the total force on it.
         """
         sites = filter(lambda s: s.xlinker is not None, self.sites)
-        force = np.sum([site.xlinker.force for site in sites])
+        force = np.sum([site.xlinker.force() for site in sites])
         return force
 
     def diffuse(self):
         """Move around a bit, see AlphaActinin.diffuse for more explanation"""
         L, r = self.length, self._radius
         f_drag = _diffuse.Drag.Cylinder.long_axis_translation(L, r)
-        dx = _diffuse.Dx(f_drag)
+        d_x = _diffuse.Dx(f_drag)
         self.x += d_x
         return d_x
 
