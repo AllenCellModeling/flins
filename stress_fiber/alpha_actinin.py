@@ -129,6 +129,13 @@ class ActininHead:
         rate = A * np.exp(-(deltaG - U) / kT)
         return rate
 
+    def force(self, x=None):
+        """What force does this α-actinin head exert or feel?"""
+        if x is None:
+            x = self.x
+        length = abs(x - self.actinin.heads[self.side ^ 1].x)
+        return self.actinin.spring.force(length)
+
 
 class AlphaActinin:
     """A 1D α-actinin head
