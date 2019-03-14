@@ -38,8 +38,6 @@ class Actin:
 
     def __init__(self, x, n, t):
         """An actin at x with n pairs of g-actin on tract t"""
-        self.x = x
-        self.pairs = n
         # Calculate actin rise and run, store for later use
         # Numbers derived from Howard (2001), Pg 125
         mon_per_poly = 26  # number of g-actin in a thin filament section
@@ -49,9 +47,31 @@ class Actin:
         self._pitch = poly_base_turns * rev / mon_per_poly  # rad/actin pair
         self._rise = poly_base_length / mon_per_poly  # nm / actin pair
         self._radius = 3  # nm, Howard (2001), Pg 121
-        # Create the binding sites
-        self.sites_x = [x + i * self._rise for i in range(n)]
+        # Store locations 
+        self.pairs = n
+        self.x = x
+        self.sites_x = self._calc_sites_x()  # redundant, but here for reminder
+        # Create binding sites
         self.sites = [BindingSite(self, index) for index in range(n)]
+
+    def _calc_sites_x(self, start_x=None):
+        """Where would our binding sites be for a given starting location?"""
+        if start_x is None:
+            start_x is self.x
+        rise, n = self._rise, self.pairs
+        return np.arange(start_x, start_x + rise * n, rise) 
+
+    @property
+    def x(self):
+        """What is the starting location of the actin filament? 
+        It is assumed to go in the positive direction afterwards.
+        """
+        return self._x
+
+    @x.setter
+    def x(self, start_x):
+        self._x = start_x
+        self.sites_x = self._calc_sites_x(start_x)
 
     @property
     def length(self):
@@ -72,16 +92,48 @@ class Actin:
         """What is the nearest site to the given location"""
         return self.sites[np.argmin(np.abs(np.subtract(x, self.sites_x)))]
 
+    def _hypothetical_force(self, x):
+        """Assume the filament is, like, really stiff and find the force on it.
+        
+        This takes the sum of forces exerted by bound α-actinins along the
+        filament given a hypothetical actin location, x. This is used to do
+        force balances without changing the state of the filament.
+        """
+        bs_x = self._calc_sites_x(x)
+        bs_and_x = [(site, x) for site,x in zip(self.sites, bs_x) if site.bound]
+        force = np.sum([site.xlinker.force(x) for site,x in bs_and_x])
+        return force
+        
     @property
     def force(self):
-        """Let's assume that the filament is really stiff, like really 
-        stiff, and then find the total force on it.
+        """How much force does the filament feel at its current location?
+        See `_hypothetical_force` for more detail.
         """
-        sites = filter(lambda s: s.xlinker is not None, self.sites)
-        force = np.sum([site.xlinker.force() for site in sites])
+        if not self.bound:
+            return 0
+        force = self._hypothetical_force(self.x)
+        #sites = filter(lambda s: s.xlinker is not None, self.sites)
+        #force = np.sum([site.xlinker.force() for site in sites])
         return force
 
-    def diffuse(self):
+    def _hypothetical_energy(self, x):
+        """Assume our (axially) stiff actin is storing energy in α-actinin
+        What is the current energy in the bound α-actinins?
+        """
+        bs_x = self._calc_sites_x(x)
+        bs_and_x = [(site, x) for site,x in zip(self.sites, bs_x) if site.bound]
+        energy = np.sum([site.xlinker.energy(x) for site,x in bs_and_x])
+        return energy
+
+    @property
+    def energy(self):
+        """How much energy does the filament bear at its current location?"""
+        if not self.bound:
+            return 0
+        energy = self._hypothetical_energy(self.x)
+        return energy
+
+    def freely_diffuse(self):
         """Move around a bit, see AlphaActinin.diffuse for more explanation"""
         L, r = self.length, self._radius
         f_drag = _diffuse.Drag.Cylinder.long_axis_translation(L, r)

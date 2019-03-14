@@ -129,16 +129,34 @@ class ActininHead:
         rate = A * np.exp(-(deltaG - U) / kT)
         return rate
 
-    def force(self, x=None):
-        """What force does this α-actinin head exert or feel?"""
+    def _spring_property(self, spring_prop, x=None):
+        """Calculate a spring property, energy or force"""
+        # If other head isn't bound, can't bear energy/strain
+        other_head = self.actinin.heads[self.side ^ 1] 
+        if not other_head.bound:
+            return 0
+        # If no x is given, use current location
         if x is None:
             x = self.x
-        length = abs(x - self.actinin.heads[self.side ^ 1].x)
-        return self.actinin.spring.force(length)
+        length = abs(x - other_head.x)
+        return spring_prop(length)
 
+    def force(self, x=None):
+        """What force does this α-actinin head exert or feel?"""
+        force_fn = self.actinin.spring.force
+        return self._spring_property(force_fn, x)
+    
+    def energy(self, x=None):
+        """What energy is stored in the α-actinin backbone?
+        This exists because we want to be able to propose alternate ActininHead
+        locations and find the energy without changing states. 
+        """
+        energy_fn = self.actinin.spring.energy
+        return self._spring_property(energy_fn, x)
+        
 
 class AlphaActinin:
-    """A 1D α-actinin head
+    """A 1D α-actinin molecule with heads on either end
 
     As this head is considered as a semi-physical object, we care about its
     dimensions and material properties. The dimensions of α-actinin are readily
@@ -214,11 +232,11 @@ class AlphaActinin:
     def step(self):
         """Take a timestep"""
         if not self.bound:
-            self.diffuse()
+            self.freely_diffuse()
         [head.step() for head in self.heads]
         return
 
-    def diffuse(self):
+    def freely_diffuse(self):
         """ Diffuse to a new location.
         We know the approximate dimensions of the α-actinin backbone are 24-36
         nm by 0.5-6.5 nm as specified in [Sjöblom_2008]_ and [Ribeiro_2014]_. We

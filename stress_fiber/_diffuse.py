@@ -89,7 +89,7 @@ class Drag:
 
 
 def Dx(f_drag):
-    """ How far do we move because of diffusion subject to drag?
+    """How far do we move because of diffusion subject to drag?
     From the Einstein-Smoluchowski relation via [Berg_1983]_ we know that the
     diffusion coefficient for a particle subject to a viscous drag, :math:`f`
     (in :math:`g/s`) is :math:`D=kT/f`. Further, from the same source and
