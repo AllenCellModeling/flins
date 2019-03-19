@@ -57,7 +57,7 @@ class Actin:
     def _calc_sites_x(self, start_x=None):
         """Where would our binding sites be for a given starting location?"""
         if start_x is None:
-            start_x is self.x
+            start_x = self.x
         rise, n = self._rise, self.pairs
         return np.array([start_x + rise * i for i in range(n)])
 
