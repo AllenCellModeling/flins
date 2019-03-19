@@ -59,7 +59,7 @@ class Actin:
         if start_x is None:
             start_x is self.x
         rise, n = self._rise, self.pairs
-        return np.arange(start_x, start_x + rise * n, rise) 
+        return np.array([start_x + rise * i for i in range(n)])
 
     @property
     def x(self):
