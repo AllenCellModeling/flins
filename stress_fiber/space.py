@@ -185,6 +185,7 @@ class Tract:
         self.loc = loc
         self.space = space
         self._neighbors = None
+        self.mols = {}
 
     @property
     def neighbors(self):

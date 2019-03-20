@@ -30,7 +30,7 @@ class ActininHead:
     def nearest_binding_site(self):
         """The nearest actin binding site from neighboring tracts"""
         # Get all candidate actins
-        actins = [t.actin for t in self.actinin.tract.neighbors]
+        actins = [t.mols["actin"] for t in self.actinin.tract.neighbors]
         actins = list(itertools.chain(*actins))  # flatten
         # Find the binding site nearest our location
         near = [act.nearest(self.x) for act in actins]

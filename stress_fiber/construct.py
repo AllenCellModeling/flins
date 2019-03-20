@@ -4,11 +4,12 @@ Make a world
 CDW 2019
 """
 
+import itertools
+import numpy as np
+
 from . import space
 from .actin import Actin
 from .alpha_actinin import AlphaActinin
-
-import numpy as np
 
 np.random.seed()  # Ensure proper seeding
 
@@ -26,8 +27,8 @@ def create_test_world(radius, span, n_actin, n_actinin):
         actinins = []
         for _ in range(n_actinin):
             actinins.append(AlphaActinin(np.random.rand() * (span - 10), tract))
-        tract.actin = actins
-        tract.actinin = actinins
+        tract.mols['actin'] = actins
+        tract.mols['actinin'] = actinins
     world = World(tractspace)
     return world
 
@@ -42,6 +43,6 @@ class World:
         """Step forward one tick"""
         self.time += 1
         for tract in np.random.permutation(self.tractspace.all_tracts):
-            all_mols = tract.actin + tract.actinin
+            all_mols = list(itertools.chain(*tract.mols.values()))
             for mol in np.random.permutation(all_mols):
                 mol.step()
