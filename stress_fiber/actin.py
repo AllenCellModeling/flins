@@ -4,7 +4,9 @@ Actin' up
 CDW 2019
 """
 
+import warnings
 import numpy as np
+import scipy.optimize
 
 import matplotlib.pyplot as plt
 import matplotlib
@@ -140,6 +142,56 @@ class Actin:
         d_x = _diffuse.Dx(f_drag)
         self.x += d_x
         return d_x
+
+
+    def step(self):
+        """Take a timestep: move subject to force and diffusion
+        As with α-actinin, we take free diffusion to be subject to an
+        Einstein-Smoluchowski diffusive processes (as documented in `_diffuse`).
+
+        When bound we treat the movement of actin as subject to equipartition of
+        energy stored in each of the bound α-actinins. We first find the
+        x-location where the force from bound α-actinins is balanced,
+        representing relaxation into the local lowest-energy state. We then draw
+        a Boltzmann distributed energy, use its sign as a directionality
+        indicator, and move in the given direction until the energy stored in
+        the system has changed by the drawn amount. 
+        """
+        if not self.bound:
+            d_x = self.freely_diffuse()
+        else:
+            # Balance forces, finding local relaxation point
+            starting_x = self.x
+            force_least_sq = scipy.optimize.least_squares(
+                self._hypothetical_force, 
+                starting_x)
+            minimal_force_x = force_least_sq.x[0]
+            if force_least_sq.success is not True:
+                warnings.warn("Unsuccessful force minimization: " +
+                              str(force_least_sq))
+            # Find base and perturbed energies
+            base_energy = self._hypothetical_energy(minimal_force_x)
+            energy_bump = np.random.normal(0, 0.5 * _units.constants.kT)
+            if energy_bump < 0:  # move left if bump is negative
+                bounds = (-np.inf, minimal_force_x)
+            else:  # move right if bump is positive
+                bounds = (minimal_force_x, np.inf)
+            energy_bump = abs(energy_bump)
+            # Find energy difference and move
+            def energy_delta(x):
+                energy_from_movement = abs(self._hypothetical_energy(x) - base_energy) 
+                energy_mismatch = energy_from_movement - energy_bump
+                return energy_mismatch
+            energy_least_sq = scipy.optimize.least_squares(
+                energy_delta,
+                minimal_force_x,
+                bounds=bounds)
+            if energy_least_sq.success is not True:
+                warnings.warn("Unsuccessful energy minimization: " +
+                              str(energy_least_sq))
+            minimal_energy_x = energy_least_sq.x[0]
+            d_x = minimal_energy_x - starting_x
+        self.x += d_x
 
     def plot(self, ax=None, show=False, y=0):
         """Plot this fil"""
