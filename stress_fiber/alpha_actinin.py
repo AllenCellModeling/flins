@@ -13,7 +13,7 @@ from . import _diffuse
 
 
 class ActininHead:
-    """One of the two heads of an alpha-actinin"""
+    """One of the two heads of an α-actinin"""
 
     def __init__(self, actinin, side):
         self.actinin = actinin
@@ -138,7 +138,7 @@ class ActininHead:
     def _spring_property(self, spring_prop, x=None):
         """Calculate a spring property, energy or force"""
         # If other head isn't bound, can't bear energy/strain
-        other_head = self.actinin.heads[self.side ^ 1] 
+        other_head = self.actinin.heads[self.side ^ 1]
         if not other_head.bound:
             return 0
         # If no x is given, use current location

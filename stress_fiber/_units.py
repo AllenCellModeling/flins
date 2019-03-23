@@ -44,5 +44,6 @@ class world:
 
     .. [Swaminathan_1997] https://doi.org/10.1016/S0006-3495(97)78835-0
     """
+
     timestep = milliseconds(1)  # 1ms timestep
-    D_cyto_corr = 1/3.2  # Cytoplasmic crowding sub-diffusion, need source
+    D_cyto_corr = 1 / 3.2  # Cytoplasmic crowding sub-diffusion, need source

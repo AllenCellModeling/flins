@@ -54,7 +54,7 @@ class Actin:
         self._pitch = poly_base_turns * rev / mon_per_poly  # rad/actin pair
         self._rise = poly_base_length / mon_per_poly  # nm / actin pair
         self._radius = 3  # nm, Howard (2001), Pg 121
-        # Store locations 
+        # Store locations
         self.pairs = n
         self.x = x
         self.sites_x = self._calc_sites_x()  # redundant, but here for reminder
@@ -121,10 +121,10 @@ class Actin:
         force balances without changing the state of the filament.
         """
         bs_x = self._calc_sites_x(x)
-        bs_and_x = [(site, x) for site,x in zip(self.sites, bs_x) if site.bound]
-        force = np.sum([site.xlinker.force(x) for site,x in bs_and_x])
+        bs_and_x = [(site, x) for site, x in zip(self.sites, bs_x) if site.bound]
+        force = np.sum([site.force(x) for site, x in bs_and_x])
         return force
-        
+
     @property
     def force(self):
         """How much force does the filament feel at its current location?
@@ -133,8 +133,6 @@ class Actin:
         if not self.bound:
             return 0
         force = self._hypothetical_force(self.x)
-        #sites = filter(lambda s: s.xlinker is not None, self.sites)
-        #force = np.sum([site.xlinker.force() for site in sites])
         return force
 
     def _hypothetical_energy(self, x):
@@ -162,7 +160,6 @@ class Actin:
         self.x += d_x
         return d_x
 
-
     def step(self):
         """Take a timestep: move subject to force and diffusion
         As with α-actinin, we take free diffusion to be subject to an
@@ -182,12 +179,11 @@ class Actin:
             # Balance forces, finding local relaxation point
             starting_x = self.x
             force_least_sq = scipy.optimize.least_squares(
-                self._hypothetical_force, 
-                starting_x)
+                self._hypothetical_force, starting_x
+            )
             minimal_force_x = force_least_sq.x[0]
             if force_least_sq.success is not True:
-                warnings.warn("Unsuccessful force minimization: " +
-                              str(force_least_sq))
+                warnings.warn("Unsuccessful force minimization: " + str(force_least_sq))
             # Find base and perturbed energies
             base_energy = self._hypothetical_energy(minimal_force_x)
             energy_bump = np.random.normal(0, 0.5 * _units.constants.kT)
@@ -198,16 +194,17 @@ class Actin:
             energy_bump = abs(energy_bump)
             # Find energy difference and move
             def energy_delta(x):
-                energy_from_movement = abs(self._hypothetical_energy(x) - base_energy) 
+                energy_from_movement = abs(self._hypothetical_energy(x) - base_energy)
                 energy_mismatch = energy_from_movement - energy_bump
                 return energy_mismatch
+
             energy_least_sq = scipy.optimize.least_squares(
-                energy_delta,
-                minimal_force_x,
-                bounds=bounds)
+                energy_delta, minimal_force_x, bounds=bounds
+            )
             if energy_least_sq.success is not True:
-                warnings.warn("Unsuccessful energy minimization: " +
-                              str(energy_least_sq))
+                warnings.warn(
+                    "Unsuccessful energy minimization: " + str(energy_least_sq)
+                )
             minimal_energy_x = energy_least_sq.x[0]
             d_x = minimal_energy_x - starting_x
         self.x += d_x

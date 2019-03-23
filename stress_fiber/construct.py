@@ -27,13 +27,15 @@ def create_test_world(radius, span, n_actin, n_actinin):
         actinins = []
         for _ in range(n_actinin):
             actinins.append(AlphaActinin(np.random.rand() * (span - 10), tract))
-        tract.mols['actin'] = actins
-        tract.mols['actinin'] = actinins
+        tract.mols["actin"] = actins
+        tract.mols["actinin"] = actinins
     world = World(tractspace)
     return world
 
+
 class World:
     """Keep track of a tract space, simulation time, and metadata"""
+
     def __init__(self, tractspace):
         """Save the tractspace, initiate record keeping"""
         self.tractspace = tractspace
