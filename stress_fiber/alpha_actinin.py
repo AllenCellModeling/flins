@@ -74,7 +74,7 @@ class ActininHead:
         rate = self._r12(abs(actin_bs.x - self.x))
         prob = rate * _units.world.timestep
         if prob > np.random.rand():
-            actin_bs.xlinker = self
+            actin_bs.link = self
             self.binding_site = actin_bs
 
     def _unbind_or_not(self):
@@ -82,7 +82,7 @@ class ActininHead:
         rate = self._r21()
         prob = rate * _units.world.timestep
         if prob > np.random.rand():
-            self.binding_site.xlinker = None
+            self.binding_site.link = None
             self.binding_site = None
 
     def _r12(self, dist):
@@ -145,7 +145,7 @@ class ActininHead:
         """What force does this α-actinin head exert or feel?"""
         force_fn = self.actinin.spring.force
         return self._spring_property(force_fn, x)
-    
+
     def energy(self, x=None):
         """What energy is stored in the α-actinin backbone?
         This exists because we want to be able to propose alternate ActininHead
@@ -153,7 +153,7 @@ class ActininHead:
         """
         energy_fn = self.actinin.spring.energy
         return self._spring_property(energy_fn, x)
-        
+
 
 class AlphaActinin:
     """A 1D α-actinin molecule with heads on either end

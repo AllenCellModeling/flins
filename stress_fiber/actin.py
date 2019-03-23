@@ -22,7 +22,7 @@ class BindingSite:
     def __init__(self, filament, index):
         self.filament = filament
         self.index = index
-        self.xlinker = None
+        self.link = None
 
     @property
     def x(self):
@@ -32,7 +32,7 @@ class BindingSite:
     @property
     def bound(self):
         """Are you bound?"""
-        return self.xlinker is not None
+        return self.link is not None
 
 
 class Actin:
@@ -123,8 +123,8 @@ class Actin:
         What is the current energy in the bound α-actinins?
         """
         bs_x = self._calc_sites_x(x)
-        bs_and_x = [(site, x) for site,x in zip(self.sites, bs_x) if site.bound]
-        energy = np.sum([site.xlinker.energy(x) for site,x in bs_and_x])
+        bs_and_x = [(site, x) for site, x in zip(self.sites, bs_x) if site.bound]
+        energy = np.sum([site.energy(x) for site, x in bs_and_x])
         return energy
 
     @property
