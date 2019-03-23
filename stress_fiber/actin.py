@@ -24,6 +24,11 @@ class BindingSite:
         self.index = index
         self.link = None
 
+    def __str__(self):
+        """String representation of a binding site"""
+        bound = "Bound" if self.bound else "Unbound"
+        return bound+" binding site"
+
     @property
     def x(self):
         """Where are you at? Referenced from parent actin."""
@@ -55,6 +60,20 @@ class Actin:
         self.sites_x = self._calc_sites_x()  # redundant, but here for reminder
         # Create binding sites
         self.sites = [BindingSite(self, index) for index in range(n)]
+
+    def __str__(self):
+        """String representation of actin"""
+        n, l = self.pairs, self.length
+        xmin, xmax = self.boundaries
+        bound = sum([site.bound for site in self.sites])
+        unbound = len(self.sites) - bound
+        force, energy = self.force, self.energy
+        state = (
+            "Actin w/ %i pairs (%.1fnm), between x=%.1f-%.1f, \n \
+            with %i/%i bound/unbound sites. Force/energy is %.1fpN/%.1fpN*nm"
+            % (n, l, xmin, xmax, bound, unbound, force, energy)
+        )
+        return state
 
     def _calc_sites_x(self, start_x=None):
         """Where would our binding sites be for a given starting location?"""

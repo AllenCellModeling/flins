@@ -122,6 +122,14 @@ class TractSpace:
                     hex_grid[n][m] = Tract(location["cube"], self)
         self._tracts = hex_grid
 
+    def __str__(self):
+        """String representation of tractspace"""
+        state = "TractSpace with radius %i, %i tracts" % (
+            self.size,
+            len(self.all_tracts),
+        )
+        return state
+
     def _OOB(self, x, y, z):
         """Is a location out of bounds for list storage?"""
         n = self.size
@@ -186,6 +194,13 @@ class Tract:
         self.space = space
         self._neighbors = None
         self.mols = {}
+
+    def __str__(self):
+        """String representation of tract"""
+        loc_str = str(self.loc)
+        mols_counts = ["%i %ss" % (len(v), k) for k, v in self.mols.items()]
+        mols_str = ", ".join(mols_counts)
+        return "Tract at %s with %s" % (loc_str, mols_str)
 
     @property
     def neighbors(self):

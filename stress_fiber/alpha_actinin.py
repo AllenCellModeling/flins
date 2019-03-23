@@ -21,6 +21,12 @@ class ActininHead:
         self.binding_site = None  # None or g-actin site
         self._update_x()
 
+    def __str__(self):
+        """String representation of α-actinin head"""
+        x_str = "%0.1f" % self.x
+        state_str = "unbound" if not self.bound else "bound"
+        return "α-act head %s at x=%s" % (state_str, x_str)
+
     @property
     def bound(self):
         """Are you currently bound? Extrapolate from binding site link"""
@@ -215,6 +221,13 @@ class AlphaActinin:
         self.x = x
         self.tract = t
         self.heads = [ActininHead(self, 0), ActininHead(self, 1)]
+
+    def __str__(self):
+        """String representation of α-actinin"""
+        tract_str = str(self.tract.loc)
+        x_str = "%.1f" % self.x
+        bound_str = "%i bound heads" % sum([h.bound for h in self.heads])
+        return "α-act with %s at x=%s on tract %s" % (bound_str, x_str, tract_str)
 
     @property
     def bound(self):
