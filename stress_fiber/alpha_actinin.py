@@ -34,7 +34,9 @@ class ActininHead:
 
     @property
     def nearest_binding_site(self):
-        """The nearest actin binding site from neighboring tracts"""
+        """The nearest actin binding site from neighboring tracts
+        TODO: factor this out into the tract space, making it molecule-agnostic
+        """
         # Get all candidate actins
         actins = [t.mols["actin"] for t in self.actinin.tract.neighbors]
         actins = list(itertools.chain(*actins))  # flatten
@@ -77,6 +79,8 @@ class ActininHead:
     def _bind_or_not(self):
         """Maybe bind? Can't say for sure."""
         actin_bs = self.nearest_binding_site
+        if actin_bs.bound:  # don't bind if site is already taken
+            return
         rate = self._r12(abs(actin_bs.x - self.x))
         prob = rate * _units.world.timestep
         if prob > np.random.rand():
