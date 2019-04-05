@@ -19,13 +19,30 @@ class Anchor:
 
     def __init__(self, x, binding_site=None, k=100, rest=10):
         self.x = x
-        self.binding_site = binding_site
+        self._binding_site = binding_site
         self.spring = Spring(k, rest)
 
+    def __str__(self):
+        """String representation of an anchor"""
+        return "Anchor at %02f"%self.x
+
+    @property
+    def binding_site(self):
+        """Site that anchor is bound to, or none"""
+        return self._binding_site
+
+    @binding_site.setter
+    def binding_site(self, bs):
+        if self._binding_site is not None:
+            self._binding_site.link = None
+        if bs is not None:
+            bs.link = self
+        self._binding_site = bs
+        
     def force(self, x):
         """Force exerted by anchor if other end is stretched to x"""
         dist = abs(x - self.x)
-        return self.Spring.force(dist)
+        return self.spring.force(dist)
 
     def energy(self, x):
         """Trick question, I don't want to consider this as storing energy.
@@ -33,4 +50,6 @@ class Anchor:
         contributing to calculations of the energy stored in cross linkers or
         motors. 
         """
+        # TODO this is used to calculate actin boping-around and as such needs
+        # to be passed back relatively high
         return 0

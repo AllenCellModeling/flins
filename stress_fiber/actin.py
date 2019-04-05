@@ -17,9 +17,18 @@ from . import _diffuse
 
 
 class BindingSite:
-    """An actin binding site"""
+    """A single g-actin with a site that can bind and unbind."""
 
     def __init__(self, filament, index):
+        """A binding site on actin filament at location index. 
+
+        Parameters
+        ----------
+        filament : `stress_fiber.Actin`
+            Parent actin filament to this binding site.
+        index : `int`
+            Binding site location in the list of sites on the parent filament. 
+        """
         self.filament = filament
         self.index = index
         self.link = None
@@ -39,12 +48,45 @@ class BindingSite:
         """Are you bound?"""
         return self.link is not None
 
+    def force(self, x=None):
+        """What force does the binding site experience?"""
+        if not self.bound:
+            return 0
+        if x is None:
+            x = self.x
+        return self.link.force(x)
+
+    def energy(self, x=None):
+        """What energy does this binding site store?
+
+        Energy is only stored in the case that the binding site is attached,
+        since we are treating actin as inflexible.
+        """
+        if not self.bound:
+            return 0
+        if x is None:
+            x = self.x
+        return self.link.energy(x)
+
 
 class Actin:
-    """A 1D actin"""
+    """A 1D actin filament that has binding sites, diffusion behavior, etc."""
 
     def __init__(self, x, n, t):
-        """An actin at x with n pairs of g-actin on tract t"""
+        """An actin at x with n pairs of g-actin on tract t.
+        
+        Parameters
+        ----------
+        x : `float`
+            X location of the actin within the tract. This is where the first
+            pair will be located, with all others calculated in reference to it. 
+        n : `int`
+            Number of g-actin pairs in the filament. We use this to set filament
+            length. 
+        t : `stress_fiber.space.tract`
+            1D tract that the actin lives in. Is the parent of the filament in
+            organizational hierarchy. 
+        """
         # Calculate actin rise and run, store for later use
         # Numbers derived from Howard (2001), Pg 125
         mon_per_poly = 26  # number of g-actin in a thin filament section
@@ -175,39 +217,47 @@ class Actin:
         """
         if not self.bound:
             d_x = self.freely_diffuse()
+            self.x += d_x
+            return
+        # Balance forces, finding local relaxation point
+        starting_x = self.x
+        force_least_sq = scipy.optimize.least_squares(
+            self._hypothetical_force, starting_x
+        )
+        if force_least_sq.success is not True:
+            warnings.warn("Unsuccessful force minimization: " + str(force_least_sq))
+        minimal_force_x = force_least_sq.x[0]
+        # Find base and perturbed energies
+        base_energy = self._hypothetical_energy(minimal_force_x)
+        energy_bump = np.random.normal(0, 0.5 * _units.constants.kT)
+        # Don't move if in energy constrained state already?
+        if base_energy>=abs(energy_bump):
+            self.x = minimal_force_x
+            return (minimal_force_x, minimal_force_x)
         else:
-            # Balance forces, finding local relaxation point
-            starting_x = self.x
-            force_least_sq = scipy.optimize.least_squares(
-                self._hypothetical_force, starting_x
-            )
-            minimal_force_x = force_least_sq.x[0]
-            if force_least_sq.success is not True:
-                warnings.warn("Unsuccessful force minimization: " + str(force_least_sq))
-            # Find base and perturbed energies
-            base_energy = self._hypothetical_energy(minimal_force_x)
-            energy_bump = np.random.normal(0, 0.5 * _units.constants.kT)
-            if energy_bump < 0:  # move left if bump is negative
-                bounds = (-np.inf, minimal_force_x)
-            else:  # move right if bump is positive
-                bounds = (minimal_force_x, np.inf)
-            energy_bump = abs(energy_bump)
-            # Find energy difference and move
-            def energy_delta(x):
-                energy_from_movement = abs(self._hypothetical_energy(x) - base_energy)
-                energy_mismatch = energy_from_movement - energy_bump
-                return energy_mismatch
+            energy_bump = np.sign(energy_bump)*(base_energy-abs(energy_bump))
+        if energy_bump < 0:  # move left if bump is negative
+            bounds = (-np.inf, minimal_force_x)
+        else:  # move right if bump is positive
+            bounds = (minimal_force_x, np.inf)
+        energy_bump = abs(energy_bump)
+        # Find energy difference and move
+        # NOTE: most time intensive part; would benefit from optimization
+        def energy_delta(x):
+            energy_from_movement = abs(self._hypothetical_energy(x) - base_energy)
+            energy_mismatch = energy_from_movement - energy_bump
+            return energy_mismatch
 
-            energy_least_sq = scipy.optimize.least_squares(
-                energy_delta, minimal_force_x, bounds=bounds
+        energy_least_sq = scipy.optimize.least_squares(
+            energy_delta, minimal_force_x, bounds=bounds
+        )
+        if energy_least_sq.success is not True:
+            warnings.warn(
+                "Unsuccessful energy minimization: " + str(energy_least_sq)
             )
-            if energy_least_sq.success is not True:
-                warnings.warn(
-                    "Unsuccessful energy minimization: " + str(energy_least_sq)
-                )
-            minimal_energy_x = energy_least_sq.x[0]
-            d_x = minimal_energy_x - starting_x
-        self.x += d_x
+        minimal_energy_x = energy_least_sq.x[0]
+        self.x = minimal_energy_x
+        return (minimal_force_x, minimal_energy_x)
 
     def plot(self, ax=None, show=False, y=0):
         """Plot this fil"""

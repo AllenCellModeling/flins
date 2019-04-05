@@ -7,6 +7,7 @@ __email__ = 'cdave@uw.edu'
 __version__ = '0.1.0'
 
 from .actin import Actin
-from .space import TractSpace
 from .alpha_actinin import AlphaActinin
+from .anchor import Anchor
+from .space import TractSpace
 from .construct import create_test_world 
