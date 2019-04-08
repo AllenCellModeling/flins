@@ -20,6 +20,14 @@ stress\_fiber.alpha\_actinin module
     :undoc-members:
     :show-inheritance:
 
+stress\_fiber.anchor module
+---------------------------
+
+.. automodule:: stress_fiber.anchor
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 stress\_fiber.construct module
 ------------------------------
 
