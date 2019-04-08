@@ -10,6 +10,7 @@ import numpy as np
 from ._spring import Spring
 from . import _units
 from . import _diffuse
+from . import _binding_site
 
 
 class ActininHead:
@@ -18,29 +19,24 @@ class ActininHead:
     def __init__(self, actinin, side):
         self.actinin = actinin
         self.side = side  # Which side of the α-actinin is this on, 0 or 1
-        self.binding_site = None  # None or g-actin site
+        self.bs = _binding_site.BindingSite(self)
         self._update_x()
 
     def __str__(self):
         """String representation of α-actinin head"""
         x_str = "%0.1f" % self.x
-        state_str = "unbound" if not self.bound else "bound"
+        state_str = "unbound" if not self.bs.bound else "bound"
         return "α-act head %s at x=%s" % (state_str, x_str)
 
     @property
-    def bound(self):
-        """Are you currently bound? Extrapolate from binding site link"""
-        return self.binding_site is not None
-
-    @property
     def nearest_binding_site(self):
-        """The nearest actin binding site from neighboring tracts
+        """The nearest g-actin pair from neighboring tracts
         TODO: factor this out into the tract space, making it molecule-agnostic
         """
         # Get all candidate actins
         actins = [t.mols["actin"] for t in self.actinin.tract.neighbors]
         actins = list(itertools.chain(*actins))  # flatten
-        # Find the binding site nearest our location
+        # Find the g-actin pair nearest our location
         near = [act.nearest(self.x) for act in actins]
         nearest = near[np.argmin(np.subtract([a.x for a in near], self.x))]
         return nearest
@@ -48,9 +44,9 @@ class ActininHead:
     @property
     def x(self):
         """Location derived from α-actinin"""
-        # If bound, you are located at the binding site
-        if self.bound:
-            return self.binding_site.x
+        # If bound, you are located at the linked site
+        if self.bs.bound:
+            return self.bs.linked.x
         # Else from parent α-actinin loc a distribution of parent lengths
         else:
             return self._x
@@ -71,29 +67,27 @@ class ActininHead:
     def step(self):
         """Take a timestep: bind, unbind, or stay current"""
         self._update_x()
-        if not self.bound:
+        if not self.bs.bound:
             self._bind_or_not()
         else:
             self._unbind_or_not()
 
     def _bind_or_not(self):
         """Maybe bind? Can't say for sure."""
-        actin_bs = self.nearest_binding_site
-        if actin_bs.bound:  # don't bind if site is already taken
+        gactin = self.nearest_binding_site
+        if gactin.bs.bound:  # don't bind if site is already taken
             return
-        rate = self._r12(abs(actin_bs.x - self.x))
+        rate = self._r12(abs(gactin.x - self.x))
         prob = rate * _units.world.timestep
         if prob > np.random.rand():
-            actin_bs.link = self
-            self.binding_site = actin_bs
+            self.bs.bind(gactin.bs)
 
     def _unbind_or_not(self):
         """Maybe unbind? Can't say for sure."""
         rate = self._r21()
         prob = rate * _units.world.timestep
         if prob > np.random.rand():
-            self.binding_site.link = None
-            self.binding_site = None
+            self.bs.unbind()
 
     def _r12(self, dist):
         """Binding rate per second, given the distance to binding site.
@@ -143,7 +137,7 @@ class ActininHead:
         """Calculate a spring property, energy or force"""
         # If other head isn't bound, can't bear energy/strain
         other_head = self.actinin.heads[self.side ^ 1]
-        if not other_head.bound:
+        if not other_head.bs.bound:
             return 0
         # If no x is given, use current location
         if x is None:
@@ -236,12 +230,12 @@ class AlphaActinin:
     @property
     def bound(self):
         """Are you bound?"""
-        return self.heads[0].bound or self.heads[1].bound
+        return self.heads[0].bs.bound or self.heads[1].bs.bound
 
     @property
     def energy(self):
         """Current energy born by the stretched (or not) α-actinin"""
-        if not (self.heads[0].bound and self.heads[1].bound):
+        if not (self.heads[0].bs.bound and self.heads[1].bs.bound):
             return 0
         dist = np.abs(self.heads[0].x - self.heads[1].x)
         return self.spring.energy(dist)

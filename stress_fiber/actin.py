@@ -14,10 +14,11 @@ import matplotlib.patches
 
 from . import _units
 from . import _diffuse
+from . import _binding_site
 
 
-class BindingSite:
-    """A single g-actin with a site that can bind and unbind."""
+class GActinPair:
+    """Two g-actin with a site that can bind and unbind."""
 
     def __init__(self, filament, index):
         """A binding site on actin filament at location index. 
@@ -25,48 +26,42 @@ class BindingSite:
         Parameters
         ----------
         filament : `stress_fiber.Actin`
-            Parent actin filament to this binding site.
+            Parent actin filament to this pair.
         index : `int`
-            Binding site location in the list of sites on the parent filament. 
+            Pair location in the list of pairs on the parent filament. 
         """
         self.filament = filament
         self.index = index
-        self.link = None
+        self.bs = _binding_site.BindingSite(self)
 
     def __str__(self):
-        """String representation of a binding site"""
-        bound = "Bound" if self.bound else "Unbound"
-        return bound+" binding site"
+        """String representation of a pair"""
+        return "GActin %i with %s" % (self.index, str(self.bs))
 
     @property
     def x(self):
         """Where are you at? Referenced from parent actin."""
-        return self.filament.sites_x[self.index]
-
-    @property
-    def bound(self):
-        """Are you bound?"""
-        return self.link is not None
+        return self.filament.pairs_x[self.index]
 
     def force(self, x=None):
-        """What force does the binding site experience?"""
-        if not self.bound:
+        """What force does the g-actin experience?"""
+        if not self.bs.bound:
             return 0
         if x is None:
             x = self.x
-        return self.link.force(x)
+        return self.bs.linked.force(x)
 
     def energy(self, x=None):
-        """What energy does this binding site store?
+        """What energy does this g-actin store?
 
         Energy is only stored in the case that the binding site is attached,
         since we are treating actin as inflexible.
         """
-        if not self.bound:
+        if not self.bs.bound:
             return 0
         if x is None:
             x = self.x
-        return self.link.energy(x)
+        return self.bs.linked.energy(x)
 
 
 class Actin:
@@ -97,31 +92,31 @@ class Actin:
         self._rise = poly_base_length / mon_per_poly  # nm / actin pair
         self._radius = 3  # nm, Howard (2001), Pg 121
         # Store locations
-        self.pairs = n
+        self.n_pairs = n
         self.x = x
-        self.sites_x = self._calc_sites_x()  # redundant, but here for reminder
-        # Create binding sites
-        self.sites = [BindingSite(self, index) for index in range(n)]
+        self.pairs_x = self._calc_pairs_x()  # redundant, but here for reminder
+        # Create g-actin pairs
+        self.pairs = [GActinPair(self, index) for index in range(n)]
 
     def __str__(self):
         """String representation of actin"""
-        n, l = self.pairs, self.length
+        n, l = self.n_pairs, self.length
         xmin, xmax = self.boundaries
-        bound = sum([site.bound for site in self.sites])
-        unbound = len(self.sites) - bound
+        bound = sum([pair.bs.bound for pair in self.pairs])
+        unbound = len(self.pairs) - bound
         force, energy = self.force, self.energy
         state = (
             "Actin w/ %i pairs (%.1fnm), between x=%.1f-%.1f, \n \
-            with %i/%i bound/unbound sites. Force/energy is %.1fpN/%.1fpN*nm"
+            with %i/%i bound/unbound pairs. Force/energy is %.1fpN/%.1fpN*nm"
             % (n, l, xmin, xmax, bound, unbound, force, energy)
         )
         return state
 
-    def _calc_sites_x(self, start_x=None):
-        """Where would our binding sites be for a given starting location?"""
+    def _calc_pairs_x(self, start_x=None):
+        """Where would our g-actin pairs be for a given starting location?"""
         if start_x is None:
             start_x = self.x
-        rise, n = self._rise, self.pairs
+        rise, n = self._rise, self.n_pairs
         return np.array([start_x + rise * i for i in range(n)])
 
     @property
@@ -134,12 +129,12 @@ class Actin:
     @x.setter
     def x(self, start_x):
         self._x = start_x
-        self.sites_x = self._calc_sites_x(start_x)
+        self.pairs_x = self._calc_pairs_x(start_x)
 
     @property
     def length(self):
         """How long are you?"""
-        return abs(self.pairs * self._rise)
+        return abs(self.n_pairs * self._rise)
 
     @property
     def boundaries(self):
@@ -148,12 +143,17 @@ class Actin:
 
     @property
     def bound(self):
-        """Do you have any attached binding sites?"""
-        return any([bs.bound for bs in self.sites])
+        """Do you have any attached pairs?"""
+        return any([pair.bs.bound for pair in self.pairs])
 
     def nearest(self, x):
-        """What is the nearest site to the given location"""
-        return self.sites[np.argmin(np.abs(np.subtract(x, self.sites_x)))]
+        """What is the nearest pair to the given location"""
+        return self.pairs[np.argmin(np.abs(np.subtract(x, self.pairs_x)))]
+
+    def nearest_unbound(self, x):
+        """What is the nearest unbound pair to the given location"""
+        # TODO Implement
+        raise NotImplementedError
 
     def _hypothetical_force(self, x):
         """Assume the filament is, like, really stiff and find the force on it.
@@ -162,9 +162,9 @@ class Actin:
         filament given a hypothetical actin location, x. This is used to do
         force balances without changing the state of the filament.
         """
-        bs_x = self._calc_sites_x(x)
-        bs_and_x = [(site, x) for site, x in zip(self.sites, bs_x) if site.bound]
-        force = np.sum([site.force(x) for site, x in bs_and_x])
+        px = self._calc_pairs_x(x)
+        pairs_and_x = [(pair, x) for pair, x in zip(self.pairs, px) if pair.bs.bound]
+        force = np.sum([pair.force(x) for pair, x in pairs_and_x])
         return force
 
     @property
@@ -181,9 +181,9 @@ class Actin:
         """Assume our (axially) stiff actin is storing energy in α-actinin
         What is the current energy in the bound α-actinins?
         """
-        bs_x = self._calc_sites_x(x)
-        bs_and_x = [(site, x) for site, x in zip(self.sites, bs_x) if site.bound]
-        energy = np.sum([site.energy(x) for site, x in bs_and_x])
+        px = self._calc_pairs_x(x)
+        pairs_and_x = [(pair, x) for pair, x in zip(self.pairs, px) if pair.bs.bound]
+        energy = np.sum([pair.energy(x) for pair, x in pairs_and_x])
         return energy
 
     @property
@@ -231,11 +231,11 @@ class Actin:
         base_energy = self._hypothetical_energy(minimal_force_x)
         energy_bump = np.random.normal(0, 0.5 * _units.constants.kT)
         # Don't move if in energy constrained state already?
-        if base_energy>=abs(energy_bump):
+        if base_energy >= abs(energy_bump):
             self.x = minimal_force_x
             return (minimal_force_x, minimal_force_x)
         else:
-            energy_bump = np.sign(energy_bump)*(base_energy-abs(energy_bump))
+            energy_bump = np.sign(energy_bump) * (base_energy - abs(energy_bump))
         if energy_bump < 0:  # move left if bump is negative
             bounds = (-np.inf, minimal_force_x)
         else:  # move right if bump is positive
@@ -252,9 +252,7 @@ class Actin:
             energy_delta, minimal_force_x, bounds=bounds
         )
         if energy_least_sq.success is not True:
-            warnings.warn(
-                "Unsuccessful energy minimization: " + str(energy_least_sq)
-            )
+            warnings.warn("Unsuccessful energy minimization: " + str(energy_least_sq))
         minimal_energy_x = energy_least_sq.x[0]
         self.x = minimal_energy_x
         return (minimal_force_x, minimal_energy_x)
@@ -276,8 +274,8 @@ class Actin:
             facecolor="skyblue",
             edgecolor="royalblue",
         )
-        # Work through each site pair
-        for x in [s.x for s in self.sites]:
+        # Work through each pair
+        for x in [p.x for p in self.pairs]:
             ax.add_patch(circ(x + self._rise * 0.1, y + 0.5 * self._rise))
             ax.add_patch(circ(x - self._rise * 0.1, y - 0.5 * self._rise))
         if show:

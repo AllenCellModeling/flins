@@ -7,9 +7,25 @@ CDW 2019
 class BindingSite:
     """A link between this (thing) and that (thing)"""
 
-    def __init__(self, other=None):
+    def __init__(self, parent):
+        self.parent = parent
         self.link = None
     
+    def __str__(self):
+        """String representation of a binding site"""
+        if not self.bound:
+            return "Unbound site"
+        else:
+            return "Site bound to "+str(self.link)
+
+    @property
+    def linked(self):
+        """Return the parent object of the linked site (None if unbound)"""
+        if self.bound:
+            return self.link.parent
+        else:
+            return None
+
     @property
     def bound(self):
         """Are you currently bound?"""
