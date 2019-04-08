@@ -18,11 +18,11 @@ class Anchor:
     stiff springs attached to actin binding sites. 
     """
 
-    def __init__(self, x, bind_to=None, k=100, rest=10):
+    def __init__(self, x, anchor_to=None, k=100, rest=0):
         self.x = x
         self.bs = _binding_site.BindingSite(self)
-        if binding_site is not None:
-            self.bs.bind(bind_to)
+        if anchor_to is not None:
+            self.bs.bind(anchor_to.bs)
         self.spring = _spring.Spring(k, rest)
 
     def __str__(self):
@@ -43,3 +43,7 @@ class Anchor:
         # TODO this is used to calculate actin boping-around and as such needs
         # to be passed back relatively high
         return 0
+
+    def step(self):
+        """Sit there and remain bound"""
+        pass
