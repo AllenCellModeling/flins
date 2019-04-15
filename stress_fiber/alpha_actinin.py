@@ -29,6 +29,11 @@ class ActininHead:
         return "α-act head %s at x=%s" % (state_str, x_str)
 
     @property
+    def other_head(self):
+        """The other head on this actinin"""
+        return self.actinin.heads[self.side ^ 1]
+
+    @property
     def nearest_binding_site(self):
         """The nearest g-actin pair from neighboring tracts
         TODO: factor this out into the tract space, making it molecule-agnostic
@@ -136,13 +141,12 @@ class ActininHead:
     def _spring_property(self, spring_prop, x=None):
         """Calculate a spring property, energy or force"""
         # If other head isn't bound, can't bear energy/strain
-        other_head = self.actinin.heads[self.side ^ 1]
-        if not other_head.bs.bound:
+        if not self.other_head.bs.bound:
             return 0
         # If no x is given, use current location
         if x is None:
             x = self.x
-        length = abs(x - other_head.x)
+        length = abs(x - self.other_head.x)
         return spring_prop(length)
 
     def force(self, x=None):
