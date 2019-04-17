@@ -17,7 +17,7 @@ np.random.seed()  # Ensure proper seeding
 
 def create_test_world(radius, span, n_actin, n_actinin):
     """Create a world of given radius with n_actin and n_actinin per tract"""
-    tractspace = space.TractSpace(radius)
+    tractspace = space.TractSpace(radius, span)
     for tract in tractspace.all_tracts:
         actins = []
         anchors = []
@@ -27,10 +27,10 @@ def create_test_world(radius, span, n_actin, n_actinin):
             x = np.random.rand() * (span - pairs * rise)
             actins.append(Actin(x, pairs, tract))
             # Anchor first and last tenth
-            if x < span*0.1:
+            if x < span * 0.1:
                 anchors.append(Anchor(x, actins[-1].pairs[0]))
             x_end = actins[-1].pairs_x[-1]
-            if x_end > span*0.9:
+            if x_end > span * 0.9:
                 anchors.append(Anchor(x_end, actins[-1].pairs[-1]))
         actinins = []
         for _ in range(n_actinin):

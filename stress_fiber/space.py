@@ -112,9 +112,18 @@ class TractSpace:
     many of the aspects of 3D space with easier mechanics. 
     """
 
-    def __init__(self, size):
-        """A hexagonal grid of a given symmetric radial size"""
+    def __init__(self, size, span=None):
+        """A hexagonal grid of a given symmetric radial size
+
+        Parameters
+        ----------
+        size: int
+            Radius (0 is a single tract, 1 is 9 tracts, ...) of tracts
+        span: None or float
+            Length of the tracts in x dimension, optional
+        """
         self.size = size
+        self.span = span
         hex_grid = HexMath.create_grid_array(size)
         for n, row in enumerate(hex_grid):
             for m, location in enumerate(row):
