@@ -22,7 +22,7 @@ def save(dwg, filename):
     if not filename.endswith("svg"):
         filename += ".svg"
     with open(filename, "w") as fileout:
-        filename.write(dwg.tostring())
+        fileout.write(dwg.tostring())
 
 
 def display(dwg):
