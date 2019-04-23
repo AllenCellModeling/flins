@@ -25,7 +25,7 @@ def create_test_world(radius, span, n_actin, n_actinin):
             rise = 2.77
             pairs = np.random.randint(4, span // rise - 4)
             x = np.random.rand() * (span - pairs * rise)
-            actins.append(Actin(x, pairs, tract))
+            actins.append(Actin(x, tract, n_pair=pairs))
             # Anchor first and last tenth
             if x < span * 0.1:
                 anchors.append(Anchor(x, actins[-1].pairs[0]))

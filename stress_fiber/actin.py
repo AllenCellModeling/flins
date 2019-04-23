@@ -67,20 +67,23 @@ class GActinPair:
 class Actin:
     """A 1D actin filament that has binding sites, diffusion behavior, etc."""
 
-    def __init__(self, x, n, t):
-        """An actin at x with n pairs of g-actin on tract t.
+    def __init__(self, x, tract, n_pair=None, length=None):
+        """An actin at x with n pairs of g-actin in a tract.
         
         Parameters
         ----------
         x : `float`
             X location of the actin within the tract. This is where the first
             pair will be located, with all others calculated in reference to it. 
-        n : `int`
-            Number of g-actin pairs in the filament. We use this to set filament
-            length. 
-        t : `stress_fiber.space.tract`
+        tract : `stress_fiber.space.tract`
             1D tract that the actin lives in. Is the parent of the filament in
             organizational hierarchy. 
+        n_pair : `int`, optional
+            Number of g-actin pairs in the filament. We use this to set filament
+            length. Takes precedence over length.
+        length : `float`, optional
+            Alternate method of setting number of g-actin pairs. Will set
+            n_pair to number that results in filament extent closest to length.
         """
         # Calculate actin rise and run, store for later use
         # Numbers derived from Howard (2001), Pg 125
@@ -91,10 +94,18 @@ class Actin:
         self._pitch = poly_base_turns * rev / mon_per_poly  # rad/actin pair
         self._rise = poly_base_length / mon_per_poly  # nm / actin pair
         self._radius = 3  # nm, Howard (2001), Pg 121
+        # Calculate length
+        if n_pair is not None:
+            n = n_pair
+        elif length is not None:
+            n = round(length/self._rise)
+        else:
+            raise Exception("must pass n_pair or length to actin on creation")
         # Store locations
         self.n_pairs = n
         self.x = x
         self.pairs_x = self._calc_pairs_x()  # redundant, but here for reminder
+        self.tract = tract
         # Create g-actin pairs
         self.pairs = [GActinPair(self, index) for index in range(n)]
 
