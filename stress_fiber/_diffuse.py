@@ -116,3 +116,37 @@ def Dx(f_drag):
     std_dev = np.sqrt(2 * D * t)
     d_x = np.random.normal(0, std_dev)
     return d_x
+
+def coerce_to_bounds(mol_start, mol_end, boundaries):
+    """When a molecule has diffused out of bounds, coerce it back into bounds
+
+    A choice is made here to reflect the molecule back into bounds rather than
+    stopping it dead at the boundary. This is to prevent the boundaries of the
+    system from acting as absorbing ends that will tend to build up diffusing
+    proteins over time. 
+
+    Parameters
+    ----------
+    mol_start : `float`
+        X location of the right side of the protein
+    mol_end : `float`
+        X location of left side of the protein
+    boundaries : `tuple`
+        Upper and lower bounds of the 1D space the molecule is diffusing within
+    """
+    m1, m2, b1, b2 = mol_start, mol_end, boundaries[0], boundaries[1]
+    ## Do some checking
+    if m2-m1 > b2-b1:
+        raise Exception("molecule is too long to fit in boundaries")
+    if m1>m2 or b1>b2:
+        raise Exception("molecule/boundaries passed in reverse order")
+    ## And now the bouncing around
+    if m1 < b1:
+        diff = b1-m1
+        m1, m2 = m1 + 2 * diff, m2 + 2 * diff
+        m1, m2 = coerce_to_bounds(m1, m2, boundaries)
+    elif m2 > b2:
+        diff = m2-b2
+        m1, m2 = m1 - 2 * diff, m2 - 2 * diff
+        m1, m2 = coerce_to_bounds(m1, m2, boundaries)
+    return m1, m2
