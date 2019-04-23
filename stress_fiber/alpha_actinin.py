@@ -270,4 +270,8 @@ class AlphaActinin:
         f_drag = _diffuse.Drag.Ellipsoid.long_axis_translation(b, a)
         d_x = _diffuse.Dx(f_drag)
         self.x += d_x
+        if self.tract is not None:  # then derive diffusion limits from tract
+            start, end = self.x, self.x + self.spring.rest
+            space_limits = (0, self.tract.space.span)
+            self.x, _  = _diffuse.coerce_to_bounds(start, end, space_limits)
         return d_x

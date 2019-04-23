@@ -211,6 +211,10 @@ class Actin:
         f_drag = _diffuse.Drag.Cylinder.long_axis_translation(L, r)
         d_x = _diffuse.Dx(f_drag)
         self.x += d_x
+        if self.tract is not None:  # then derive diffusion limits from tract
+            start, end = self.boundaries
+            space_limits = (0, self.tract.space.span)
+            self.x, _  = _diffuse.coerce_to_bounds(start, end, space_limits)
         return d_x
 
     def step(self):
