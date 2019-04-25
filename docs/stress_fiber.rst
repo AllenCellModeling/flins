@@ -1,6 +1,13 @@
 stress\_fiber package
 =====================
 
+Subpackages
+-----------
+
+.. toctree::
+
+    stress_fiber.visualize
+
 Submodules
 ----------
 
@@ -40,14 +47,6 @@ stress\_fiber.space module
 --------------------------
 
 .. automodule:: stress_fiber.space
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-stress\_fiber.visualize module
-------------------------------
-
-.. automodule:: stress_fiber.visualize
     :members:
     :undoc-members:
     :show-inheritance:
