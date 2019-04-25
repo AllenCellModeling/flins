@@ -129,8 +129,12 @@ class Actin:
         """Where would our g-actin pairs be for a given starting location?"""
         if start_x is None:
             start_x = self.x
-        rise, n = self._rise, self.n_pairs
-        return np.array([start_x + rise * i for i in range(n)])
+        try:
+            return self.__unshifted_locations + start_x
+        except AttributeError:
+            rise, n = self._rise, self.n_pairs
+            self.__unshifted_locations = np.array([rise * i for i in range(n)])
+            return self.__unshifted_locations + start_x
 
     @property
     def x(self):
