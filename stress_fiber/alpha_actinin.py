@@ -217,11 +217,15 @@ class AlphaActinin:
     .. [5] https://doi.org/10.1016/S0092-8674(00)81980-7
     """
 
-    def __init__(self, x, t):
-        """An α-actinin head at location x in tract t"""
+    def __init__(self, x, tract=None):
+        """An α-actinin at location x in a tract"""
+        # Seed each protein
+        np.random.seed()
+        # Create the spring that is our actinin and remember passed values
         self.spring = Spring(3.75, 36)  # See class doc for sources
         self.x = x
-        self.tract = t
+        self.tract = tract
+        # Create the heads at either end of the actinin
         self.heads = [ActininHead(self, 0), ActininHead(self, 1)]
 
     def __str__(self):
