@@ -44,6 +44,9 @@ napolean_include_init_with_doc = True
 napoleon_use_ivar = True
 napoleon_use_param = False
 
+# Control autodoc
+autoclass_content = 'both'  # include init doc with class
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
