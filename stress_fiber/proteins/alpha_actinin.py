@@ -1,16 +1,19 @@
 # encoding: utf-8
 """
 αaas: α-actinin as a service
-CDW 2019
+
+But seriously, α-actinin is the primary cross-linker in this system. It requires
+two heads separated by a flexible (or extensible) backbone that are able to bind
+adjacent actin filaments. 
 """
 
 import itertools
 import numpy as np
 
-from ._spring import Spring
-from . import _units
-from . import _diffuse
-from . import _binding_site
+from ..support import spring
+from ..support import units
+from ..support import diffuse
+from ..support import binding_site
 
 
 class ActininHead:
@@ -19,7 +22,7 @@ class ActininHead:
     def __init__(self, actinin, side):
         self.actinin = actinin
         self.side = side  # Which side of the α-actinin is this on, 0 or 1
-        self.bs = _binding_site.BindingSite(self)
+        self.bs = binding_site.BindingSite(self)
         self._update_x()
 
     def __str__(self):
@@ -83,14 +86,14 @@ class ActininHead:
         if gactin.bs.bound:  # don't bind if site is already taken
             return
         rate = self._r12(abs(gactin.x - self.x))
-        prob = rate * _units.world.timestep
+        prob = rate * units.world.timestep
         if prob > np.random.rand():
             self.bs.bind(gactin.bs)
 
     def _unbind_or_not(self):
         """Maybe unbind? Can't say for sure."""
         rate = self._r21()
-        prob = rate * _units.world.timestep
+        prob = rate * units.world.timestep
         if prob > np.random.rand():
             self.bs.unbind()
 
@@ -105,7 +108,7 @@ class ActininHead:
         """
         tau = 72
         k = self.actinin.spring.k
-        kT = _units.constants.kT
+        kT = units.constants.kT
         rate = tau * np.exp(-(k * dist ** 2) / (2 * kT))
         return rate
 
@@ -134,7 +137,7 @@ class ActininHead:
         deltaG = 62  # pN*nm energy barrier between unbound and bound
         U = self.actinin.energy
         A = 1
-        kT = _units.constants.kT
+        kT = units.constants.kT
         rate = A * np.exp(-(deltaG - U) / kT)
         return rate
 
@@ -222,7 +225,7 @@ class AlphaActinin:
         # Seed each protein
         np.random.seed()
         # Create the spring that is our actinin and remember passed values
-        self.spring = Spring(3.75, 36)  # See class doc for sources
+        self.spring = spring.Spring(3.75, 36)  # See class doc for sources
         self.x = x
         self.tract = tract
         # Create the heads at either end of the actinin
@@ -271,11 +274,11 @@ class AlphaActinin:
         """
         # NB This is checked well at this time, CDW20190221
         b, a = 18, 3
-        f_drag = _diffuse.Drag.Ellipsoid.long_axis_translation(b, a)
-        d_x = _diffuse.Dx(f_drag)
+        f_drag = diffuse.Drag.Ellipsoid.long_axis_translation(b, a)
+        d_x = diffuse.Dx(f_drag)
         self.x += d_x
         if self.tract is not None:  # then derive diffusion limits from tract
             start, end = self.x, self.x + self.spring.rest
             space_limits = (0, self.tract.space.span)
-            self.x, _  = _diffuse.coerce_to_bounds(start, end, space_limits)
+            self.x, _ = diffuse.coerce_to_bounds(start, end, space_limits)
         return d_x

@@ -1,13 +1,13 @@
 # encoding: utf-8
 """
-Don't stray far now
-CDW 2019
+Don't stray far now.
+
+Anchor keeps a linked binding site strongly attached to a given location. It is
+intended to be used to represent focal adhesions and their movements. 
 """
 
-import numpy as np
-
-from . import _spring
-from . import _binding_site
+from ..support.spring import Spring
+from ..support.binding_site import BindingSite
 
 
 class Anchor:
@@ -20,15 +20,15 @@ class Anchor:
 
     def __init__(self, x, anchor_to=None, k=100, rest=0):
         self.x = x
-        self.bs = _binding_site.BindingSite(self)
+        self.bs = BindingSite(self)
         if anchor_to is not None:
             self.bs.bind(anchor_to.bs)
-        self.spring = _spring.Spring(k, rest)
+        self.spring = Spring(k, rest)
 
     def __str__(self):
         """String representation of an anchor"""
-        return "Anchor at %02f"%self.x
-        
+        return "Anchor at %02f" % self.x
+
     def force(self, x):
         """Force exerted by anchor if other end is stretched to x"""
         dist = abs(x - self.x)

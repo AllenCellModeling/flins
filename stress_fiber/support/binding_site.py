@@ -1,22 +1,31 @@
 # encoding: utf-8
 """
-_binding_site.py: Track what is bound to what
-CDW 2019
+What is bound to what.
+
+Let different proteins link to and unlink from each other.
 """
+
 
 class BindingSite:
     """A link between this (thing) and that (thing)"""
 
     def __init__(self, parent):
+        """Create the binding site
+
+        Parameters
+        ----------
+        parent : `protein`
+            Protein on which this binding site is located
+        """
         self.parent = parent
         self.link = None
-    
+
     def __str__(self):
         """String representation of a binding site"""
         if not self.bound:
             return "Unbound site"
         else:
-            return "Site bound to "+str(self.link)
+            return "Site bound to " + str(self.link)
 
     @property
     def linked(self):

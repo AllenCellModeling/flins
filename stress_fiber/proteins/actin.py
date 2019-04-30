@@ -1,7 +1,10 @@
 # encoding: utf-8
 """
-Actin' up
-CDW 2019
+Actin' up.
+
+These actin filaments are the backbones of the stress-fiber. They transmit
+force, are the common binding target for most other proteins, and move in
+response to gradual remodeling. 
 """
 
 import warnings
@@ -12,9 +15,9 @@ import matplotlib.pyplot as plt
 import matplotlib
 import matplotlib.patches
 
-from . import _units
-from . import _diffuse
-from . import _binding_site
+from ..support import units
+from ..support import diffuse
+from ..support import binding_site
 
 
 class GActinPair:
@@ -32,7 +35,7 @@ class GActinPair:
         """
         self.filament = filament
         self.index = index
-        self.bs = _binding_site.BindingSite(self)
+        self.bs = binding_site.BindingSite(self)
 
     def __str__(self):
         """String representation of a pair"""
@@ -100,7 +103,7 @@ class Actin:
         if n_pair is not None:
             n = n_pair
         elif length is not None:
-            n = round(length/self._rise)
+            n = round(length / self._rise)
         else:
             raise Exception("must pass n_pair or length to actin on creation")
         # Store locations
@@ -214,19 +217,20 @@ class Actin:
     def freely_diffuse(self):
         """Move around a bit, see AlphaActinin.diffuse for more explanation"""
         L, r = self.length, self._radius
-        f_drag = _diffuse.Drag.Cylinder.long_axis_translation(L, r)
-        d_x = _diffuse.Dx(f_drag)
+        f_drag = diffuse.Drag.Cylinder.long_axis_translation(L, r)
+        d_x = diffuse.Dx(f_drag)
         self.x += d_x
         if self.tract is not None:  # then derive diffusion limits from tract
             start, end = self.boundaries
             space_limits = (0, self.tract.space.span)
-            self.x, _  = _diffuse.coerce_to_bounds(start, end, space_limits)
+            self.x, _ = diffuse.coerce_to_bounds(start, end, space_limits)
         return d_x
 
     def step(self):
         """Take a timestep: move subject to force and diffusion
         As with α-actinin, we take free diffusion to be subject to an
-        Einstein-Smoluchowski diffusive processes (as documented in `_diffuse`).
+        Einstein-Smoluchowski diffusive processes (as documented in
+        `stress_fiber.support.diffuse`).
 
         When bound we treat the movement of actin as subject to equipartition of
         energy stored in each of the bound α-actinins. We first find the
@@ -250,7 +254,7 @@ class Actin:
         minimal_force_x = force_least_sq.x[0]
         # Find base and perturbed energies
         base_energy = self._hypothetical_energy(minimal_force_x)
-        energy_bump = np.random.normal(0, 0.5 * _units.constants.kT)
+        energy_bump = np.random.normal(0, 0.5 * units.constants.kT)
         # Don't move if in energy constrained state already?
         if base_energy >= abs(energy_bump):
             self.x = minimal_force_x

@@ -1,16 +1,15 @@
 # encoding: utf-8
 """
 Make a world
-CDW 2019
+
+A whole new world in which we track the execution of a model run.
 """
 
 import itertools
 import numpy as np
 
-from . import space
-from .actin import Actin
-from .anchor import Anchor
-from .alpha_actinin import AlphaActinin
+from .space import space
+from . import proteins
 
 np.random.seed()  # Ensure proper seeding
 
@@ -25,16 +24,20 @@ def create_test_world(radius, span, n_actin, n_actinin):
             rise = 2.77
             pairs = np.random.randint(4, span // rise - 4)
             x = np.random.rand() * (span - pairs * rise)
-            actins.append(Actin(x, tract, n_pair=pairs))
+            actins.append(proteins.actin.Actin(x, tract, n_pair=pairs))
             # Anchor first and last tenth
             if x < span * 0.1:
-                anchors.append(Anchor(x, actins[-1].pairs[0]))
+                anchors.append(proteins.anchor.Anchor(x, actins[-1].pairs[0]))
             x_end = actins[-1].pairs_x[-1]
             if x_end > span * 0.9:
-                anchors.append(Anchor(x_end, actins[-1].pairs[-1]))
+                anchors.append(proteins.anchor.Anchor(x_end, actins[-1].pairs[-1]))
         actinins = []
         for _ in range(n_actinin):
-            actinins.append(AlphaActinin(np.random.rand() * (span - 10), tract))
+            actinins.append(
+                proteins.alpha_actinin.AlphaActinin(
+                    np.random.rand() * (span - 10), tract
+                )
+            )
         tract.mols["actin"] = actins
         tract.mols["anchor"] = anchors
         tract.mols["actinin"] = actinins

@@ -1,10 +1,12 @@
 # encoding: utf-8
 """
-_units: To protect constants and serve unit conversions
-CDW 2019
+To protect constants and serve unit conversions
+
+Gather all the parameters that define the units in our universe, and the
+particular section of it we are interested in, into one spot. 
 """
 
-
+## Conversion
 def poise(input_in_poise):
     """Convert the input viscosity, in poise, to g/nm*s"""
     return input_in_poise * 10 ** -7
@@ -26,7 +28,7 @@ def milliseconds(input_in_ms):
 
 
 class constants:
-    """Universal constants"""
+    """Universal constants we don't expect to change across runs"""
 
     temperature = 288  # Standard temperature, K
     eta = poise(0.0114)  # Viscosity of water at 288K
@@ -46,4 +48,4 @@ class world:
     """
 
     timestep = milliseconds(1)  # 1ms timestep
-    D_cyto_corr = 1 / 3.2  # Cytoplasmic crowding sub-diffusion, need source
+    D_cyto_corr = 1 / 3.2  # Cytoplasmic crowding sub-diffusion
