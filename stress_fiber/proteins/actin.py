@@ -11,10 +11,6 @@ import warnings
 import numpy as np
 import scipy.optimize
 
-import matplotlib.pyplot as plt
-import matplotlib
-import matplotlib.patches
-
 from ..support import units
 from ..support import diffuse
 from ..support import binding_site
@@ -279,28 +275,3 @@ class Actin:
         minimal_energy_x = energy_least_sq.x[0]
         self.x = minimal_energy_x
         return (minimal_force_x, minimal_energy_x)
-
-    def plot(self, ax=None, show=False, y=0):
-        """Plot this fil"""
-        if ax is None:
-            fig, ax = plt.subplots(1, 1, figsize=(8, 8))
-            ax.axis("off")
-            ax.set(
-                xlim=self.boundaries,
-                ylim=(y - 2 * self._rise, y + 2 * self._rise),
-                aspect=1,
-            )
-        circ = lambda x, y: matplotlib.patches.CirclePolygon(
-            (x, y),
-            radius=0.66 * self._rise,
-            resolution=20,
-            facecolor="skyblue",
-            edgecolor="royalblue",
-        )
-        # Work through each pair
-        for x in [p.x for p in self.pairs]:
-            ax.add_patch(circ(x + self._rise * 0.1, y + 0.5 * self._rise))
-            ax.add_patch(circ(x - self._rise * 0.1, y - 0.5 * self._rise))
-        if show:
-            plt.show()
-        return ax

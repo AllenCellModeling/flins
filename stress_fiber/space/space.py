@@ -8,10 +8,6 @@ neighboring tracts that also extend in a long direction.
 
 from .hexmath import HexMath
 
-import matplotlib.pyplot as plt
-import matplotlib
-import matplotlib.patches
-
 
 class TractSpace:
     """A spatial region of filaments/crosslinkers
@@ -79,26 +75,6 @@ class TractSpace:
             if self.tract(i, j, k) is not None
         ]
         return tracts
-
-    def plot(self, callback=None):
-        """Plot the tracts and what's in them, optionally using a callback"""
-        # Set up callback
-        if callback is None:
-            callback = lambda t: t["cube"]  # default to cube coordinates
-        # Set up figure
-        fig, ax = plt.subplots(1, 1, figsize=(8, 8))
-        ax.axis("off")
-        limit = 2 * self.size + 1
-        ax.set(xlim=(-limit, limit), ylim=(-limit, limit), aspect=1)
-        # Work through each tract
-        for tract in self.all_tracts:
-            x, y = HexMath.cube_to_cart(*tract["cube"])
-            hex = matplotlib.patches.RegularPolygon(
-                (x, y), numVertices=6, radius=1, facecolor="White", edgecolor="k"
-            )
-            ax.add_patch(hex)
-            ax.text(x, y, str(callback(tract)), ha="center", va="center")
-        plt.show()
 
 
 class Tract:
