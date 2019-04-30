@@ -191,12 +191,12 @@ class AlphaActinin:
     from single helices to coiled-coils. More structural detail can be found,
     amongst other places, in Autore_2013_.
 
-    Persistence length, :math:`L_p`, is related to the
-    bending stiffness, :math:`B_s`, and therefore to Young's modulus, :math:`E`,
-    via :math:`L_p=\\frac{B_s}{k_B T}=\\frac{E I}{k_B T}` where :math:`I` is the
-    second moment of area. For a rod :math:`I=\\frac{\pi r^4}{4}`.
-    So our :math:`E` becomes :math:`E=\\frac{4 L_p k_B T}{\pi r^4}`. What we
-    really want is the spring constant, :math:`k` which we get from :math:`E` by
+    Persistence length, :math:`L_p`, is related to the bending stiffness,
+    :math:`B_s`, and therefore to Young's modulus, :math:`E`, via
+    :math:`L_p=\\frac{B_s}{k_B T}=\\frac{E I}{k_B T}` where :math:`I` is the
+    second moment of area. For a rod :math:`I=\\frac{\pi r^4}{4}`.  So our
+    :math:`E` becomes :math:`E=\\frac{4 L_p k_B T}{\pi r^4}`. What we really
+    want is the spring constant, :math:`k` which we get from :math:`E` by
     :math:`k=\\frac{E \pi r^2}{L_0}` and thus
 
     .. math:: k = \\frac{4 L_p k_B T}{r^2 L_0}
