@@ -11,12 +11,12 @@ from . import units
 
 
 class Drag:
-    """Drag coefficients drawn from [Howard_2001]_, Pg 107 and [Berg_1983]_.
+    """Drag coefficients drawn from Howard_2001_, Pg 107 and Berg_1983_.
     We assume that our coefficient of viscosity, :math:`\eta`, defaults to that
     of water (0.0114 poise at 288K), referenced from units
 
-    .. [Howard_2001] http://books.google.com/books?vid=ISBN9780878933334
-    .. [Berg_1983] https://press.princeton.edu/titles/112.html
+    .. _Howard_2001: http://books.google.com/books?vid=ISBN9780878933334
+    .. _Berg_1983: https://press.princeton.edu/titles/112.html
     """
 
     class Cylinder:
@@ -92,21 +92,22 @@ class Drag:
 
 def Dx(f_drag):
     """How far do we move because of diffusion subject to drag?
-    From the Einstein-Smoluchowski relation via [Berg_1983]_ we know that the
+    From the Einstein-Smoluchowski relation via Berg_1983_ we know that the
     diffusion coefficient for a particle subject to a viscous drag, :math:`f`
     (in :math:`g/s`) is :math:`D=kT/f`. Further, from the same source and
-    [Howard_2001]_ we know the drag on cylinders, ellipsoids, and spheres and
+    Howard_2001_ we know the drag on cylinders, ellipsoids, and spheres and
     calculate them above for reference. 
 
     We add a correction factor of 1/3.2 to account for the difference in
-    diffusion between water and eukaryotic cytoplasm [Swaminathan_1997].
+    diffusion between water and eukaryotic cytoplasm (Swaminathan_1997_).
 
     An alternate treatment would be to use the Stoke's radius for all molecules,
     approximating them as spheres. There is an argument that anything beyond the
     spherical approximation is false precision. 
 
-    .. [Berg_1983] https://press.princeton.edu/titles/112.html
-    .. [Swaminathan_1997] https://doi.org/10.1016/S0006-3495(97)78835-0
+    .. _Berg_1983: https://press.princeton.edu/titles/112.html
+    .. _Howard_2001: http://books.google.com/books?vid=ISBN9780878933334
+    .. _Swaminathan_1997: https://doi.org/10.1016/S0006-3495(97)78835-0
     """
     # Gather info
     kT = units.constants.kT

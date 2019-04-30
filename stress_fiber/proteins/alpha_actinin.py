@@ -189,23 +189,23 @@ class AlphaActinin:
     80nm [3]_, and therefore for our tetrameric spectrin repeat backbone to be
     240nm. This assumes linear scaling, but is supported in [3]_ for scaling
     from single helices to coiled-coils. More structural detail can be found,
-    amongst other places, here [4]_.
+    amongst other places, in Autore_2013_.
 
     Persistence length, :math:`L_p`, is related to the
     bending stiffness, :math:`B_s`, and therefore to Young's modulus, :math:`E`,
-    via :math:`L_p=\frac{B_s}{k_B T}=\frac{E I}{k_B T}` where :math:`I` is the
-    second moment of area. For a rod :math:`I=\frac{\pi r^4}{4}`.
-    So our :math:`E` becomes :math:`E=\frac{4 L_p k_B T}{\pi r^4}`. What we
+    via :math:`L_p=\\frac{B_s}{k_B T}=\\frac{E I}{k_B T}` where :math:`I` is the
+    second moment of area. For a rod :math:`I=\\frac{\pi r^4}{4}`.
+    So our :math:`E` becomes :math:`E=\\frac{4 L_p k_B T}{\pi r^4}`. What we
     really want is the spring constant, :math:`k` which we get from :math:`E` by
-    :math:`k=\frac{E \pi r^2}{L_0}` and thus
+    :math:`k=\\frac{E \pi r^2}{L_0}` and thus
 
-    .. math:: k = \frac{4 L_p k_B T}{r^2 L_0}
+    .. math:: k = \\frac{4 L_p k_B T}{r^2 L_0}
 
     Where with :math:`L_p=240nm`, :math:`k_B=0.0138pN*nm/K`, :math:`T=288K`,
     :math:`r=1.5nm`, and :math:`L_0=36nm` to give :math:`k=3.75pN/nm`
 
     While we'll use this extensional stiffness below, it is worth noting that
-    bending may be the primary mechanism by which α-actinin deforms [5]_.
+    bending may be the primary mechanism by which α-actinin deforms (Grum_1999_).
 
     =========  =======  ======  ==========
     Property   Value    Units   Source
@@ -216,8 +216,8 @@ class AlphaActinin:
     .. [1] https://dx.doi.org/10.1007/s00018-008-8080-8
     .. [2] https://dx.doi.org/10.1016%2Fj.cell.2014.10.056
     .. [3] https://dx.doi.org/10.1103/PhysRevLett.97.248101
-    .. [4] https://dx.doi.org/10.1371/journal.pone.0063633
-    .. [5] https://doi.org/10.1016/S0092-8674(00)81980-7
+    .. _Autore_2013: https://dx.doi.org/10.1371/journal.pone.0063633
+    .. _Grum_1999: https://doi.org/10.1016/S0092-8674(00)81980-7
     """
 
     def __init__(self, x, tract=None):
@@ -259,16 +259,16 @@ class AlphaActinin:
     def freely_diffuse(self):
         """ Diffuse to a new location.
         We know the approximate dimensions of the α-actinin backbone are 24-36
-        nm by 0.5-6.5 nm as specified in [Sjöblom_2008]_ and [Ribeiro_2014]_. We
+        nm by 0.5-6.5 nm as specified in Sjöblom_2008_ and Ribeiro_2014_. We
         treat this as an ellipsoid of radii 18 by 3 nm to account for the heads
         at either end. 
 
         An alternate treatment would be to use the Stoke's radius for actinin
-        described in [BNID:104395]
+        described in BNID_104395_.
 
-        .. [Sjöblom_2008] https://dx.doi.org/10.1007/s00018-008-8080-8
-        .. [Ribeiro_2014] https://dx.doi.org/10.1016%2Fj.cell.2014.10.056
-        .. [BNID:104395] https://bionumbers.hms.harvard.edu/bionumber.aspx?id=104395
+        .. _Sjöblom_2008: https://dx.doi.org/10.1007/s00018-008-8080-8
+        .. _Ribeiro_2014: https://dx.doi.org/10.1016%2Fj.cell.2014.10.056
+        .. _BNID_104395: https://bionumbers.hms.harvard.edu/bionumber.aspx?id=104395
         """
         # NB This is checked well at this time, CDW20190221
         b, a = 18, 3
