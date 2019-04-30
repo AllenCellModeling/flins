@@ -222,8 +222,6 @@ class AlphaActinin:
 
     def __init__(self, x, tract=None):
         """An α-actinin at location x in a tract"""
-        # Seed each protein
-        np.random.seed()
         # Create the spring that is our actinin and remember passed values
         self.spring = spring.Spring(3.75, 36)  # See class doc for sources
         self.x = x

@@ -11,8 +11,6 @@ import numpy as np
 from .space import space
 from . import proteins
 
-np.random.seed()  # Ensure proper seeding
-
 
 def create_test_world(radius, span, n_actin, n_actinin):
     """Create a world of given radius with n_actin and n_actinin per tract"""
@@ -48,8 +46,24 @@ def create_test_world(radius, span, n_actin, n_actinin):
 class World:
     """Keep track of a tract space, simulation time, and metadata"""
 
-    def __init__(self, tractspace):
-        """Save the tractspace, initiate record keeping"""
+    def __init__(self, tractspace, random_state=None):
+        """Save the tractspace, initiate record keeping 
+        
+        Parameters
+        ----------
+        tractspace : `stress_fiber.space.space.TrackSpace`
+            Spatial component of the world
+        random_state : 
+            The internal state of numpy's Mersenne Twister implementation as
+            given by `numpy.random.get_state()`. This allows us to recreate run
+            trajectories. 
+        """
+        if random_state is None:
+            np.random.seed()  # Ensure proper seeding, making each world unique
+            self._starting_random_state = np.random.get_state()
+        else:
+            np.random.set_state(random_state)
+            self._starting_random_state = random_state
         self.tractspace = tractspace
         self.time = 0
 

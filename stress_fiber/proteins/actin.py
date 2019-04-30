@@ -88,8 +88,6 @@ class Actin:
             Alternate method of setting number of g-actin pairs. Will set
             n_pair to number that results in filament extent closest to length.
         """
-        # Seed each protein
-        np.random.seed()
         # Calculate actin rise and run, store for later use
         # Numbers derived from Howard (2001), Pg 125
         mon_per_poly = 26  # number of g-actin in a thin filament section
