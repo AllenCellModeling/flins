@@ -236,7 +236,7 @@ class AlphaActinin(Protein):
         """String representation of α-actinin"""
         tract_str = str(self.tract.loc)
         x_str = "%.1f" % self.x
-        bound_str = "%i bound heads" % sum([h.bound for h in self.heads])
+        bound_str = "%i bound heads" % sum([h.bs.bound for h in self.heads])
         return "α-act with %s at x=%s on tract %s" % (bound_str, x_str, tract_str)
 
     @property
