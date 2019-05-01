@@ -35,13 +35,14 @@ class Anchor(Protein):
         rest : float, optional
             Rest length of the spring tethering the anchor in nm [0]
         """
+        # Store tract if given, else create placeholders
+        super().__init__("anchor", tract)
+        # Store location and links
         self.x = x
         self.bs = BindingSite(self)
         if anchor_to is not None:
             self.bs.bind(anchor_to.bs)
         self.spring = Spring(k, rest)
-        # Store tract if given, else create placeholders
-        super().__init__("anchor", tract)
 
     def __str__(self):
         """String representation of an anchor"""

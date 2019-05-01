@@ -32,6 +32,7 @@ class GActinPair:
         """
         self.filament = filament
         self.index = index
+        self.address = (filament.address[:], ('gactinpair', index))
         self.bs = binding_site.BindingSite(self)
 
     def __str__(self):
@@ -85,6 +86,8 @@ class Actin(Protein):
             Alternate method of setting number of g-actin pairs. Will set
             n_pair to number that results in filament extent closest to length.
         """
+        # Store tract if given, else create placeholders
+        super().__init__("actin", tract)
         # Calculate actin rise and run, store for later use
         # Numbers derived from Howard (2001), Pg 125
         mon_per_poly = 26  # number of g-actin in a thin filament section
@@ -107,8 +110,6 @@ class Actin(Protein):
         self.pairs_x = self._calc_pairs_x()  # redundant, but here for reminder
         # Create g-actin pairs
         self.pairs = [GActinPair(self, index) for index in range(n)]
-        # Store tract if given, else create placeholders
-        super().__init__("actin", tract)
 
     def __str__(self):
         """String representation of actin"""

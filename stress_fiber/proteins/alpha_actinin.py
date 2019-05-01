@@ -23,6 +23,7 @@ class ActininHead:
     def __init__(self, actinin, side):
         self.actinin = actinin
         self.side = side  # Which side of the α-actinin is this on, 0 or 1
+        self.address = (actinin.address[:], ('actininhead', side))
         self.bs = binding_site.BindingSite(self)
         self._update_x()
 
@@ -223,13 +224,13 @@ class AlphaActinin(Protein):
 
     def __init__(self, x, tract=None):
         """An α-actinin at location x in a tract"""
+        # Store tract if given, else create placeholders
+        super().__init__("actinin", tract)
         # Create the spring that is our actinin and remember passed values
         self.spring = spring.Spring(3.75, 36)  # See class doc for sources
         self.x = x
         # Create the heads at either end of the actinin
         self.heads = [ActininHead(self, 0), ActininHead(self, 1)]
-        # Store tract if given, else create placeholders
-        super().__init__("actinin", tract)
 
     def __str__(self):
         """String representation of α-actinin"""
