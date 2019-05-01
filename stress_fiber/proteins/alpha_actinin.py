@@ -10,6 +10,7 @@ adjacent actin filaments.
 import itertools
 import numpy as np
 
+from .base import Protein
 from ..support import spring
 from ..support import units
 from ..support import diffuse
@@ -166,7 +167,7 @@ class ActininHead:
         return self._spring_property(energy_fn, x)
 
 
-class AlphaActinin:
+class AlphaActinin(Protein):
     """A 1D α-actinin molecule with heads on either end
 
     As this head is considered as a semi-physical object, we care about its
@@ -225,9 +226,10 @@ class AlphaActinin:
         # Create the spring that is our actinin and remember passed values
         self.spring = spring.Spring(3.75, 36)  # See class doc for sources
         self.x = x
-        self.tract = tract
         # Create the heads at either end of the actinin
         self.heads = [ActininHead(self, 0), ActininHead(self, 1)]
+        # Store tract if given, else create placeholders
+        super().__init__("actinin", tract)
 
     def __str__(self):
         """String representation of α-actinin"""

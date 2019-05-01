@@ -6,6 +6,8 @@ Tracts are sections of space that extend in a long direction and have adjacent
 neighboring tracts that also extend in a long direction.
 """
 
+import uuid
+
 from .hexmath import HexMath
 
 
@@ -86,13 +88,15 @@ class Tract:
         self.space = space
         self._neighbors = None
         self.mols = {}
+        self.mols_named = {}
+        self.address = ("tract", loc)
 
     def __str__(self):
         """String representation of tract"""
         loc_str = str(self.loc)
         mols_counts = ["%i %ss" % (len(v), k) for k, v in self.mols.items()]
         mols_str = ", ".join(mols_counts)
-        return "Tract at %s with %s" % (loc_str, mols_str)
+        return "Tract %s with %s" % (loc_str, mols_str)
 
     @property
     def neighbors(self):
@@ -104,3 +108,17 @@ class Tract:
         if self._neighbors is None:
             self._neighbors = self.space.neighbors(*self.loc)
         return self._neighbors
+
+    def add_mol(self, kind, mol):
+        """Add a molecule to our lists and dicts thereof"""
+        # Create entries for this type of protein if seeing for first time
+        if not kind in self.mols:
+            self.mols[kind] = []
+        if not kind in self.mols_named:
+            self.mols_named[kind] = {}
+        # Create id for this mol
+        id = uuid.uuid4().hex
+        # Append mol to named and unnamed stores
+        self.mols[kind].append(mol)
+        self.mols_named[kind][id] = mol
+        return id

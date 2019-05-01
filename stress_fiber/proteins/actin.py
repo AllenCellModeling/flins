@@ -11,6 +11,7 @@ import warnings
 import numpy as np
 import scipy.optimize
 
+from .base import Protein
 from ..support import units
 from ..support import diffuse
 from ..support import binding_site
@@ -63,10 +64,10 @@ class GActinPair:
         return self.bs.linked.energy(x)
 
 
-class Actin:
+class Actin(Protein):
     """A 1D actin filament that has binding sites, diffusion behavior, etc."""
 
-    def __init__(self, x, tract, n_pair=None, length=None):
+    def __init__(self, x, tract=None, n_pair=None, length=None):
         """An actin at x with n pairs of g-actin in a tract.
         
         Parameters
@@ -74,7 +75,7 @@ class Actin:
         x : `float`
             X location of the actin within the tract. This is where the first
             pair will be located, with all others calculated in reference to it. 
-        tract : `stress_fiber.space.tract`
+        tract : `stress_fiber.space.Tract`, optional
             1D tract that the actin lives in. Is the parent of the filament in
             organizational hierarchy. 
         n_pair : `int`, optional
@@ -104,9 +105,10 @@ class Actin:
         self.n_pairs = n
         self.x = x
         self.pairs_x = self._calc_pairs_x()  # redundant, but here for reminder
-        self.tract = tract
         # Create g-actin pairs
         self.pairs = [GActinPair(self, index) for index in range(n)]
+        # Store tract if given, else create placeholders
+        super().__init__("actin", tract)
 
     def __str__(self):
         """String representation of actin"""

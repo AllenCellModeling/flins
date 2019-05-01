@@ -6,11 +6,12 @@ Anchor keeps a linked binding site strongly attached to a given location. It is
 intended to be used to represent focal adhesions and their movements. 
 """
 
+from .base import Protein
 from ..support.spring import Spring
 from ..support.binding_site import BindingSite
 
 
-class Anchor:
+class Anchor(Protein):
     """A strongly anchored spring that stays put
     We need to be able to specify the locations of, e.g., the ends of an actin
     being treated as bound to a focal adhesion or simply a boundary of the
@@ -18,12 +19,29 @@ class Anchor:
     stiff springs attached to actin binding sites. 
     """
 
-    def __init__(self, x, anchor_to=None, k=100, rest=0):
+    def __init__(self, x, anchor_to=None, tract=None, k=100, rest=0):
+        """Create our anchor
+
+        Parameters
+        ----------
+        x : float
+            Initial x location of the anchor
+        anchor_to : component with BindingSite, optional
+            Protein segment with a binding site to anchor down
+        tract : stress_fiber.space.Tract, optional
+            Tract in which this anchor exists
+        k : float, optional
+            Stiffness of the anchor's attachment to its location in pN/nm [100]
+        rest : float, optional
+            Rest length of the spring tethering the anchor in nm [0]
+        """
         self.x = x
         self.bs = BindingSite(self)
         if anchor_to is not None:
             self.bs.bind(anchor_to.bs)
         self.spring = Spring(k, rest)
+        # Store tract if given, else create placeholders
+        super().__init__("anchor", tract)
 
     def __str__(self):
         """String representation of an anchor"""

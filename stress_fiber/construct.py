@@ -8,7 +8,7 @@ A whole new world in which we track the execution of a model run.
 import itertools
 import numpy as np
 
-from .space import space
+from . import space
 from . import proteins
 
 
@@ -16,29 +16,19 @@ def create_test_world(radius, span, n_actin, n_actinin):
     """Create a world of given radius with n_actin and n_actinin per tract"""
     tractspace = space.TractSpace(radius, span)
     for tract in tractspace.all_tracts:
-        actins = []
-        anchors = []
         for _ in range(n_actin):
-            rise = 2.77
-            pairs = np.random.randint(4, span // rise - 4)
-            x = np.random.rand() * (span - pairs * rise)
-            actins.append(proteins.actin.Actin(x, tract, n_pair=pairs))
+            length = np.random.uniform(0.1 * span, 0.9 * span)
+            x = np.random.rand() * (span - length)
+            actin = proteins.Actin(x, tract, length=length)
             # Anchor first and last tenth
             if x < span * 0.1:
-                anchors.append(proteins.anchor.Anchor(x, actins[-1].pairs[0]))
-            x_end = actins[-1].pairs_x[-1]
+                proteins.Anchor(x, actin.pairs[0], tract)
+            x_end = actin.pairs_x[-1]
             if x_end > span * 0.9:
-                anchors.append(proteins.anchor.Anchor(x_end, actins[-1].pairs[-1]))
-        actinins = []
+                proteins.Anchor(x_end, actin.pairs[-1])
         for _ in range(n_actinin):
-            actinins.append(
-                proteins.alpha_actinin.AlphaActinin(
-                    np.random.rand() * (span - 10), tract
-                )
-            )
-        tract.mols["actin"] = actins
-        tract.mols["anchor"] = anchors
-        tract.mols["actinin"] = actinins
+            x = np.random.rand() * (span - 35)
+            proteins.AlphaActinin(x, tract)
     world = World(tractspace)
     return world
 
