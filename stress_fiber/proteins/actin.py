@@ -32,7 +32,7 @@ class GActinPair:
         """
         self.filament = filament
         self.index = index
-        self.address = (filament.address[:], ('gactinpair', index))
+        self.address = (filament.address[:], ("gactinpair", index))
         self.bs = binding_site.BindingSite(self)
 
     def __str__(self):
@@ -119,8 +119,7 @@ class Actin(Protein):
         unbound = len(self.pairs) - bound
         force, energy = self.force, self.energy
         state = (
-            "Actin w/ %i pairs (%.1fnm), between x=%.1f-%.1f, \n \
-            with %i/%i bound/unbound pairs. Force/energy is %.1fpN/%.1fpN*nm"
+            "Actin w/ %i pairs (%.1fnm), between x=%.1f-%.1f, with %i/%i bound/unbound pairs. Force/energy is %.1fpN/%.1fpN*nm"
             % (n, l, xmin, xmax, bound, unbound, force, energy)
         )
         return state

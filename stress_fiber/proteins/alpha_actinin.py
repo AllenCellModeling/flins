@@ -23,7 +23,7 @@ class ActininHead:
     def __init__(self, actinin, side):
         self.actinin = actinin
         self.side = side  # Which side of the α-actinin is this on, 0 or 1
-        self.address = (actinin.address[:], ('actininhead', side))
+        self.address = (actinin.address[:], ("actininhead", side))
         self.bs = binding_site.BindingSite(self)
         self._update_x()
 
