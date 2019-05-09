@@ -164,6 +164,10 @@ class Actin(Protein):
 
     def nearest(self, x):
         """What is the nearest pair to the given location"""
+        if x < self.x:
+            return self.pairs[0]
+        elif x > self.x + self.length:
+            return self.pairs[-1]
         return self.pairs[np.argmin(np.abs(np.subtract(x, self.pairs_x)))]
 
     def nearest_unbound(self, x):
