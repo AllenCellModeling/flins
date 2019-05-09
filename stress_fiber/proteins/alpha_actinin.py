@@ -48,7 +48,8 @@ class ActininHead:
         actins = list(itertools.chain(*actins))  # flatten
         # Find the g-actin pair nearest our location
         near = [act.nearest(self.x) for act in actins]
-        nearest = near[np.argmin(np.subtract([a.x for a in near], self.x))]
+        distances = np.abs(np.subtract([g.x for g in near], self.x))
+        nearest = near[np.argmin(distances)]
         return nearest
 
     @property
