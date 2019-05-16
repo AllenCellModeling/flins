@@ -83,6 +83,52 @@ class HexMath:
         ]
         return neighbors
 
+    def cube_rotate_about_center(i, j, k, n):
+        """Rotate the coordinate i,j,k about the 0,0,0 center by n steps
+
+        Each step is one 60 degree rotation to the right. Negative steps are 
+        60 degree rotations to the left.
+        """
+        coord = np.roll([i, j, k], n)
+        if n%2 == 1:  # odd rotations invert signs
+            coord *= -1
+        return list(coord)
+    
+    def cube_mirrored_centers(r):
+        """Return the mirrored centers of a world with radius r
+
+        These are the locations that the centers of worlds of equal radius would
+        occupy in a greater-world coordinate system. These are used to calculate
+        wrapping when walking off the edge of the world. 
+        """
+        i, j, k = 2*r+1, -r, -r-1
+        mirrored = [HexMath.cube_rotate_about_center(i, j, k, n) for n in range(6)]
+        return mirrored
+
+    def cube_closest(i, j, k, cube_points):
+        """Which point (in a list) is closest to a single passed point?"""
+        dist = lambda pt: HexMath.cube_distance(i, j, k, *pt)
+        dists = [dist(pt) for pt in cube_points]
+        return cube_points[np.argmin(dists)]
+
+    def cube_mirror(i, j, k, r, centers=None):
+        """Return the location, mirrored across the boundary if needed
+
+        Use pre-calculated mirrored centers if given, else calculate them.
+        Reference here: https://gamedev.stackexchange.com/questions/137603
+        """
+        ## Before all else, if within radius of world no mirroring is needed
+        if HexMath.cube_within_radius(i, j, k, r):
+            return i, j, k
+        ## Calculate mirrored centers if not given
+        if centers is None:
+            centers = HexMath.cube_mirrored_centers(r)
+        ## Find closest mirrored center
+        closest = HexMath.cube_closest(i, j, k, centers)
+        ## Subtract that center to shift back into world
+        mirrored = np.subtract((i, j, k), closest)
+        return list(mirrored)
+
     def cube_to_array_indices(i, j, k, n):
         """Convert cube coordinates to array location for a grid of radius n"""
         x = i + n
