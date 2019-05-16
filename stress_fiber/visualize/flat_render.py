@@ -65,9 +65,9 @@ def _plot_actin(actin, group, y, params):
         if not pair.bs.bound:
             continue
         mol = pair.bs.linked
-        if type(mol) is sf.alpha_actinin.ActininHead:
+        if type(mol) is sf.proteins.alpha_actinin.ActininHead:
             _plot_actinin_head(mol, group, (y, y_edge), params)
-        elif type(mol) is sf.anchor.Anchor:
+        elif type(mol) is sf.proteins.anchor.Anchor:
             _plot_anchor(mol, group, y, params)
     return
 
