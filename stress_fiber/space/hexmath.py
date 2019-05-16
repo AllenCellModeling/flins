@@ -60,7 +60,10 @@ class HexMath:
 
     def cube_within_radius(i, j, k, n, original=(0, 0, 0)):
         """Is this new location within a radius from an original (default origin)"""
-        within_radius = HexMath.cube_distance(i, j, k, *original) <= n
+        if original == (0,0,0):
+            within_radius = max((abs(i), abs(j), abs(k))) <= n
+        else:
+            within_radius = HexMath.cube_distance(i, j, k, *original) <= n
         return within_radius
 
     def cube_validate(i, j, k):
