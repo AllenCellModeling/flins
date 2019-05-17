@@ -35,6 +35,7 @@ class TractSpace:
                 if not location == []:
                     hex_grid[n][m] = Tract(location["cube"], self)
         self._tracts = hex_grid
+        self._mirror_centers = HexMath.cube_mirrored_centers(size)
 
     def __str__(self):
         """String representation of tractspace"""
@@ -54,8 +55,10 @@ class TractSpace:
         n = self.size
         within = HexMath.cube_within_radius(i, j, k, n)
         valid = HexMath.cube_validate(i, j, k)
-        if not within or not valid:
-            return None  # OOB
+        if not valid:
+            return None
+        if not within:
+            i, j, k = HexMath.cube_mirror(i, j, k, n, self._mirror_centers)
         x, y = HexMath.cube_to_array_indices(i, j, k, n)
         tract = self._tracts[x, y]
         return tract
