@@ -156,9 +156,37 @@ class ActininHead:
         return spring_prop(length)
 
     def force(self, x=None):
-        """What force does this α-actinin head exert or feel?"""
+        """What force does this α-actinin head exert or feel?
+
+        This accounts for the fact that heads feel equal and opposite forces
+        and that these forces change as the spring is compressed or extended
+        from rest. Let's think of two heads, `a` and `b` at either end of an
+        α-actinin spring. The default force sign returned from the spring is
+        negative when the spring is shortened and positive when it is
+        lengthened. The desired sign is that which reflects the force exerted by
+        the spring on the binding site. 
+
+        ====  ===========  ======  =======  =======  ============
+               System state              Force direction         
+        -------------------------  ------------------------------
+        Head  Orientation  Spring  Default  Desired  Flip needed?
+        ====  ===========  ======  =======  =======  ============
+         A        A>B      Short      -        +         Yes     
+         A        A>B      Long       +        -         Yes     
+         A        B>A      Short      -        -         No      
+         A        B>A      Long       +        +         No      
+         B        A>B      Short      -        -         No      
+         B        A>B      Long       +        +         No      
+         B        B>A      Short      -        +         Yes     
+         B        B>A      Long       +        -         Yes     
+        ====  ===========  ======  =======  =======  ============
+        
+        Looking at this it becomes obvious that force direction flips are needed
+        in cases where the current head is the right-most of the two. 
+        """
         force_fn = self.actinin.spring.force
-        return self._spring_property(force_fn, x)
+        mult = -1 if self.x > self.other_head.x else 1
+        return self._spring_property(force_fn, x) * mult
 
     def energy(self, x=None):
         """What energy is stored in the α-actinin backbone?
