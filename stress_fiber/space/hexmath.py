@@ -60,7 +60,7 @@ class HexMath:
 
     def cube_within_radius(i, j, k, n, original=(0, 0, 0)):
         """Is this new location within a radius from an original (default origin)"""
-        if original == (0,0,0):
+        if original == (0, 0, 0):
             within_radius = max((abs(i), abs(j), abs(k))) <= n
         else:
             within_radius = HexMath.cube_distance(i, j, k, *original) <= n
@@ -90,10 +90,10 @@ class HexMath:
         60 degree rotations to the left.
         """
         coord = np.roll([i, j, k], n)
-        if n%2 == 1:  # odd rotations invert signs
+        if n % 2 == 1:  # odd rotations invert signs
             coord *= -1
         return list(coord)
-    
+
     def cube_mirrored_centers(r):
         """Return the mirrored centers of a world with radius r
 
@@ -101,7 +101,7 @@ class HexMath:
         occupy in a greater-world coordinate system. These are used to calculate
         wrapping when walking off the edge of the world. 
         """
-        i, j, k = 2*r+1, -r, -r-1
+        i, j, k = 2 * r + 1, -r, -r - 1
         mirrored = [HexMath.cube_rotate_about_center(i, j, k, n) for n in range(6)]
         return mirrored
 

@@ -16,7 +16,7 @@ class Protein(Base):
         else:
             self.tract = None
             self.id = None
-            self.address = ((self.kind, None))
+            self.address = ((self.kind, None), )
 
     def _link_tract(self, tract):
         """Link a tract, simultaneously creating the local ID and address"""

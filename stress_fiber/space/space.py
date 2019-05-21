@@ -92,7 +92,7 @@ class Tract:
         self._neighbors = None
         self.mols = {}
         self.mols_named = {}
-        self.address = (("tract", loc))
+        self.address = (("tract", loc), )
 
     def __str__(self):
         """String representation of tract"""
