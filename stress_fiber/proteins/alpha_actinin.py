@@ -235,7 +235,7 @@ class AlphaActinin(Protein):
 
     def __str__(self):
         """String representation of α-actinin"""
-        tract_str = str(self.tract.loc)
+        tract_str = "NA" if self.tract is None else str(self.tract.loc)
         x_str = "%.1f" % self.x
         bound_str = "%i bound heads" % sum([h.bs.bound for h in self.heads])
         return "α-act with %s at x=%s on tract %s" % (bound_str, x_str, tract_str)
