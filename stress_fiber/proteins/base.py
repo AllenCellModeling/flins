@@ -3,6 +3,8 @@
 Base protein class
 """
 
+import numpy as np
+
 from ..base import Base
 
 
@@ -21,3 +23,14 @@ class Protein(Base):
         self.tract = tract
         self.id = tract.add_mol(self.kind, self)
         self.address = (tract.address[:], (self.kind, self.id))
+
+    @property
+    def _space_limits(self):
+        """What are the X limits available to this protein?
+
+        Defined as 0 to tract span (if given tract) else 0 to infinity.
+        """
+        if self.tract is None:
+            return (0, np.inf)
+        else:
+            return (0, self.tract.space.span)

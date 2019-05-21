@@ -222,8 +222,7 @@ class Actin(Protein):
         self.x += d_x
         if self.tract is not None:  # then derive diffusion limits from tract
             start, end = self.boundaries
-            space_limits = (0, self.tract.space.span)
-            self.x, _ = diffuse.coerce_to_bounds(start, end, space_limits)
+            self.x, _ = diffuse.coerce_to_bounds(start, end, self._space_limits)
         return d_x
 
     def step(self):
@@ -240,10 +239,14 @@ class Actin(Protein):
         indicator, and move in the given direction until the energy stored in
         the system has changed by the drawn amount. 
         """
+        # Diffuse if unbound
         if not self.bound:
             d_x = self.freely_diffuse()
             self.x += d_x
             return
+        # X location limits
+        x_limits = (self._space_limits[0], self._space_limits[1] - self.length)
+        window_x = lambda x: max(x_limits[0], min(x, x_limits[1]))
         # Balance forces, finding local relaxation point
         starting_x = self.x
         force_least_sq = scipy.optimize.least_squares(
@@ -251,7 +254,7 @@ class Actin(Protein):
         )
         if force_least_sq.success is not True:
             warnings.warn("Unsuccessful force minimization: " + str(force_least_sq))
-        minimal_force_x = force_least_sq.x[0]
+        minimal_force_x = window_x(force_least_sq.x[0])
         # Find base and perturbed energies
         base_energy = self._hypothetical_energy(minimal_force_x)
         energy_bump = np.random.normal(0, 0.5 * units.constants.kT)
@@ -262,9 +265,11 @@ class Actin(Protein):
         else:
             energy_bump = np.sign(energy_bump) * (base_energy - abs(energy_bump))
         if energy_bump < 0:  # move left if bump is negative
-            bounds = (-np.inf, minimal_force_x)
+            bounds = (x_limits[0], minimal_force_x)
         else:  # move right if bump is positive
-            bounds = (minimal_force_x, np.inf)
+            bounds = (minimal_force_x, x_limits[1])
+        if bounds[0] == bounds[1]:  # you are pegged at an edge
+            return (minimal_force_x, minimal_force_x)
         energy_bump = abs(energy_bump)
         # Find energy difference and move
         # NOTE: most time intensive part; would benefit from optimization
