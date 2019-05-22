@@ -90,6 +90,7 @@ class Tract:
         self.loc = loc
         self.space = space
         self._neighbors = None
+        self._reachable = None
         self.mols = {}
         self.mols_named = {}
         self.address = (("tract", loc), )
@@ -111,6 +112,17 @@ class Tract:
         if self._neighbors is None:
             self._neighbors = self.space.neighbors(*self.loc)
         return self._neighbors
+
+    @property
+    def reachable(self):
+        """Reachable tracts from here. Neighbors and self.
+
+        See neighbors documentation for creation method.
+        """
+        if self._reachable is None:
+            self._reachable = self.neighbors
+            self._reachable.append(self)
+        return self._reachable
 
     def add_mol(self, kind, mol):
         """Add a molecule to our lists and dicts thereof"""
