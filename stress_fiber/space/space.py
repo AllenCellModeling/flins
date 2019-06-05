@@ -120,7 +120,7 @@ class Tract:
         See neighbors documentation for creation method.
         """
         if self._reachable is None:
-            self._reachable = self.neighbors
+            self._reachable = [n for n in self.neighbors]
             self._reachable.append(self)
         return self._reachable
 
