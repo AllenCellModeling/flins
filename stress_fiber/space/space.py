@@ -50,16 +50,27 @@ class TractSpace:
         n = self.size
         return (x + n) > n or (y + n) > n or (z + n) > n
 
-    def tract(self, i, j, k):
-        """A single tract at cube coordinates"""
+    def tract(self, i, j, k, mirror=True):
+        """A single tract at cube coordinates
+        
+        Parameters
+        ==========
+        i,j,k: int
+            The cube coordinates for the tract we want
+        mirror: boolean (True)
+            Whether or not to mirror across tractspace edges
+        """
         n = self.size
         within = Cube.within_radius(i, j, k, n)
         valid = Cube.validate(i, j, k)
         if not valid:
             return None
         if not within:
-            i, j, k = Cube.mirror(i, j, k, n, self._mirror_centers)
-        x, y = Cube.array_indices(i, j, k, n)
+            if mirror:
+                i, j, k = Cube.mirror(i, j, k, n, self._mirror_centers)
+            else:
+                return None
+        x, y = Cube.to_array_indices(i, j, k, n)
         tract = self._tracts[x, y]
         return tract
 
@@ -111,6 +122,7 @@ class Tract:
         version thereafter."""
         if self._neighbors is None:
             self._neighbors = self.space.neighbors(*self.loc)
+            self._neighbors = list(set(self._neighbors))  # dedupe
         return self._neighbors
 
     @property
@@ -122,6 +134,7 @@ class Tract:
         if self._reachable is None:
             self._reachable = [n for n in self.neighbors]
             self._reachable.append(self)
+            self._reachable = list(set(self._reachable))  # dedupe
         return self._reachable
 
     def add_mol(self, kind, mol):

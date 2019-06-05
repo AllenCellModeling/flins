@@ -33,6 +33,12 @@ class Cube:
         x, y = Offset.to_cart(col, row)
         return x, y
 
+    def to_array_indices(i, j, k, n):
+        """Convert cube coordinates to array location for a grid of radius n"""
+        x = i + n
+        y = k + n
+        return x, y
+
     def distance(i_1, j_1, k_1, i_2, j_2, k_2):
         """Distance between two hexagons in cube coordinates"""
         a = np.array((i_1, j_1, k_1))
@@ -87,10 +93,10 @@ class Cube:
         mirrored = [Cube.rotate_about_center(i, j, k, n) for n in range(6)]
         return mirrored
 
-    def closest(i, j, k, cube_points):
+    def closest(i, j, k, points):
         """Which point (in a list) is closest to a single passed point?"""
         dist = lambda pt: Cube.distance(i, j, k, *pt)
-        dists = [dist(pt) for pt in cube_points]
+        dists = [dist(pt) for pt in points]
         return points[np.argmin(dists)]
 
     def mirror(i, j, k, r, centers=None):
@@ -110,12 +116,6 @@ class Cube:
         ## Subtract that center to shift back into world
         mirrored = np.subtract((i, j, k), closest)
         return list(mirrored)
-
-    def to_array_indices(i, j, k, n):
-        """Convert cube coordinates to array location for a grid of radius n"""
-        x = i + n
-        y = k + n
-        return x, y
 
     def create_grid_array(n):
         """Create a list of hex locations for a grid of radius n"""
