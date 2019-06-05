@@ -1,0 +1,13 @@
+# Minimal travis config for running tox and uploading code coverage
+
+dist: xenial
+language: python
+cache: pip
+python: "3.7"
+
+# Install deps
+install: pip install -U tox-travis codecov
+
+# Run tests
+script: tox
+
