@@ -88,6 +88,8 @@ class ActininHead:
         gactin = self.nearest_binding_site
         if gactin.bs.bound:  # don't bind if site is already taken
             return
+        if self.other_head.bs.linked == gactin.filament:  # don't self bind
+            return
         rate = self._r12(abs(gactin.x - self.x))
         prob = rate * units.world.timestep
         if prob > np.random.rand():
