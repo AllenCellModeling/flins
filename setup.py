@@ -5,41 +5,47 @@
 
 from setuptools import setup, find_packages
 
-with open('README.rst') as readme_file:
+with open("README.rst") as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
+with open("HISTORY.rst") as history_file:
     history = history_file.read()
 
-requirements = ['numpy', 'scipy', 'matplotlib', 'svgwrite']
+requirements = ["numpy", "scipy", "matplotlib", "svgwrite"]
 
-setup_requirements = ['pytest-runner', ]
+setup_requirements = ["pytest-runner"]
 
-test_requirements = ['pytest', ]
+test_requirements = ["pytest", "pytest-cov", "pytest-raises", "codecov", "flake8"]
+
+extra_requirements = {
+    "test": test_requirements,
+    "setup": setup_requirements,
+    "all": [*requirements, *test_requirements, *setup_requirements],
+}
 
 setup(
     author="Dave Williams",
-    author_email='cdave@uw.edu',
+    author_email="cdave@uw.edu",
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
-        'Intended Audience :: Developers',
-        'License :: Allen Institute Software License',
-        'Natural Language :: English',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
+        "Development Status :: 2 - Pre-Alpha",
+        "Intended Audience :: Developers",
+        "License :: Allen Institute Software License",
+        "Natural Language :: English",
+        "Programming Language :: Python :: 3.7",
     ],
     description="  ",
     install_requires=requirements,
     license="Allen Institute Software License",
-    long_description=readme + '\n\n' + history,
+    long_description=readme + "\n\n" + history,
     include_package_data=True,
-    keywords='stress_fiber',
-    name='stress_fiber',
+    keywords="stress_fiber",
+    name="stress_fiber",
     packages=find_packages(),
     setup_requires=setup_requirements,
-    test_suite='tests',
+    test_suite="tests",
     tests_require=test_requirements,
-    url='https://github.com/AllenCellModeling/stress_fiber',
-    version='0.1.0',
+    extras_require=extra_requirements,
+    url="https://github.com/AllenCellModeling/stress_fiber",
+    version="0.1.0",
     zip_safe=False,
 )
