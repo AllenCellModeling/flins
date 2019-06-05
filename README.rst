@@ -10,6 +10,14 @@ stress_fiber
         :target: https://stress-fiber.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
+.. image:: https://codecov.io/gh/AllenCellModeling/stress_fiber/branch/master/graph/badge.svg
+        :target: https://codecov.io/gh/AllenCellModeling/stress_fiber
+        :alt: Code Coverage Status
+
+.. image:: https://travis-ci.com/AllenCellModeling/stress_fiber.svg?branch=master
+        :target: https://travis-ci.com/AllenCellModeling/stress_fiber
+        :alt: Continuous Integration Status
+
 Purpose
 -------
 
