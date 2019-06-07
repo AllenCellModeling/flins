@@ -108,7 +108,7 @@ class Tract:
         self._reachable = None
         self.mols = {}
         self.mols_named = {}
-        self.address = (("tract", loc), )
+        self.address = (("tract", loc),)
 
     def __str__(self):
         """String representation of tract"""
@@ -139,7 +139,7 @@ class Tract:
         """
         if self._reachable is None:
             if self.space is None:
-                self._reachable = [self, ]
+                self._reachable = [self]
             else:
                 self._reachable = copy.copy(self.neighbors)
                 self._reachable.append(self)

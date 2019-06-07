@@ -117,6 +117,20 @@ class Cube:
         mirrored = np.subtract((i, j, k), closest)
         return list(mirrored)
 
+    def mirrored_distance(i_1, j_1, k_1, i_2, j_2, k_2, r, centers=None):
+        """Return the shortest distance between points, allowing mirroring
+        """
+        # Calculate mirrored centers if not given
+        if centers is None:
+            centers = Cube.mirrored_centers(r)
+        # Calculate mirrored versions of pt 2
+        versions = [(i_2, j_2, k_2)]
+        for i_h, j_h, k_h in centers:
+            versions.append((i_h + i_2, j_h + j_2, k_h + k_2))
+        # Find closest and distance
+        closest = Cube.closest(i_1, j_1, k_1, versions)
+        return Cube.distance(i_1, j_1, k_1, *closest)
+
     def create_grid_array(n):
         """Create a list of hex locations for a grid of radius n"""
         # Create grid
