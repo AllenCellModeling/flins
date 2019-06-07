@@ -1,4 +1,3 @@
-
 #!/usr/bin/end python
 # -*- coding: UTF-8 -*-
 
@@ -8,19 +7,11 @@ Test the tract space and tracts.
 
 import stress_fiber.space as space
 
-def test_coordinate_round_trip():
-    """Make it there and back again"""
-    coords = ((-2, 3, -1), (0, 0, 0), (1, -1, 0))
-    for coord in coords:
-        hex = space.hexmath
-        ax_back = hex.Axial.to_cube(*hex.Cube.to_axial(*coord))
-        assert ax_back == coord
-
 
 class TestTract:
-    TRACTSPACES = [space.TractSpace(r, 100) for r in (0,1,2,3)]
+    TRACTSPACES = [space.TractSpace(r, 100) for r in (0, 1, 2, 3)]
     TRACTS = [t for s in TRACTSPACES for t in s.all_tracts]
-    SOLO_TRACT = space.Tract((1,-1,0), None)
+    SOLO_TRACT = space.Tract((1, -1, 0), None)
 
     def test_neighbors(self):
         """Should return a set of neighbors, all of which are distance 1"""
@@ -30,7 +21,7 @@ class TestTract:
             for neighbor in tract.neighbors:
                 dist = dist_fn(*tract.loc, *neighbor.loc, r)
                 assert dist == 1
-    
+
     def test_solo_neighbors(self):
         """Should return None"""
         assert self.SOLO_TRACT.neighbors is None
@@ -46,4 +37,4 @@ class TestTract:
 
     def test_solo_reachable(self):
         """Should return list of self"""
-        assert self.SOLO_TRACT.reachable == [self.SOLO_TRACT, ]
+        assert self.SOLO_TRACT.reachable == [self.SOLO_TRACT]
