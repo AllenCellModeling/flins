@@ -7,6 +7,7 @@ neighboring tracts that also extend in a long direction.
 """
 
 import uuid
+import copy
 
 from .hexmath import Cube
 
@@ -84,12 +85,15 @@ class TractSpace:
         """Give me the neighbors, ignoring out of bounds"""
         if not Cube.within_radius(i, j, k, self.size):
             return None  # OOB
+        if self.size == 0:
+            return list()
         neighboring_coordinates = Cube.neighbors(i, j, k)
         tracts = [
             self.tract(i, j, k)
             for i, j, k in neighboring_coordinates
             if self.tract(i, j, k) is not None
         ]
+        tracts = list(set(tracts))  # dedupe
         return tracts
 
 
@@ -121,8 +125,10 @@ class Tract:
         populate this list on the first call and then reference the stored
         version thereafter."""
         if self._neighbors is None:
-            self._neighbors = self.space.neighbors(*self.loc)
-            self._neighbors = list(set(self._neighbors))  # dedupe
+            if self.space is None:
+                self._neighbors = None
+            else:
+                self._neighbors = self.space.neighbors(*self.loc)
         return self._neighbors
 
     @property
@@ -132,9 +138,11 @@ class Tract:
         See neighbors documentation for creation method.
         """
         if self._reachable is None:
-            self._reachable = [n for n in self.neighbors]
-            self._reachable.append(self)
-            self._reachable = list(set(self._reachable))  # dedupe
+            if self.space is None:
+                self._reachable = [self, ]
+            else:
+                self._reachable = copy.copy(self.neighbors)
+                self._reachable.append(self)
         return self._reachable
 
     def add_mol(self, kind, mol):
