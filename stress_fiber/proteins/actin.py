@@ -12,12 +12,13 @@ import numpy as np
 import scipy.optimize
 
 from .base import Protein
+from ..base import Base
 from ..support import units
 from ..support import diffuse
 from ..support import binding_site
 
 
-class GActinPair:
+class GActinPair(Base):
     """Two g-actin with a site that can bind and unbind."""
 
     def __init__(self, filament, index):
