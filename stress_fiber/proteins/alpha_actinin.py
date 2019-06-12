@@ -44,7 +44,7 @@ class ActininHead:
         TODO: factor this out into the tract space, making it molecule-agnostic
         """
         # Get all candidate actins
-        actins = [t.mols["actin"] for t in self.actinin.tract.neighbors]
+        actins = [t.mols["actin"] for t in self.actinin.tract.reachable]
         actins = list(itertools.chain(*actins))  # flatten
         # Find the g-actin pair nearest our location
         near = [act.nearest(self.x) for act in actins]
@@ -88,8 +88,9 @@ class ActininHead:
         gactin = self.nearest_binding_site
         if gactin.bs.bound:  # don't bind if site is already taken
             return
-        if self.other_head.bs.linked == gactin.filament:  # don't self bind
-            return
+        if self.other_head.bs.bound:
+            if self.other_head.bs.linked.filament == gactin.filament:  # don't self bind
+                return
         rate = self._r12(abs(gactin.x - self.x))
         prob = rate * units.world.timestep
         if prob > np.random.rand():
