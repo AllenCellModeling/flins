@@ -48,4 +48,4 @@ class world:
     """
 
     timestep = milliseconds(1)  # 1ms timestep
-    D_cyto_corr = 1 / 3.2  # Cytoplasmic crowding sub-diffusion
+    D_cyto_corr = 3.2  # Cytoplasmic crowding sub-diffusion

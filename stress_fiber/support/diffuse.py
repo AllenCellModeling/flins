@@ -114,8 +114,7 @@ def Dx(f_drag):
     D_corr = units.world.D_cyto_corr  # Cytoplasm correction factor
     t = units.world.timestep
     # Calculate
-    D = kT / f_drag
-    D *= D_corr
+    D = kT / (f_drag * D_corr)
     std_dev = np.sqrt(2 * D * t)
     d_x = np.random.normal(0, std_dev)
     return d_x
