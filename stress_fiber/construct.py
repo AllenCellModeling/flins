@@ -25,7 +25,7 @@ def create_test_world(radius, span, n_actin, n_actinin):
                 proteins.Anchor(x, actin.pairs[0], tract)
             x_end = actin.pairs_x[-1]
             if x_end > span * 0.9:
-                proteins.Anchor(x_end, actin.pairs[-1])
+                proteins.Anchor(x_end, actin.pairs[-1], tract)
         for _ in range(n_actinin):
             x = np.random.rand() * (span - 35)
             proteins.AlphaActinin(x, tract)
