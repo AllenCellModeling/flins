@@ -17,10 +17,24 @@ setup_requirements = ["pytest-runner"]
 
 test_requirements = ["pytest", "pytest-cov", "pytest-raises", "codecov", "flake8"]
 
+dev_requirements = [
+    "black",
+    "bumpversion>=0.5.3",
+    "tox>=3.5.2",
+    "coverage>=5.0a4",
+    "sphinx_rtd_theme",
+    "Sphinx>=2.0.0b1",
+    "twine>=1.13.0",
+    "pytest>=4.3.0",
+    "pytest-cov==2.6.1",
+    "pytest-raises>=0.10",
+    "pytest-runner>=4.4",
+]
+
 extra_requirements = {
     "test": test_requirements,
     "setup": setup_requirements,
-    "all": [*requirements, *test_requirements, *setup_requirements],
+    "all": [*requirements, *test_requirements, *setup_requirements, *dev_requirements],
 }
 
 setup(
