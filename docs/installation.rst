@@ -5,42 +5,39 @@ Installation
 ============
 
 
-Stable release
---------------
+Updateable install
+------------------
 
-To install stress_fiber, run this command in your terminal:
-
-.. code-block:: console
-
-    $ pip install stress_fiber
-
-This is the preferred method to install stress_fiber, as it will always install the most recent stable release.
-
-If you don't have `pip`_ installed, this `Python installation guide`_ can guide
-you through the process.
-
-.. _pip: https://pip.pypa.io
-.. _Python installation guide: http://docs.python-guide.org/en/latest/starting/installation/
-
-
-From sources
-------------
-
-The sources for stress_fiber can be downloaded from the `Github repo`_.
-
-You can either clone the public repository:
+To install ``stress_fiber`` in an updatable and editable form, run these commands in your terminal:
 
 .. code-block:: console
 
     $ git clone git://github.com/AllenCellModeling/stress_fiber
+    $ cd stress_fiber
+    $ pip install -e .[all]
 
-Or download the `tarball`_:
+This is the preferred method to install ``stress_fiber`` in its current alpha form as it will allow updates via:
+
+.. code-block:: console
+
+    $ git pull
+
+Direct pip install
+------------------
+
+It is also possible to install ``stress_fiber`` directly from the `Github repo`_ via:
+
+.. code-block:: console
+
+    $ pip install git+https://github.com/AllenCellModeling/stress_fiber.git
+
+Or through downloading the `tarball`_:
 
 .. code-block:: console
 
     $ curl  -OL https://github.com/AllenCellModeling/stress_fiber/tarball/master
 
-Once you have a copy of the source, you can install it with:
+Untaring, and using ``setup.py``:
 
 .. code-block:: console
 

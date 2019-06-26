@@ -18,11 +18,11 @@ stress_fiber
         :target: https://travis-ci.com/AllenCellModeling/stress_fiber
         :alt: Continuous Integration Status
 
-Purpose
--------
+Overview
+--------
 
-Simulate the movement, binding, and force responses of a stress-fiber-like object as a spatially explicit protein-scale model. This treats individual actin filaments, cross-linkers, etc as objects embedded in a space that can bind, diffuse, distort, and generally behave. 
+``stress_fiber`` is a spatial, agent-based simulation of the movement of actin, cross-linkers, and adhesions in a pre-myofibril. It explores the conditions necessary to generate the emergent organization we see in differentiating and developing muscle cells. 
+
+As a spatially explicit simulation ``stress_fiber`` recreates the movement and force responses of its proteins by treating them as springs, subject to deformation and able to generate force with variable rest lengths. Connectivity and binding withing this system of proteins is controlled by binding sites distributed along the proteins that link springs together. The kinetics of these binding sites are dependent upon the forces their parent proteins are subjected to. This produces a network of springs that transmits and generates forces with connectivity that changes depending on stochastic kinetics and the current deformation within the system. 
   
-
-* License: Allen Institute Software License
-* Auto-generated documentation: https://stress-fiber.readthedocs.io.
+* Documentation: https://stress-fiber.readthedocs.io.

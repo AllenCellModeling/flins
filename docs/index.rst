@@ -1,15 +1,14 @@
-Welcome to stress_fiber's documentation!
-======================================
+.. include:: readme.rst
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   readme
    installation
    usage
    modules
    history
+   license
 
 Indices and tables
 ==================
