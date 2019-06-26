@@ -42,7 +42,7 @@ class world:
     
     * timestep is the number of ms we advance each tick
     * D_cyto_corr comes from the difference in diffusion between water and
-    eukaryotic cytoplasm (Swaminathan_1997_).
+      eukaryotic cytoplasm (Swaminathan_1997_).
 
     .. _Swaminathan_1997: https://doi.org/10.1016/S0006-3495(97)78835-0
     """

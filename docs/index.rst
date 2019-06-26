@@ -6,6 +6,7 @@
 
    installation
    usage
+   physics
    modules
    history
    license
