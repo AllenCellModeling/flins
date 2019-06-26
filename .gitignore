@@ -58,6 +58,7 @@ docs/_build/
 
 # dotenv
 .env
+.envrc
 
 # mkdocs documentation
 /site
