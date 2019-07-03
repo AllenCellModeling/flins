@@ -159,6 +159,20 @@ class Actin(Protein):
         return (self.x, self.x + self.length)
 
     @property
+    def _drag(self):
+        """What a. The drag coefficient for this protein with correction factor
+        for cytoplasmic sub-diffusion
+        """
+        try:
+            return self.__drag
+        except AttributeError:
+            L, r = self.length, self._radius
+            drag = diffuse.Drag.Cylinder.long_axis_translation(L, r)
+            cytoplasmic_subdiffusion = units.world.D_cyto_corr
+            self.__drag = drag * cytoplasmic_subdiffusion
+        return self.__drag
+
+    @property
     def bound(self):
         """Do you have any attached pairs?"""
         return any([pair.bs.bound for pair in self.pairs])
@@ -240,50 +254,90 @@ class Actin(Protein):
         indicator, and move in the given direction until the energy stored in
         the system has changed by the drawn amount. 
         """
-        # Diffuse if unbound
+        """Take a timestep subject to force balance and diffusion"""
+        # Find force balanced location
+        force_x = self._x_with_balanced_forces
+        # Find energy at that location and perturbed energy sampled
+        base_energy = self._hypothetical_energy(force_x)
+        energy_target = np.random.normal(0, 0.5 * units.constants.kT)
+        # Don't move if in energy constrained state already?
+        if base_energy >= abs(energy_target):
+            print("Base energy locked")
+            self.x = force_x  # update x to energy-locked location
+            energy_x = force_x
+        else:
+            energy_x = self._move_to_dissipate_energy(energy_target, force_x)
+            self.x = energy_x
+        return (force_x, energy_x)
+
+    @property
+    def _x_with_balanced_forces(self):
+        """Where would have balanced forces?"""
+        # If not bound, here
         if not self.bound:
-            d_x = self.freely_diffuse()
-            self.x += d_x
-            return
+            return self.x
         # X location limits
         x_limits = (self._space_limits[0], self._space_limits[1] - self.length)
         window_x = lambda x: max(x_limits[0], min(x, x_limits[1]))
         # Balance forces, finding local relaxation point
-        starting_x = self.x
-        force_least_sq = scipy.optimize.least_squares(
-            self._hypothetical_force, starting_x
-        )
-        if force_least_sq.success is not True:
-            warnings.warn("Unsuccessful force minimization: " + str(force_least_sq))
-        minimal_force_x = window_x(force_least_sq.x[0])
-        # Find base and perturbed energies
-        base_energy = self._hypothetical_energy(minimal_force_x)
-        energy_bump = np.random.normal(0, 0.5 * units.constants.kT)
-        # Don't move if in energy constrained state already?
-        if base_energy >= abs(energy_bump):
-            self.x = minimal_force_x
-            return (minimal_force_x, minimal_force_x)
-        else:
-            energy_bump = np.sign(energy_bump) * (base_energy - abs(energy_bump))
-        if energy_bump < 0:  # move left if bump is negative
-            bounds = (x_limits[0], minimal_force_x)
-        else:  # move right if bump is positive
-            bounds = (minimal_force_x, x_limits[1])
-        if bounds[0] == bounds[1]:  # you are pegged at an edge
-            return (minimal_force_x, minimal_force_x)
-        energy_bump = abs(energy_bump)
-        # Find energy difference and move
-        # NOTE: most time intensive part; would benefit from optimization
-        def energy_delta(x):
-            energy_from_movement = abs(self._hypothetical_energy(x) - base_energy)
-            energy_mismatch = energy_from_movement - energy_bump
-            return energy_mismatch
+        optim_out = scipy.optimize.least_squares(self._hypothetical_force, self.x)
+        if optim_out.success is not True:
+            warnings.warn("Unsuccessful force minimization: " + str(optim_out))
+        minimal_force_x = window_x(optim_out.x[0])
+        return minimal_force_x
 
+    def _energy_difference(self, x, x_i, energy_budget):
+        """Diffusion energy usage calculation
+
+        This is the energy difference between target energy to be consumed and
+        energy taken to move this far so far
+
+        Parameters
+        ----------
+        x: float
+            Proposed current location of actin
+        x_i: float
+            What location we are assuming as the start
+        energy_budget: float
+            Energy to be consumed during movement
+        """
+        drag_energy = self._drag * abs(x_i - x)
+        spring_energy = self._hypothetical_energy(x)
+        mismatch = abs(energy_budget) - (drag_energy + spring_energy)
+        return mismatch
+
+    def _move_to_dissipate_energy(self, energy_target, starting_x):
+        """Move until energy is dissipated
+
+        Move in the direction specified by the sign of the energy target until
+        all the energy used by the drag of the filament and the energy taken up
+        by bound springs has risen to the target energy budget. 
+
+        Parameters
+        ----------
+        energy_target: float
+            Move until you hit this energy level
+        starting_x: float
+            Location to take as start point for drag calculations
+        """
+        # Find direction of movement and spatial limits
+        x_limits = (self._space_limits[0], self._space_limits[1] - self.length)
+        if energy_target < 0:  # move left if change is negative
+            bounds = (x_limits[0], starting_x)
+        else:  # move right if change is positive
+            bounds = (starting_x, x_limits[1])
+        if bounds[0] == bounds[1]:  # you are pegged at an edge
+            return starting_x
+        # Record starting energy and solve for new location
+        base_energy = self._hypothetical_energy(starting_x)
         energy_least_sq = scipy.optimize.least_squares(
-            energy_delta, minimal_force_x, bounds=bounds
+            self._energy_difference,
+            starting_x,
+            bounds=bounds,
+            args=(starting_x, energy_target),
+            ftol=np.finfo(float).eps,
         )
         if energy_least_sq.success is not True:
             warnings.warn("Unsuccessful energy minimization: " + str(energy_least_sq))
         minimal_energy_x = energy_least_sq.x[0]
-        self.x = minimal_energy_x
-        return (minimal_force_x, minimal_energy_x)
+        return minimal_energy_x
