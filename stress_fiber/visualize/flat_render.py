@@ -27,7 +27,7 @@ def _plot_anchor(anchor, params):
     """Plot anc as part of group at y"""
     x = anchor.x * params["xm"]
     y = anchor.bs.linked.filament.__y * params["ym"]
-    group = anchor.bs.linked.filament.tract.__groups['anchor']
+    group = anchor.bs.linked.filament.tract.__groups["anchor"]
     group.add(svgwrite.shapes.Circle((x, y), 4, class_="anchor"))
     return
 
@@ -71,12 +71,12 @@ def _plot_actinin_body(actinin, params):
             x_i = head.x * params["xm"]
             x_f = head.other_head.x * params["xm"]
             ym, y_span = params["ym"], params["y_span"]
-            y = head.bs.linked.filament.__y 
+            y = head.bs.linked.filament.__y
             y_i = y * ym
             y_f = np.round(y / y_span) * y_span * ym  # end links at top or bottom
             group = tract.__groups["bound_actinin"]
             group.add(svgwrite.shapes.Line((x_i, y_i), (x_f, y_f), class_="actinin"))
-        return 
+        return
 
 
 def _plot_actin(actin, params):
@@ -118,8 +118,9 @@ def _plot_tract(dwg, tract, tract_i, params):
         "unbound_actinin": group.add(svgwrite.container.Group(class_="actinin fade")),
     }
     group.add(
-        svgwrite.shapes.Rect(size=(dwg.attribs["width"], ym * y_span),
-                             class_="clear tract")
+        svgwrite.shapes.Rect(
+            size=(dwg.attribs["width"], ym * y_span), class_="clear tract"
+        )
     )
     return group
 
