@@ -1,4 +1,0 @@
-[ ] Add kcal conversion to /docs/units.rst
-[x] Base string representations for all components
-[ ] Base visualization of actin/a-actinin for troubleshooting. 
-[ ] Figure out where to implement binding-site or filament pinning for anchoring at focal adhesion locations. 
