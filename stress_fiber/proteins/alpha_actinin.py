@@ -277,6 +277,11 @@ class AlphaActinin(Protein):
         return self.heads[0].bs.bound or self.heads[1].bs.bound
 
     @property
+    def fully_bound(self):
+        """Are both sides bound?"""
+        return self.heads[0].bs.bound and self.heads[1].bs.bound
+
+    @property
     def energy(self):
         """Current energy born by the stretched (or not) α-actinin"""
         if not (self.heads[0].bs.bound and self.heads[1].bs.bound):
