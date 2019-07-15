@@ -262,7 +262,6 @@ class Actin(Protein):
         energy_target = np.random.normal(0, 0.5 * units.constants.kT)
         # Don't move if in energy constrained state already?
         if base_energy >= abs(energy_target):
-            print("Base energy locked")
             self.x = force_x  # update x to energy-locked location
             energy_x = force_x
         else:
