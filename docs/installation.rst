@@ -31,18 +31,5 @@ It is also possible to install ``stress_fiber`` directly from the `Github repo`_
 
     $ pip install git+https://github.com/AllenCellModeling/stress_fiber.git
 
-Or through downloading the `tarball`_:
-
-.. code-block:: console
-
-    $ curl  -OL https://github.com/AllenCellModeling/stress_fiber/tarball/master
-
-Untaring, and using ``setup.py``:
-
-.. code-block:: console
-
-    $ python setup.py install
-
-
 .. _Github repo: https://github.com/AllenCellModeling/stress_fiber
 .. _tarball: https://github.com/AllenCellModeling/stress_fiber/tarball/master
