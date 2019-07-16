@@ -158,3 +158,14 @@ class Tract:
         self.mols[kind].append(mol)
         self.mols_named[kind][id] = mol
         return id
+
+    def nearest_binding_site(self, x):
+        """The nearest reachable actin binding site"""
+        # Get all candidate actins
+        actins = [t.mols["actin"] for t in self.reachable]
+        actins = list(itertools.chain(*actins))  # flatten
+        # Find the g-actin pair nearest our location
+        near = [act.nearest(self.x) for act in actins]
+        distances = np.abs(np.subtract([g.x for g in near], x))
+        nearest = near[np.argmin(distances)]
+        return nearest

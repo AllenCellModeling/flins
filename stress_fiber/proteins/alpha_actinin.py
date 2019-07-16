@@ -39,20 +39,6 @@ class ActininHead:
         return self.actinin.heads[self.side ^ 1]
 
     @property
-    def nearest_binding_site(self):
-        """The nearest g-actin pair from neighboring tracts
-        TODO: factor this out into the tract space, making it molecule-agnostic
-        """
-        # Get all candidate actins
-        actins = [t.mols["actin"] for t in self.actinin.tract.reachable]
-        actins = list(itertools.chain(*actins))  # flatten
-        # Find the g-actin pair nearest our location
-        near = [act.nearest(self.x) for act in actins]
-        distances = np.abs(np.subtract([g.x for g in near], self.x))
-        nearest = near[np.argmin(distances)]
-        return nearest
-
-    @property
     def x(self):
         """Location derived from α-actinin"""
         # If bound, you are located at the linked site
@@ -85,7 +71,7 @@ class ActininHead:
 
     def _bind_or_not(self):
         """Maybe bind? Can't say for sure."""
-        gactin = self.nearest_binding_site
+        gactin = self.actinin.tract.nearest_binding_site(self.x)
         if gactin.bs.bound:  # don't bind if site is already taken
             return
         if self.other_head.bs.bound:
