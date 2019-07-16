@@ -31,8 +31,20 @@ class Spring:
         ## Passed variables
         self.k = k
         self.rest = rest
+
+    @property
+    def k(self):
+        return self._k
+
+    @k.setter
+    def k(self, new_k):
+        self._k = new_k
+        self._update_bop_distribution()
+
+    def _update_bop_distribution(self):
+        """Update the mean, std used to energy-bop this spring"""
         ## Diffusion governors
-        kT = units.constants.boltzmann * units.constants.temperature
+        kT = units.constants.kT
         # Normalize: a factor used to normalize the PDF of the segment values
         self._normalize = sqrt(2 * pi * kT / self.k)
         self._stand_dev = sqrt(kT / self.k)  # of segment values
