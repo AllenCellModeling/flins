@@ -160,14 +160,14 @@ class ActininHead:
         -------------------------  ------------------------------
         Head  Orientation  Spring  Default  Desired  Flip needed?
         ====  ===========  ======  =======  =======  ============
-         A        A>B      Short      -        +         Yes     
-         A        A>B      Long       +        -         Yes     
-         A        B>A      Short      -        -         No      
-         A        B>A      Long       +        +         No      
-         B        A>B      Short      -        -         No      
-         B        A>B      Long       +        +         No      
-         B        B>A      Short      -        +         Yes     
-         B        B>A      Long       +        -         Yes     
+         A        A>B      Short     \-       \+         Yes     
+         A        A>B      Long      \+       \-         Yes     
+         A        B>A      Short     \-       \-         No      
+         A        B>A      Long      \+       \+         No      
+         B        A>B      Short     \-       \-         No      
+         B        A>B      Long      \+       \+         No      
+         B        B>A      Short     \-       \+         Yes     
+         B        B>A      Long      \+       \-         Yes     
         ====  ===========  ======  =======  =======  ============
         
         Looking at this it becomes obvious that force direction flips are needed
