@@ -25,7 +25,7 @@ class BindingSite:
         if not self.bound:
             return "Unbound site"
         else:
-            return "Site bound to " + str(self.link)
+            return "Site bound to " + str(self.linked)
 
     @property
     def linked(self):
