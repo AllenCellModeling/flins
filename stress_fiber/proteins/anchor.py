@@ -19,7 +19,7 @@ class Anchor(Protein):
     stiff springs attached to actin binding sites. 
     """
 
-    def __init__(self, x, anchor_to=None, tract=None, k=100, rest=0):
+    def __init__(self, x, anchor_to=None, tract=None, k=1000, rest=0):
         """Create our anchor
 
         Parameters
@@ -31,7 +31,7 @@ class Anchor(Protein):
         tract : stress_fiber.space.Tract, optional
             Tract in which this anchor exists
         k : float, optional
-            Stiffness of the anchor's attachment to its location in pN/nm [100]
+            Stiffness of the anchor's attachment to its location in pN/nm [1000]
         rest : float, optional
             Rest length of the spring tethering the anchor in nm [0]
         """
