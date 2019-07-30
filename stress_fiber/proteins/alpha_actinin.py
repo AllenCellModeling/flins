@@ -14,6 +14,7 @@ from .base import Protein
 from ..support import spring
 from ..support import units
 from ..support import diffuse
+from ..support import kinetics
 from ..support import binding_site
 
 
@@ -77,19 +78,19 @@ class ActininHead:
         if self.other_head.bs.bound:
             if self.other_head.bs.linked.filament == gactin.filament:  # don't self bind
                 return
-        rate = self._r12(abs(gactin.x - self.x))
-        prob = rate * units.world.timestep
+        rate = self._r01(abs(gactin.x - self.x))
+        prob = kinetics.rate_to_prob(rate, units.world.timestep)
         if prob > np.random.rand():
             self.bs.bind(gactin.bs)
 
     def _unbind_or_not(self):
         """Maybe unbind? Can't say for sure."""
-        rate = self._r21()
-        prob = rate * units.world.timestep
+        rate = self._r10()
+        prob = kinetics.rate_to_prob(rate, units.world.timestep)
         if prob > np.random.rand():
             self.bs.unbind()
 
-    def _r12(self, dist):
+    def _r01(self, dist):
         """Binding rate per second, given the distance to binding site.
 
         We take the binding rate to be dependent on the energy required to move
@@ -104,8 +105,8 @@ class ActininHead:
         rate = tau * np.exp(-(k * dist ** 2) / (2 * kT))
         return rate
 
-    def _r21(self):
-        """See _r12. We have a free energy release of ~ 8kcal/mol when α-actinin
+    def _r10(self):
+        """See _r01. We have a free energy release of ~ 8kcal/mol when α-actinin
         binds to vinculin [1]_. We'll use that as an approximation for the
         energy released when α-actinin binds to actin. This is equivalent to
         ~56 pN*nm per binding event. An estimated :math:`\Delta G_{12}` of
