@@ -54,14 +54,9 @@ class Anchor(Protein):
         return self.spring.force(dist)
 
     def energy(self, x):
-        """Trick question, I don't want to consider this as storing energy.
-        I suppose the anchor is dissipative, but really we don't want it
-        contributing to calculations of the energy stored in cross linkers or
-        motors. 
-        """
-        # TODO this is used to calculate actin boping-around and as such needs
-        # to be passed back relatively high
-        return 0
+        """Energy stored in anchor spring with other end stretched to x"""
+        dist = abs(x - self.x)
+        return self.spring.energy(dist)
 
     def step(self):
         """Sit there and remain bound"""
