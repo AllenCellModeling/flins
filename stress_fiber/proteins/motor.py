@@ -52,18 +52,35 @@ class Motor(Protein):
     def x(self, x):
         self._x = x
 
+    def _update_x(self):
+        """Ensure that x gets set each step depending on what's bound"""
+        bound = self._which_bound
+        if bound == "none":
+            return  # x is tracked by motor
+        elif bound == "left" or bound == "both":
+            self.x = self.heads[0].bs.linked.x
+        elif bound == "right":
+            self.x = self.heads[1].bs.linked.x - self.spring[self.state].rest
+        else:
+            raise ValueError("_which_bound value not in expected set")
+
     @property
     def locs(self):
         """Location of each node in motor. 2 in this case"""
         bound = self._which_bound
-        if bound == "none" or bound == "left":
+        if bound == "none":
             x = self._x
             return (x, x + self.spring[self.state].rest)
-        if bound == "right":
+        elif bound == "left":
+            x = self.heads[0].bs.linked.x
+            return (x, x + self.spring[self.state].rest)
+        elif bound == "right":
             x = self.heads[1].bs.linked.x
             return (x - self.spring[self.state].rest, x)
-        if bound == "both":
+        elif bound == "both":
             return [h.bs.linked.x for h in self.heads]
+        else:
+            raise ValueError("_which_bound value not in expected set")
 
     @property
     def bopped_locs(self):
@@ -128,6 +145,7 @@ class Motor(Protein):
                 head.step(length=length)
             else:
                 raise Exception("Head has state other than 0, 1, or 2")
+        self._update_x()
 
 
 class MotorHead(Base):
