@@ -75,7 +75,8 @@ class MovieGen:
 
     def add_world(self, world):
         """Add a world and render it as an svg"""
-        dwg = flat_render.plot_world(world)
+        xm, ym = self._zoom
+        dwg = flat_render.plot_world(world, {"xm": xm, "ym":ym}) 
         self.add_svg(dwg)
 
     def add_svg(self, dwg):
@@ -95,8 +96,7 @@ class MovieGen:
             svg_iter = tqdm.tqdm(self.svgs, "svg->png", leave=False)
         for svg_fn in svg_iter:
             fn = os.path.splitext(svg_fn)[0]
-            xz, yz = self._zoom
-            call = "rsvg-convert -o %s.png -x %.4f -y %.4f %s.svg" % (fn, xz, yz, fn)
+            call = "rsvg-convert -o %s.png %s.svg" % (fn, fn)
             subprocess.run(call, shell=True)
             self.pngs.append(fn + ".png")
         # Convert pngs to mp4
