@@ -33,3 +33,15 @@ It is also possible to install ``stress_fiber`` directly from the `Github repo`_
 
 .. _Github repo: https://github.com/AllenCellModeling/stress_fiber
 .. _tarball: https://github.com/AllenCellModeling/stress_fiber/tarball/master
+
+Visualization support
+---------------------
+
+Display of SVG visualizations within notebooks is supported by Ipython's core display functions, but to render these to PNGs and then to animations we rely on `librsvg`_ and `ffmpeg`_. Installation with Anaconda is accomplished via:
+
+.. code-block:: console
+
+    $ conda install -c conda-forge librsvg ffmpeg
+
+.. _librsvg: https://en.wikipedia.org/wiki/Librsvg
+.. _ffmpeg: https://ffmpeg.org
