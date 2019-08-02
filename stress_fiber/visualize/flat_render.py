@@ -175,6 +175,14 @@ def _plot_tract(dwg, tract, tract_i, params):
     return group
 
 
+def _entry_or_empty_list(dict, key):
+    """Give the value of the key or, if not present, an empty list"""
+    try:
+        return dict[key]
+    except KeyError:
+        return []
+
+
 def plot_world(world, params={}):
     """Plot a world as a flat, unrolled, svg
     Parameters
@@ -211,24 +219,21 @@ def plot_world(world, params={}):
         _plot_tract(dwg, tract, i, params)
     # Actins
     for tract in world.tractspace.all_tracts:
-        actins = tract.mols["actin"]
+        actins = _entry_or_empty_list(tract.mols, "actin")
         n_actin = len(actins)
         for k, actin in enumerate(actins):
             actin.__y = y_span * (k + 1) / (n_actin + 1)
             _plot_actin(actin, params)
     # Alpha-actinins
     for tract in world.tractspace.all_tracts:
-        actinins = tract.mols["actinin"]
+        actinins = _entry_or_empty_list(tract.mols, "actinin")
         n_actinin = len(actinins)
         for j, actinin in enumerate(actinins):
             y_actinin = y_span * (j + 1) / (n_actinin + 1)
             _plot_actinin(actinin, y_actinin, params)
     # Motors
     for tract in world.tractspace.all_tracts:
-        if "motor" in tract.mols.keys():
-            motors = tract.mols["motor"]
-        else:
-            motors = list()
+        motors = _entry_or_empty_list(tract.mols, "motor")
         n_motor = len(motors)
         for j, motor in enumerate(motors):
             y_motor = y_span * (j + 1) / (n_motor + 1)
