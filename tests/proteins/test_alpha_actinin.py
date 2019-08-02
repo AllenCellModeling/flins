@@ -31,10 +31,10 @@ class TestActininHead:
         assert head.actinin == other_head.actinin
 
     @pytest.mark.parametrize('head', HEADS)
-    def test__r12(self, head):
+    def test__r01(self, head):
         """Ensure that our binding rates are going in the right direction"""
-        assert head._r12(-1) < head._r12(0)
-        assert head._r12(0) > head._r12(1)
+        assert head._r01(-1) < head._r01(0)
+        assert head._r01(0) > head._r01(1)
 
 
 
