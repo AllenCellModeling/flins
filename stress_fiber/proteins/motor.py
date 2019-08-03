@@ -220,7 +220,7 @@ class MotorHead(Base):
         return dist - self.parent.spring[state].rest
 
     def _free_energy(self, dist, state):
-        """dist is offset from rest"""
+        """Free energy for given spring length and state"""
         kT = units.constants.kT
         if state == 0:
             return 0.0
