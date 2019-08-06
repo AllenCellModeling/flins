@@ -45,6 +45,15 @@ class GActinPair(Base):
         """Where are you at? Referenced from parent actin."""
         return self.filament.pairs_x[self.index]
 
+    @property
+    def polarity(self):
+        """Is the plus end to the right? NB: Myosin is plus-end directed.
+        For a review of polarity in the sarcomere, see `this book section`_.
+
+        .. _this book section: https://www.ncbi.nlm.nih.gov/books/NBK9961/
+        """
+        return self.filament.polarity
+
     def force(self, x=None):
         """What force does the g-actin experience?"""
         if not self.bs.bound:
@@ -69,7 +78,7 @@ class GActinPair(Base):
 class Actin(Protein):
     """A 1D actin filament that has binding sites, diffusion behavior, etc."""
 
-    def __init__(self, x, tract=None, n_pair=None, length=None):
+    def __init__(self, x, tract=None, n_pair=None, length=None, polarity=None):
         """An actin at x with n pairs of g-actin in a tract.
         
         Parameters
@@ -86,6 +95,9 @@ class Actin(Protein):
         length : `float`, optional
             Alternate method of setting number of g-actin pairs. Will set
             n_pair to number that results in filament extent closest to length.
+        polarity : `boolean`, optional 
+            Is the plus end to the right? Governs myosin binding shortening. If
+            not passed, we answer None and let the motors figure it out. 
         """
         # Store tract if given, else create placeholders
         super().__init__("actin", tract)
@@ -111,6 +123,9 @@ class Actin(Protein):
         self.pairs_x = self._calc_pairs_x()  # redundant, but here for reminder
         # Create g-actin pairs
         self.pairs = [GActinPair(self, index) for index in range(n)]
+        # Store polarity
+        assert polarity in (None, True, False), "Polarity is boolean or none"
+        self.polarity = polarity
 
     def __str__(self):
         """String representation of actin"""

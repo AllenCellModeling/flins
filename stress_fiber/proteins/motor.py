@@ -179,6 +179,20 @@ class MotorHead(Base):
     def x(self):
         return self.parent.locs[self.side]
 
+    @property
+    def polarity(self):
+        """Return true if this is the right-most head.
+
+        The polarity of the actin filaments is defined as True when the plus end
+        is to the right. As myosin is `plus-end directed`_ we want it to bind
+        only when the backbone-to-face direction is facing the plus end of the
+        actin filament. So we'll return a polarity of ``True`` when this head's
+        location is greater than the other head's and ``False`` when it isn't.
+
+        .. _plus-end directed: https://www.ncbi.nlm.nih.gov/books/NBK9961/
+        """
+        return self.x > self.other_head.x
+
     def _r01(self, dist):
         """dist is distance to binding site"""
         return 100 * m.exp(-(0.25 * dist) ** 2)
@@ -243,6 +257,8 @@ class MotorHead(Base):
                 our_fil = bs.parent.filament
                 if other_fil == our_fil:  # Don't self bind
                     return
+            if not bs.parent.polarity in (self.polarity, None):
+                return  # can't bind if polarity doesn't match (or is off)
             dist = abs(bs.parent.x - self.x)
             if p(self._r01(dist)) > check:
                 self.bs.bind(bs)
