@@ -78,7 +78,7 @@ class MyosinHead(Base):
     @property
     def x_base(self):
         """The location of the base of the head"""
-        return self.myosin.x_segments[1+self.side]
+        return self.myosin.x_segments[1 + self.side]
 
     @property
     def x_tip(self):
@@ -159,10 +159,11 @@ class Myosin(Protein):
         I'd like these to vibrate.
         """
         if not self.fully_bound:
-            self._spring_lengths = [np.clip(spring.bop_length(), 0, np.Inf)
-                                    for spring in self.springs]
+            self._spring_lengths = [
+                np.clip(spring.bop_length(), 0, np.Inf) for spring in self.springs
+            ]
         else:
-            # Solve for all lengths given total length, L and each spring's 
+            # Solve for all lengths given total length, L and each spring's
             # rest length rn, and stiffness, kn
             L = abs(self.heads[0].bs.linked.x - self.heads[1].bs.linked.x)
             (k1, r1), (k2, r2), (k3, r3) = [(s.k, s.rest) for s in self.springs]
@@ -191,7 +192,6 @@ class Myosin(Protein):
     def boundaries(self):
         return self.x_segments[0], self.x_segments[3]
 
-
     def step(self):
         """Take a timestep"""
         self._update_x_segments()
@@ -199,7 +199,6 @@ class Myosin(Protein):
             self._freely_diffuse()
         [head.step() for head in self.heads]
         return
-
 
     def _freely_diffuse(self):
         """How myosin moves when unbound"""

@@ -76,7 +76,7 @@ class MovieGen:
     def add_world(self, world):
         """Add a world and render it as an svg"""
         xm, ym = self._zoom
-        dwg = flat_render.plot_world(world, {"xm": xm, "ym":ym}) 
+        dwg = flat_render.plot_world(world, {"xm": xm, "ym": ym})
         self.add_svg(dwg)
 
     def add_svg(self, dwg):
