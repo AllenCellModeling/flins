@@ -30,6 +30,7 @@ for gact, head in zip(GACTINS, HEADS):
 # TEST SAMPLE SPRING LENGTHS FOR THE CASE OF FULLY BOUND. WAS THEN GOING TO
 # START RE_INTRODUCING KINETICS BACK INTO THE MYOSIN MOTOR.
 
+
 class TestMyosin:
     @pytest.mark.parametrize("myosin", MYOSINS)
     def test___str__(self, myosin):
@@ -38,13 +39,17 @@ class TestMyosin:
     @pytest.mark.parametrize("myosin", MYOSINS)
     def test_freely_diffuse(self, myosin):
         xi = myosin.x
+        # Store info for reflection calc
+        initial_length = myosin.boundaries[-1] - myosin.boundaries[0]
+        # Do the diffuse
         dx = myosin._freely_diffuse()
         xf = xi + dx
         is_x = myosin.x == xf
         at_limits = myosin.heads[0].x_tip == pytest.approx(0) or myosin.heads[
             1
         ].x_tip == pytest.approx(SPAN)
-        assert is_x or at_limits
+        reflected = myosin.x == -xf or xf > (SPAN - initial_length)
+        assert is_x or at_limits or reflected
 
     @pytest.mark.parametrize("myosin", MYOSINS)
     def test__sample_spring_lengths(self, myosin):
@@ -56,7 +61,6 @@ class TestMyosin:
             assert not any([i == f for i, f in zip(sl_i, sl_f)])
         else:
             assert all([i == f for i, f in zip(sl_i, sl_f)])
-
 
     # @pytest.mark.parametrize('myosin', MYOSINS)
     # def test_step(self, myosin):
