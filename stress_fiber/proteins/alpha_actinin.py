@@ -280,6 +280,11 @@ class AlphaActinin(Protein):
         """Take a timestep"""
         if not self.bound:
             self.freely_diffuse()
+        else:
+            if self.heads[0].bs.bound:
+                self.x = self.heads[0].bs.linked.x
+            else:
+                self.x = self.heads[1].bs.linked.x - self.spring.rest
         [head.step() for head in self.heads]
         return
 
