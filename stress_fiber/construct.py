@@ -60,7 +60,6 @@ class World:
     def step(self):
         """Step forward one tick"""
         self.time += 1
-        for tract in np.random.permutation(self.tractspace.all_tracts):
-            all_mols = list(itertools.chain(*tract.mols.values()))
-            for mol in np.random.permutation(all_mols):
-                mol.step()
+        all_mols = [m for t in self.tractspace.all_tracts for v in t.mols.values() for m in list(v)]
+        for mol in np.random.permutation(all_mols):
+            mol.step()
