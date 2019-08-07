@@ -189,6 +189,9 @@ def plot_world(world, params={}):
     ---------
     world: stress_fiber.construct.World
         World to render as svg
+    params: dict keys in (y_span, y_sep, xm, ym)
+        Set how tall tracts are (y_span), how far apart they are (y_sep), and
+        the multipliers used to convert SVG units to pixels (ym, xm)
     """
     ## Visualization parameters
     # Manage parameters for passing to sub-plotting
