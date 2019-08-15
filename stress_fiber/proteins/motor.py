@@ -40,6 +40,12 @@ class Motor(Protein):
         self.spring = [spring.Spring(k, r) for k, r in zip(ks, rs)]
         self.heads = [MotorHead(self, side) for side in (0, 1)]
 
+    def __str__(self):
+        """String representation of a motor"""
+        heads_bound = [h.bs.bound for h in self.heads]
+        bound = ["un", "partially ", "fully "][sum(heads_bound)]
+        return "Motor %sbound at %0.1f, in state %i" % (bound, self.x, self.state)
+
     @property
     def state(self):
         return max([h.state for h in self.heads])
@@ -107,6 +113,10 @@ class Motor(Protein):
     @property
     def bound(self):
         return self.heads[0].bs.bound or self.heads[1].bs.bound
+
+    @property
+    def fully_bound(self):
+        return self.heads[0].bs.bound and self.heads[1].bs.bound
 
     @property
     def _which_bound(self):
