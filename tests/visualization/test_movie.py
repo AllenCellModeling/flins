@@ -18,7 +18,7 @@ dirs = [None, tempfile.mkdtemp(), 'non-existing_test_movie_dir']
 
 @pytest.mark.parametrize("dir", dirs)
 def test_MovieGen(dir):
-    world = sf.construct.create_test_world(0, 2000, 1, 2)
+    world = sf.construct.create_test_world(0, 2000, 1, 2, 2)
     quiet = False if dir is None else True
     moviegen = sf.visualize.movie.MovieGen(temp_dir=dir, quiet=quiet)
     moviegen.add_world(world)
