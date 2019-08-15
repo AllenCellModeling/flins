@@ -18,6 +18,7 @@ CSS_STYLES = """
     .anchor { stroke: tan; fill: tan;}
     .actinin { stroke: limegreen; fill: limegreen; stroke-width: 2px; }
     .motor { stroke: firebrick; fill: firebrick; stroke-width: 2px; }
+    .post { stroke-width: 4px; }
     .tract { stroke: darkslategray; fill: whitesmoke; stroke-width: 3px; }
     .clear { fill-opacity: 0.0; }
     .fade { opacity: 0.3; }
@@ -36,15 +37,53 @@ def _plot_anchor(anchor, params):
 def _plot_motor(motor, y, params):
     """Plot an actinin as part of group within y_lim"""
     if not motor.bound:  # none bound
-        y *= params["ym"]
-        x = motor.x * params["xm"]
-        group = motor.tract.__groups["unbound_motor"]
-        group.add(svgwrite.shapes.Ellipse((x, y), (5, 1)))
+        _plot_unbound(motor, y, params, "motor")
         return
     if sum([h.bs.bound for h in motor.heads]) == 2:  # both bound
-        _plot_body(motor, params, "motor")
+        if motor.state == 2:
+            _plot_body(motor, params, "motor.post")
+        else:
+            _plot_body(motor, params, "motor")
     for head in motor.heads:
         _plot_head(head, params, "motor")
+    return
+
+
+def _plot_actinin(actinin, y, params):
+    """Plot an actinin as part of group within y_lim"""
+    if not actinin.bound:  # none bound
+        _plot_unbound(actinin, y, params, "actinin")
+        return
+    if sum([h.bs.bound for h in actinin.heads]) == 2:  # both bound
+        _plot_body(actinin, params, "actinin")
+    for head in actinin.heads:
+        _plot_head(head, params, "actinin")
+    return
+
+
+def _plot_actin(actin, params):
+    """Plot actin and affiliated proteins as part of group within y_lim"""
+    # Locally load params
+    xm = params["xm"]
+    ym = params["ym"]
+    y_span = params["y_span"]
+    y = actin.__y
+    group = actin.tract.__groups["actin"]
+    # Find limits and convert to user units
+    y_edge = np.round(y / y_span) * y_span * ym  # end links at top or bottom
+    x = np.multiply(xm, actin.boundaries)
+    y *= ym
+    # Plot actin
+    group.add(svgwrite.shapes.Line((x[0], y), (x[1], y)))
+    return
+
+
+def _plot_unbound(mol, y, params, kind):
+    """Plot a free floating ellipse for an unbound component"""
+    y *= params["ym"]
+    x = mol.x * params["xm"]
+    group = mol.tract.__groups["unbound_" + kind]
+    group.add(svgwrite.shapes.Ellipse((x, y), (5, 1)))
     return
 
 
@@ -80,70 +119,6 @@ def _plot_body(mol, params, kind):
         return
 
 
-def _plot_actinin(actinin, y, params):
-    """Plot an actinin as part of group within y_lim"""
-    if not actinin.bound:  # none bound
-        y *= params["ym"]
-        x = actinin.x * params["xm"]
-        group = actinin.tract.__groups["unbound_actinin"]
-        group.add(svgwrite.shapes.Ellipse((x, y), (3, 1)))
-        return
-    if sum([h.bs.bound for h in actinin.heads]) == 2:  # both bound
-        _plot_actinin_body(actinin, params)
-    for head in actinin.heads:
-        _plot_actinin_head(head, params)
-    return
-
-
-def _plot_actinin_head(head, params):
-    """Plot actinin head on actin"""
-    if not head.bs.bound:
-        return
-    x = head.x * params["xm"]
-    y = head.bs.linked.filament.__y * params["ym"]
-    group = head.bs.linked.filament.tract.__groups["bound_actinin"]
-    group.add(svgwrite.shapes.Circle((x, y), 2, class_="actinin"))
-    return
-
-
-def _plot_actinin_body(actinin, params):
-    """Only plot body in case where both heads are bound"""
-    tracts = [head.bs.linked.filament.tract for head in actinin.heads]
-    if tracts[0] == tracts[1]:  # same tract
-        x = [head.x * params["xm"] for head in actinin.heads]
-        y = [h.bs.linked.filament.__y * params["ym"] for h in actinin.heads]
-        group = tracts[0].__groups["bound_actinin"]
-        group.add(svgwrite.shapes.Line((x[0], y[0]), (x[1], y[1]), class_="actinin"))
-    else:  # different tracts
-        for head, tract in zip(actinin.heads, tracts):
-            x_i = head.x * params["xm"]
-            x_f = head.other_head.x * params["xm"]
-            ym, y_span = params["ym"], params["y_span"]
-            y = head.bs.linked.filament.__y
-            y_i = y * ym
-            y_f = np.round(y / y_span) * y_span * ym  # end links at top or bottom
-            group = tract.__groups["bound_actinin"]
-            group.add(svgwrite.shapes.Line((x_i, y_i), (x_f, y_f), class_="actinin"))
-        return
-
-
-def _plot_actin(actin, params):
-    """Plot actin and affiliated proteins as part of group within y_lim"""
-    # Locally load params
-    xm = params["xm"]
-    ym = params["ym"]
-    y_span = params["y_span"]
-    y = actin.__y
-    group = actin.tract.__groups["actin"]
-    # Find limits and convert to user units
-    y_edge = np.round(y / y_span) * y_span * ym  # end links at top or bottom
-    x = np.multiply(xm, actin.boundaries)
-    y *= ym
-    # Plot actin
-    group.add(svgwrite.shapes.Line((x[0], y), (x[1], y)))
-    return
-
-
 def _plot_tract(dwg, tract, tract_i, params):
     """Plot tract in dwg offset to loc for tract_i"""
     # Locally load params
@@ -165,6 +140,7 @@ def _plot_tract(dwg, tract, tract_i, params):
         "bound_actinin": group.add(svgwrite.container.Group(class_="actinin")),
         "unbound_actinin": group.add(svgwrite.container.Group(class_="actinin fade")),
         "bound_motor": group.add(svgwrite.container.Group(class_="motor")),
+        "bound_motor.post": group.add(svgwrite.container.Group(class_="motor post")),
         "unbound_motor": group.add(svgwrite.container.Group(class_="motor fade")),
     }
     group.add(
