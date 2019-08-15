@@ -58,18 +58,6 @@ class Motor(Protein):
     def x(self, x):
         self._x = x
 
-    def _update_x(self):
-        """Ensure that x gets set each step depending on what's bound"""
-        bound = self._which_bound
-        if bound == "none":
-            return  # x is tracked by motor
-        elif bound == "left" or bound == "both":
-            self.x = self.heads[0].bs.linked.x
-        elif bound == "right":
-            self.x = self.heads[1].bs.linked.x - self.spring[self.state].rest
-        else:
-            raise ValueError("_which_bound value not in expected set")
-
     @property
     def locs(self):
         """Location of each node in motor. 2 in this case"""
@@ -143,8 +131,15 @@ class Motor(Protein):
         return d_x
 
     def step(self):
+        """Take one step forward in time. 
+
+        If the motor isn't bound, it freely diffuses. Both heads have the chance
+        to transition from their current state to a new one.
+        """
         if not self.bound:
             self._freely_diffuse()
+        else:
+            self.x = self.locs[0]  # Continue to update _x
         for head in self.heads:
             if head.state == 0:
                 gact = self.tract.nearest_binding_site(head.x)
@@ -155,7 +150,6 @@ class Motor(Protein):
                 head.step(length=length)
             else:
                 raise Exception("Head has state other than 0, 1, or 2")
-        self._update_x()
 
 
 class MotorHead(Base):
