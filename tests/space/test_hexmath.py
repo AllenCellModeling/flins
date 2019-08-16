@@ -27,4 +27,4 @@ class TestCube:
                 if hm.Cube.within_radius(*coord, n):
                     indices = hm.Cube.to_array_indices(*coord, n)
                     print(indices)
-                    assert grid[indices]['cube']==coord
+                    assert grid[indices]["cube"] == coord
