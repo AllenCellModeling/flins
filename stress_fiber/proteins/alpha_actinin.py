@@ -14,190 +14,8 @@ from .base import Protein
 from ..support import spring
 from ..support import units
 from ..support import diffuse
+from ..support import kinetics
 from ..support import binding_site
-
-
-class ActininHead:
-    """One of the two heads of an α-actinin"""
-
-    def __init__(self, actinin, side):
-        self.actinin = actinin
-        self.side = side  # Which side of the α-actinin is this on, 0 or 1
-        self.address = (actinin.address[:], ("actininhead", side))
-        self.bs = binding_site.BindingSite(self)
-        self._update_x()
-
-    def __str__(self):
-        """String representation of α-actinin head"""
-        x_str = "%0.1f" % self.x
-        state_str = "unbound" if not self.bs.bound else "bound"
-        return "α-act head %s at x=%s" % (state_str, x_str)
-
-    @property
-    def other_head(self):
-        """The other head on this actinin"""
-        return self.actinin.heads[self.side ^ 1]
-
-    @property
-    def nearest_binding_site(self):
-        """The nearest g-actin pair from neighboring tracts
-        TODO: factor this out into the tract space, making it molecule-agnostic
-        """
-        # Get all candidate actins
-        actins = [t.mols["actin"] for t in self.actinin.tract.reachable]
-        actins = list(itertools.chain(*actins))  # flatten
-        # Find the g-actin pair nearest our location
-        near = [act.nearest(self.x) for act in actins]
-        distances = np.abs(np.subtract([g.x for g in near], self.x))
-        nearest = near[np.argmin(distances)]
-        return nearest
-
-    @property
-    def x(self):
-        """Location derived from α-actinin"""
-        # If bound, you are located at the linked site
-        if self.bs.bound:
-            return self.bs.linked.x
-        # Else from parent α-actinin loc a distribution of parent lengths
-        else:
-            return self._x
-
-    def _update_x(self):
-        """Update the α-actinin-vibration-based estimate of x
-
-        NOTE This is recalculating the x even when the actinin-head is bound.
-        This isn't necessary and we could stop it by linking our updates to a
-        global timestep clock.
-        """
-        spring = self.actinin.spring
-        if self.side == 0:
-            self._x = self.actinin.x - 0.5 * spring.bop_dx()
-        elif self.side == 1:
-            self._x = self.actinin.x + spring.rest + 0.5 * spring.bop_dx()
-
-    def step(self):
-        """Take a timestep: bind, unbind, or stay current"""
-        self._update_x()
-        if not self.bs.bound:
-            self._bind_or_not()
-        else:
-            self._unbind_or_not()
-
-    def _bind_or_not(self):
-        """Maybe bind? Can't say for sure."""
-        gactin = self.nearest_binding_site
-        if gactin.bs.bound:  # don't bind if site is already taken
-            return
-        if self.other_head.bs.bound:
-            if self.other_head.bs.linked.filament == gactin.filament:  # don't self bind
-                return
-        rate = self._r12(abs(gactin.x - self.x))
-        prob = rate * units.world.timestep
-        if prob > np.random.rand():
-            self.bs.bind(gactin.bs)
-
-    def _unbind_or_not(self):
-        """Maybe unbind? Can't say for sure."""
-        rate = self._r21()
-        prob = rate * units.world.timestep
-        if prob > np.random.rand():
-            self.bs.unbind()
-
-    def _r12(self, dist):
-        """Binding rate per second, given the distance to binding site.
-
-        We take the binding rate to be dependent on the energy required to move
-        from the current position to the binding site, with pre-exponential
-        terms as in [1]_.
-
-        .. [1] http://dx.doi.org/10.1098/rspb.2013.0697
-        """
-        tau = 72
-        k = self.actinin.spring.k
-        kT = units.constants.kT
-        rate = tau * np.exp(-(k * dist ** 2) / (2 * kT))
-        return rate
-
-    def _r21(self):
-        """See _r12. We have a free energy release of ~ 8kcal/mol when α-actinin
-        binds to vinculin [1]_. We'll use that as an approximation for the
-        energy released when α-actinin binds to actin. This is equivalent to
-        ~56 pN*nm per binding event. An estimated :math:`\Delta G_{12}` of
-        56 pN*nm is approximately consistent with other estimates, such as [2]_
-        which provides ~44 pN*nm. This is ~2x the energy released by the
-        hydrolysis of ATP and so seems a reasonable estimate. We'll approximate
-        the energy landscape as having a ~10% :math:`G_a` barrier of 6 pN*nm
-        meaning the total energy barrier between the bound and unbound states is
-        62 pN*nm.
-
-        How much of that barrier the head has to surmount is dependent on how
-        stretched the α-actinin backbone is at any point in time, thus
-        :math:`\DeltaG_{a2}=62pN*nm-0.5*k*x^2`.
-
-        We don't include a pre-exponential correction. Or, rather, assume it to
-        be one.
-
-        .. [1] https://dx.doi.org/10.1016/j.bpj.2012.08.044
-        .. [2] https://dx.doi.org/10.1074/jbc.273.16.9570
-        """
-        deltaG = 62  # pN*nm energy barrier between unbound and bound
-        U = self.actinin.energy
-        A = 1
-        kT = units.constants.kT
-        rate = A * np.exp(-(deltaG - U) / kT)
-        return rate
-
-    def _spring_property(self, spring_prop, x=None):
-        """Calculate a spring property, energy or force"""
-        # If other head isn't bound, can't bear energy/strain
-        if not self.other_head.bs.bound:
-            return 0
-        # If no x is given, use current location
-        if x is None:
-            x = self.x
-        length = abs(x - self.other_head.x)
-        return spring_prop(length)
-
-    def force(self, x=None):
-        """What force does this α-actinin head exert or feel?
-
-        This accounts for the fact that heads feel equal and opposite forces
-        and that these forces change as the spring is compressed or extended
-        from rest. Let's think of two heads, `a` and `b` at either end of an
-        α-actinin spring. The default force sign returned from the spring is
-        negative when the spring is shortened and positive when it is
-        lengthened. The desired sign is that which reflects the force exerted by
-        the spring on the binding site. 
-
-        ====  ===========  ======  =======  =======  ============
-               System state              Force direction         
-        -------------------------  ------------------------------
-        Head  Orientation  Spring  Default  Desired  Flip needed?
-        ====  ===========  ======  =======  =======  ============
-         A        A>B      Short      -        +         Yes     
-         A        A>B      Long       +        -         Yes     
-         A        B>A      Short      -        -         No      
-         A        B>A      Long       +        +         No      
-         B        A>B      Short      -        -         No      
-         B        A>B      Long       +        +         No      
-         B        B>A      Short      -        +         Yes     
-         B        B>A      Long       +        -         Yes     
-        ====  ===========  ======  =======  =======  ============
-        
-        Looking at this it becomes obvious that force direction flips are needed
-        in cases where the current head is the right-most of the two. 
-        """
-        force_fn = self.actinin.spring.force
-        mult = -1 if self.x > self.other_head.x else 1
-        return self._spring_property(force_fn, x) * mult
-
-    def energy(self, x=None):
-        """What energy is stored in the α-actinin backbone?
-        This exists because we want to be able to propose alternate ActininHead
-        locations and find the energy without changing states. 
-        """
-        energy_fn = self.actinin.spring.energy
-        return self._spring_property(energy_fn, x)
 
 
 class AlphaActinin(Protein):
@@ -293,6 +111,11 @@ class AlphaActinin(Protein):
         """Take a timestep"""
         if not self.bound:
             self.freely_diffuse()
+        else:
+            if self.heads[0].bs.bound:
+                self.x = self.heads[0].bs.linked.x
+            else:
+                self.x = self.heads[1].bs.linked.x - self.spring.rest
         [head.step() for head in self.heads]
         return
 
@@ -320,3 +143,172 @@ class AlphaActinin(Protein):
             space_limits = (0, self.tract.space.span)
             self.x, _ = diffuse.coerce_to_bounds(start, end, space_limits)
         return d_x
+
+
+class ActininHead:
+    """One of the two heads of an α-actinin"""
+
+    def __init__(self, actinin, side):
+        self.actinin = actinin
+        self.side = side  # Which side of the α-actinin is this on, 0 or 1
+        self.address = (actinin.address[:], ("actininhead", side))
+        self.bs = binding_site.BindingSite(self)
+        self._update_x()
+
+    def __str__(self):
+        """String representation of α-actinin head"""
+        x_str = "%0.1f" % self.x
+        state_str = "unbound" if not self.bs.bound else "bound"
+        return "α-act head %s at x=%s" % (state_str, x_str)
+
+    @property
+    def other_head(self):
+        """The other head on this actinin"""
+        return self.actinin.heads[self.side ^ 1]
+
+    @property
+    def x(self):
+        """Location derived from α-actinin"""
+        # If bound, you are located at the linked site
+        if self.bs.bound:
+            return self.bs.linked.x
+        # Else from parent α-actinin loc a distribution of parent lengths
+        else:
+            return self._x
+
+    def _update_x(self):
+        """Update the α-actinin-vibration-based estimate of x
+
+        NOTE This is recalculating the x even when the actinin-head is bound.
+        This isn't necessary and we could stop it by linking our updates to a
+        global timestep clock.
+        """
+        spring = self.actinin.spring
+        if self.side == 0:
+            self._x = self.actinin.x - 0.5 * spring.bop_dx()
+        elif self.side == 1:
+            self._x = self.actinin.x + spring.rest + 0.5 * spring.bop_dx()
+
+    def step(self):
+        """Take a timestep: bind, unbind, or stay current"""
+        self._update_x()
+        if not self.bs.bound:
+            self._bind_or_not()
+        else:
+            self._unbind_or_not()
+
+    def _bind_or_not(self):
+        """Maybe bind? Can't say for sure."""
+        gactin = self.actinin.tract.nearest_binding_site(self.x)
+        if gactin.bs.bound:  # don't bind if site is already taken
+            return
+        if self.other_head.bs.bound:
+            if self.other_head.bs.linked.filament == gactin.filament:  # don't self bind
+                return
+        rate = self._r01(abs(gactin.x - self.x))
+        prob = kinetics.rate_to_prob(rate, units.world.timestep)
+        if prob > np.random.rand():
+            self.bs.bind(gactin.bs)
+
+    def _unbind_or_not(self):
+        """Maybe unbind? Can't say for sure."""
+        rate = self._r10()
+        prob = kinetics.rate_to_prob(rate, units.world.timestep)
+        if prob > np.random.rand():
+            self.bs.unbind()
+
+    def _r01(self, dist):
+        """Binding rate per second, given the distance to binding site.
+
+        We take the binding rate to be dependent on the energy required to move
+        from the current position to the binding site, with pre-exponential
+        terms as in [1]_.
+
+        .. [1] http://dx.doi.org/10.1098/rspb.2013.0697
+        """
+        tau = 72
+        k = self.actinin.spring.k
+        kT = units.constants.kT
+        rate = tau * np.exp(-(k * dist ** 2) / (2 * kT))
+        return rate
+
+    def _r10(self):
+        """See _r01. We have a free energy release of ~ 8kcal/mol when α-actinin
+        binds to vinculin [1]_. We'll use that as an approximation for the
+        energy released when α-actinin binds to actin. This is equivalent to
+        ~56 pN*nm per binding event. An estimated :math:`\Delta G_{12}` of
+        56 pN*nm is approximately consistent with other estimates, such as [2]_
+        which provides ~44 pN*nm. This is ~2x the energy released by the
+        hydrolysis of ATP and so seems a reasonable estimate. We'll approximate
+        the energy landscape as having a ~10% :math:`G_a` barrier of 6 pN*nm
+        meaning the total energy barrier between the bound and unbound states is
+        62 pN*nm.
+
+        How much of that barrier the head has to surmount is dependent on how
+        stretched the α-actinin backbone is at any point in time, thus
+        :math:`\DeltaG_{a2}=62pN*nm-0.5*k*x^2`.
+
+        We don't include a pre-exponential correction. Or, rather, assume it to
+        be one.
+
+        .. [1] https://dx.doi.org/10.1016/j.bpj.2012.08.044
+        .. [2] https://dx.doi.org/10.1074/jbc.273.16.9570
+        """
+        deltaG = 62  # pN*nm energy barrier between unbound and bound
+        U = self.actinin.energy
+        A = 1
+        kT = units.constants.kT
+        rate = A * np.exp(-(deltaG - U) / kT)
+        return rate
+
+    def _spring_property(self, spring_prop, x=None):
+        """Calculate a spring property, energy or force"""
+        # If other head isn't bound, can't bear energy/strain
+        if not self.other_head.bs.bound:
+            return 0
+        # If no x is given, use current location
+        if x is None:
+            x = self.x
+        length = abs(x - self.other_head.x)
+        return spring_prop(length)
+
+    def force(self, x=None):
+        """What force does this α-actinin head exert or feel?
+
+        This accounts for the fact that heads feel equal and opposite forces
+        and that these forces change as the spring is compressed or extended
+        from rest. Let's think of two heads, `a` and `b` at either end of an
+        α-actinin spring. The default force sign returned from the spring is
+        negative when the spring is shortened and positive when it is
+        lengthened. The desired sign is that which reflects the force exerted by
+        the spring on the binding site. 
+
+        ====  ===========  ======  =======  =======  ============
+               System state              Force direction         
+        -------------------------  ------------------------------
+        Head  Orientation  Spring  Default  Desired  Flip needed?
+        ====  ===========  ======  =======  =======  ============
+         A        A>B      Short     \-       \+         Yes     
+         A        A>B      Long      \+       \-         Yes     
+         A        B>A      Short     \-       \-         No      
+         A        B>A      Long      \+       \+         No      
+         B        A>B      Short     \-       \-         No      
+         B        A>B      Long      \+       \+         No      
+         B        B>A      Short     \-       \+         Yes     
+         B        B>A      Long      \+       \-         Yes     
+        ====  ===========  ======  =======  =======  ============
+        
+        Looking at this it becomes obvious that force direction flips are needed
+        in cases where the current head is the right-most of the two. 
+        """
+        force_fn = self.actinin.spring.force
+        mult = -1 if self.x > self.other_head.x else 1
+        return self._spring_property(force_fn, x) * mult
+
+    def energy(self, x=None):
+        """What energy is stored in the α-actinin backbone?
+        This exists because we want to be able to propose alternate ActininHead
+        locations and find the energy without changing states. 
+        """
+        energy_fn = self.actinin.spring.energy
+        return self._spring_property(energy_fn, x)

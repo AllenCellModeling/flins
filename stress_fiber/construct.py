@@ -12,7 +12,7 @@ from . import space
 from . import proteins
 
 
-def create_test_world(radius, span, n_actin, n_actinin):
+def create_test_world(radius, span, n_actin, n_actinin, n_motors):
     """Create a world of given radius with n_actin and n_actinin per tract"""
     tractspace = space.TractSpace(radius, span)
     for tract in tractspace.all_tracts:
@@ -29,6 +29,9 @@ def create_test_world(radius, span, n_actin, n_actinin):
         for _ in range(n_actinin):
             x = np.random.rand() * (span - 35)
             proteins.AlphaActinin(x, tract)
+        for _ in range(n_motors):
+            x = np.random.rand() * (span - 30)
+            proteins.Motor(x, tract)
     world = World(tractspace)
     return world
 
@@ -60,7 +63,11 @@ class World:
     def step(self):
         """Step forward one tick"""
         self.time += 1
-        for tract in np.random.permutation(self.tractspace.all_tracts):
-            all_mols = list(itertools.chain(*tract.mols.values()))
-            for mol in np.random.permutation(all_mols):
-                mol.step()
+        all_mols = [
+            m
+            for t in self.tractspace.all_tracts
+            for v in t.mols.values()
+            for m in list(v)
+        ]
+        for mol in np.random.permutation(all_mols):
+            mol.step()

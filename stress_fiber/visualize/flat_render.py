@@ -17,6 +17,8 @@ CSS_STYLES = """
     .actin { stroke: cornflowerblue; stroke-width: 3px; }
     .anchor { stroke: tan; fill: tan;}
     .actinin { stroke: limegreen; fill: limegreen; stroke-width: 2px; }
+    .motor { stroke: firebrick; fill: firebrick; stroke-width: 2px; }
+    .post { stroke-width: 4px; }
     .tract { stroke: darkslategray; fill: whitesmoke; stroke-width: 3px; }
     .clear { fill-opacity: 0.0; }
     .fade { opacity: 0.3; }
@@ -32,51 +34,31 @@ def _plot_anchor(anchor, params):
     return
 
 
+def _plot_motor(motor, y, params):
+    """Plot an actinin as part of group within y_lim"""
+    if not motor.bound:  # none bound
+        _plot_unbound(motor, y, params, "motor")
+        return
+    if sum([h.bs.bound for h in motor.heads]) == 2:  # both bound
+        if motor.state == 2:
+            _plot_body(motor, params, "motor.post")
+        else:
+            _plot_body(motor, params, "motor")
+    for head in motor.heads:
+        _plot_head(head, params, "motor")
+    return
+
+
 def _plot_actinin(actinin, y, params):
     """Plot an actinin as part of group within y_lim"""
     if not actinin.bound:  # none bound
-        y *= params["ym"]
-        x = actinin.x * params["xm"]
-        group = actinin.tract.__groups["unbound_actinin"]
-        group.add(svgwrite.shapes.Ellipse((x, y), (3, 1)))
+        _plot_unbound(actinin, y, params, "actinin")
         return
     if sum([h.bs.bound for h in actinin.heads]) == 2:  # both bound
-        _plot_actinin_body(actinin, params)
+        _plot_body(actinin, params, "actinin")
     for head in actinin.heads:
-        _plot_actinin_head(head, params)
+        _plot_head(head, params, "actinin")
     return
-
-
-def _plot_actinin_head(head, params):
-    """Plot actinin head on actin"""
-    if not head.bs.bound:
-        return
-    x = head.x * params["xm"]
-    y = head.bs.linked.filament.__y * params["ym"]
-    group = head.bs.linked.filament.tract.__groups["bound_actinin"]
-    group.add(svgwrite.shapes.Circle((x, y), 2, class_="actinin"))
-    return
-
-
-def _plot_actinin_body(actinin, params):
-    """Only plot body in case where both heads are bound"""
-    tracts = [head.bs.linked.filament.tract for head in actinin.heads]
-    if tracts[0] == tracts[1]:  # same tract
-        x = [head.x * params["xm"] for head in actinin.heads]
-        y = [h.bs.linked.filament.__y * params["ym"] for h in actinin.heads]
-        group = tracts[0].__groups["bound_actinin"]
-        group.add(svgwrite.shapes.Line((x[0], y[0]), (x[1], y[1]), class_="actinin"))
-    else:  # different tracts
-        for head, tract in zip(actinin.heads, tracts):
-            x_i = head.x * params["xm"]
-            x_f = head.other_head.x * params["xm"]
-            ym, y_span = params["ym"], params["y_span"]
-            y = head.bs.linked.filament.__y
-            y_i = y * ym
-            y_f = np.round(y / y_span) * y_span * ym  # end links at top or bottom
-            group = tract.__groups["bound_actinin"]
-            group.add(svgwrite.shapes.Line((x_i, y_i), (x_f, y_f), class_="actinin"))
-        return
 
 
 def _plot_actin(actin, params):
@@ -94,6 +76,47 @@ def _plot_actin(actin, params):
     # Plot actin
     group.add(svgwrite.shapes.Line((x[0], y), (x[1], y)))
     return
+
+
+def _plot_unbound(mol, y, params, kind):
+    """Plot a free floating ellipse for an unbound component"""
+    y *= params["ym"]
+    x = mol.x * params["xm"]
+    group = mol.tract.__groups["unbound_" + kind]
+    group.add(svgwrite.shapes.Ellipse((x, y), (5, 1)))
+    return
+
+
+def _plot_head(head, params, kind):
+    """Plot actinin head on actin"""
+    if not head.bs.bound:
+        return
+    x = head.x * params["xm"]
+    y = head.bs.linked.filament.__y * params["ym"]
+    group = head.bs.linked.filament.tract.__groups["bound_" + kind]
+    group.add(svgwrite.shapes.Circle((x, y), 2, class_=kind))
+    return
+
+
+def _plot_body(mol, params, kind):
+    """Only plot body in case where both heads are bound"""
+    tracts = [head.bs.linked.filament.tract for head in mol.heads]
+    if tracts[0] == tracts[1]:  # same tract
+        x = [head.x * params["xm"] for head in mol.heads]
+        y = [h.bs.linked.filament.__y * params["ym"] for h in mol.heads]
+        group = tracts[0].__groups["bound_" + kind]
+        group.add(svgwrite.shapes.Line((x[0], y[0]), (x[1], y[1]), class_=kind))
+    else:  # different tracts
+        for head, tract in zip(mol.heads, tracts):
+            x_i = head.x * params["xm"]
+            x_f = head.other_head.x * params["xm"]
+            ym, y_span = params["ym"], params["y_span"]
+            y = head.bs.linked.filament.__y
+            y_i = y * ym
+            y_f = np.round(y / y_span) * y_span * ym  # end links at top or bottom
+            group = tract.__groups["bound_" + kind]
+            group.add(svgwrite.shapes.Line((x_i, y_i), (x_f, y_f), class_=kind))
+        return
 
 
 def _plot_tract(dwg, tract, tract_i, params):
@@ -116,6 +139,9 @@ def _plot_tract(dwg, tract, tract_i, params):
         "anchor": group.add(svgwrite.container.Group(class_="anchor")),
         "bound_actinin": group.add(svgwrite.container.Group(class_="actinin")),
         "unbound_actinin": group.add(svgwrite.container.Group(class_="actinin fade")),
+        "bound_motor": group.add(svgwrite.container.Group(class_="motor")),
+        "bound_motor.post": group.add(svgwrite.container.Group(class_="motor post")),
+        "unbound_motor": group.add(svgwrite.container.Group(class_="motor fade")),
     }
     group.add(
         svgwrite.shapes.Rect(
@@ -125,12 +151,23 @@ def _plot_tract(dwg, tract, tract_i, params):
     return group
 
 
+def _entry_or_empty_list(dict, key):
+    """Give the value of the key or, if not present, an empty list"""
+    try:
+        return dict[key]
+    except KeyError:
+        return []
+
+
 def plot_world(world, params={}):
     """Plot a world as a flat, unrolled, svg
     Parameters
     ---------
     world: stress_fiber.construct.World
         World to render as svg
+    params: dict keys in (y_span, y_sep, xm, ym)
+        Set how tall tracts are (y_span), how far apart they are (y_sep), and
+        the multipliers used to convert SVG units to pixels (ym, xm)
     """
     ## Visualization parameters
     # Manage parameters for passing to sub-plotting
@@ -161,18 +198,25 @@ def plot_world(world, params={}):
         _plot_tract(dwg, tract, i, params)
     # Actins
     for tract in world.tractspace.all_tracts:
-        actins = tract.mols["actin"]
+        actins = _entry_or_empty_list(tract.mols, "actin")
         n_actin = len(actins)
         for k, actin in enumerate(actins):
             actin.__y = y_span * (k + 1) / (n_actin + 1)
             _plot_actin(actin, params)
     # Alpha-actinins
     for tract in world.tractspace.all_tracts:
-        actinins = tract.mols["actinin"]
+        actinins = _entry_or_empty_list(tract.mols, "actinin")
         n_actinin = len(actinins)
         for j, actinin in enumerate(actinins):
             y_actinin = y_span * (j + 1) / (n_actinin + 1)
             _plot_actinin(actinin, y_actinin, params)
+    # Motors
+    for tract in world.tractspace.all_tracts:
+        motors = _entry_or_empty_list(tract.mols, "motor")
+        n_motor = len(motors)
+        for j, motor in enumerate(motors):
+            y_motor = y_span * (j + 1) / (n_motor + 1)
+            _plot_motor(motor, y_motor, params)
     # Anchors
     for tract in world.tractspace.all_tracts:
         if "anchor" in tract.mols:
