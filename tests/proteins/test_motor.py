@@ -80,9 +80,17 @@ class TestMotor:
         assert not str(motor).startswith("<")
 
     @pytest.mark.parametrize("motor", motor_list)
-    def test_step(self, motor):
-        motor.locs
-    
+    def test_locs(self, motor):
+        """Are the locs in the right order and updating the motor hidden loc"""
+        locs = motor.locs
+        assert locs[0] < locs[1]
+        motor.step()
+        assert motor._x == motor.locs[0]
+
+    @pytest.mark.parametrize("motor", motor_list)
+    def test_which_bound(self, motor):
+        assert motor._which_bound in ("none", "left", "right", "both")
+
     @pytest.mark.parametrize("motor", motor_list)
     def test_step(self, motor):
         motor.step()
@@ -94,7 +102,16 @@ class TestMotor:
 
     @pytest.mark.parametrize("motor", motor_list)
     def test_force(self, motor):
-        pass
+        for head in motor.heads:
+            x = head.x + np.random.randn()
+            if not head.other_head.bs.bound:
+                assert head.force() == 0.0
+                assert head.energy() == 0.0
+                assert head.force(x) == 0.0
+                assert head.energy(x) == 0.0
+            else:
+                assert head.force(x) != 0.0
+                assert head.energy(x) != 0.0
 
     @pytest.mark.parametrize("motor", motor_list)
     def test_energy(self, motor):
