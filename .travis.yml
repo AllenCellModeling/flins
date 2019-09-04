@@ -6,7 +6,7 @@ cache: pip
 python: "3.7"
 
 # Install system packages
-before_install: sudo apt-get install ffmpeg librsvg2-2
+before_install: sudo apt-get install ffmpeg librsvg2-bin
 
 # Install deps
 install: pip install -U tox-travis codecov
