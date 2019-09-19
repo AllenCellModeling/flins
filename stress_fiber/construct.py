@@ -14,7 +14,7 @@ from . import proteins
 
 def create_test_world(radius, span, n_actin, n_actinin, n_motors):
     """Create a world of given radius with n_actin and n_actinin per tract"""
-    tractspace = space.TractSpace(radius, span)
+    tractspace = space.Space("hex", radius, span)
     for tract in tractspace.all_tracts:
         for _ in range(n_actin):
             length = np.random.uniform(0.1 * span, 0.9 * span)

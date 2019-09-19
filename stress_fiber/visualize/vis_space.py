@@ -6,7 +6,7 @@ Plot things about our hex spaces and their tracts on matplotlib axes
 import matplotlib.pyplot as plt
 import matplotlib
 import matplotlib.patches
-from ..space.hexmath import Cube
+from ..support.hexmath import cube
 
 
 def plot_tractspace(ts, callback=None, show=False):

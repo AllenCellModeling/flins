@@ -14,7 +14,7 @@ from stress_fiber.proteins.alpha_actinin import AlphaActinin
 
 def actinin_tract():
     span = 10000
-    tractspace = sf.space.TractSpace(0, span)
+    tractspace = sf.space.Space("hex", 0, span)
     t = tractspace.all_tracts[0]
     t.rand = lambda: span * (np.random.rand() * 0.5 + 0.25)
     return t

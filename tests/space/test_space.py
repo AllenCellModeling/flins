@@ -2,39 +2,43 @@
 # -*- coding: UTF-8 -*-
 
 """
-Test the tract space and tracts. 
+Test space. 
 """
+
+import pytest
+import random
 
 import stress_fiber.space as space
 
 
-class TestTract:
-    TRACTSPACES = [space.TractSpace(r, 100) for r in (0, 1, 2, 3)]
-    TRACTS = [t for s in TRACTSPACES for t in s.all_tracts]
-    SOLO_TRACT = space.Tract((1, -1, 0), None)
+space_list = [space.Space("hex", r, 100, True) for r in (0, 1, 2, 3)]
+space_list += [space.Space("hex", r, 100, False) for r in (1, 3)]
 
-    def test_neighbors(self):
-        """Should return a set of neighbors, all of which are distance 1"""
-        dist_fn = space.hexmath.Cube.mirrored_distance
-        for tract in self.TRACTS:
-            r = tract.space.size
-            for neighbor in tract.neighbors:
-                dist = dist_fn(*tract.loc, *neighbor.loc, r)
-                assert dist == 1
 
-    def test_solo_neighbors(self):
-        """Should return None"""
-        assert self.SOLO_TRACT.neighbors is None
+class TestSpace:
+    @pytest.mark.parametrize("space", space_list)
+    def test__str__(self, space):
+        """Should not return a <blah>"""
+        assert not str(space).startswith("<")
 
-    def test_reachable(self):
-        """Should return a set of neighbors and self"""
-        dist_fn = space.hexmath.Cube.mirrored_distance
-        for tract in self.TRACTS:
-            r = tract.space.size
-            for reachable in tract.reachable:
-                dist = dist_fn(*tract.loc, *reachable.loc, r)
-                assert dist == 1 or dist == 0
+    @pytest.mark.parametrize("space", space_list)
+    def test_all_tracts(self, space):
+        """Tracts equal to the entries in the grid"""
+        tracts = space.all_tracts
+        grid_entries = [entry['tract'] for entry in space.grid.all_entries]
+        assert set(tracts) == set(grid_entries)
 
-    def test_solo_reachable(self):
-        """Should return list of self"""
-        assert self.SOLO_TRACT.reachable == [self.SOLO_TRACT]
+    
+    @pytest.mark.parametrize("space", space_list)
+    def test_tract(self, space):
+        """Return tracts matching our coordinates"""
+        assert all([space.tract(tract.loc)==tract for tract in space.all_tracts])
+
+    @pytest.mark.parametrize("space", space_list)
+    def test_neighbors(self, space):
+        """All neighbors are one away. Only testing one to limit test runtime."""
+        tract = random.choice(space.all_tracts)
+        loc = tract.loc
+        neighbors = space.neighbors(loc)
+        assert all([space.grid.distance(n.loc, loc)==1 for n in neighbors])
+    

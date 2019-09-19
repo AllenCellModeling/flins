@@ -14,7 +14,7 @@ from stress_fiber.proteins.motor import Motor
 
 def motor_tract():
     span = 10000
-    tractspace = sf.space.TractSpace(0, span)
+    tractspace = sf.space.Space("hex", 0, span)
     t = tractspace.all_tracts[0]
     t.rand = lambda: span * (np.random.rand() * 0.5 + 0.25)
     return t
@@ -90,6 +90,10 @@ class TestMotor:
     @pytest.mark.parametrize("motor", motor_list)
     def test_which_bound(self, motor):
         assert motor._which_bound in ("none", "left", "right", "both")
+
+    @pytest.mark.parametrize("motor", motor_list)
+    def test_bopped_locs(self, motor):
+        pass  # TODO Left off here. Can I delete this method entirely?
 
     @pytest.mark.parametrize("motor", motor_list)
     def test_step(self, motor):
