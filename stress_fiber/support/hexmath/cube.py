@@ -21,15 +21,16 @@ def to_axial(i, j, k):
 
 def to_offset(i, j, k):
     """Convert cube coordinates to offset coordinates, odd rows shifted by +1/2 col"""
-    col = i + (k - (k & 1)) // 2
-    row = k
+    col = i + (j - (j & 1)) // 2
+    row = j
     return col, row
 
 
 def to_cart(i, j, k):
     """Convert cube coordinates to cartesian"""
-    col, row = to_offset(i, j, k)
-    x, y = offset.to_cart(col, row)
+    # col, row = to_offset(i, j, k)
+    # x, y = offset.to_cart(col, row)
+    x, y = axial.to_cart(*to_axial(i, j, k))
     return x, y
 
 

@@ -1,6 +1,6 @@
 # encoding: utf-8
 """
-Grid-scale computing. 
+Grid-scale computing. Axial coordinates.
 
 Hexagonal axial coordinate helper functions, assuming pointy side up.
 """

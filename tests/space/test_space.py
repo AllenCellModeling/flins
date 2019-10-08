@@ -25,14 +25,13 @@ class TestSpace:
     def test_all_tracts(self, space):
         """Tracts equal to the entries in the grid"""
         tracts = space.all_tracts
-        grid_entries = [entry['tract'] for entry in space.grid.all_entries]
+        grid_entries = [entry["tract"] for entry in space.grid.all_entries]
         assert set(tracts) == set(grid_entries)
 
-    
     @pytest.mark.parametrize("space", space_list)
     def test_tract(self, space):
         """Return tracts matching our coordinates"""
-        assert all([space.tract(tract.loc)==tract for tract in space.all_tracts])
+        assert all([space.tract(tract.loc) == tract for tract in space.all_tracts])
 
     @pytest.mark.parametrize("space", space_list)
     def test_neighbors(self, space):
@@ -40,5 +39,4 @@ class TestSpace:
         tract = random.choice(space.all_tracts)
         loc = tract.loc
         neighbors = space.neighbors(loc)
-        assert all([space.grid.distance(n.loc, loc)==1 for n in neighbors])
-    
+        assert all([space.grid.distance(n.loc, loc) == 1 for n in neighbors])

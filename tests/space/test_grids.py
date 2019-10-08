@@ -15,9 +15,18 @@ grids = sf.space.grids
 
 grid_list = [grids.HexGrid(n, True) for n in (0, 1, 2, 3)]
 grid_list += [grids.HexGrid(n, False) for n in (1, 3)]
+grid_list += [grids.RectGrid(nm, True) for nm in ((2, 2), (2, 4), (4, 4))]
+grid_list += [grids.RectGrid(nm, False) for nm in ((2, 2), (2, 4), (4, 4))]
 coords = ((-2, 3, -1), (0, 0, 0), (1, -1, 0), (-3, 1, 2), (1, 0, -1))
 
 # TODO: Convert to using coords of given size and multiplying them to scale
+
+
+def scale(size):
+    if type(size) == int:
+        return size
+    else:
+        return max(size)
 
 
 class TestGrid:
@@ -30,9 +39,9 @@ class TestGrid:
     def test_within(self, grid):
         """Origin is always within, 1 off is if size>=1, 10000 isn't"""
         assert grid.within((0, 0, 0))
-        if grid.size >= 1:
+        if scale(grid.size) >= 1:
             assert grid.within((1, -1, 0))
-        if grid.size <= 1_000_000:
+        if scale(grid.size) <= 1_000_000:
             assert not grid.within((2_000_000, -1_000_000, -1_000_000))
 
     @pytest.mark.parametrize("grid", grid_list)
@@ -45,7 +54,6 @@ class TestGrid:
     @pytest.mark.parametrize("grid", grid_list)
     def test_to_array_indices(self, grid):
         """Created grids should match up to the resolution method"""
-        n = grid.size
         for loc in coords:
             if grid.within(loc):
                 indices = grid.to_array_indices(loc)
@@ -57,4 +65,3 @@ class TestGrid:
         loc1 = random.choice(grid.all_entries)["cube"]
         for loc2 in grid.neighbors(loc1):
             assert grid.distance(loc1, loc2) == 1
-

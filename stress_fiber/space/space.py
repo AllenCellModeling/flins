@@ -47,9 +47,9 @@ class Space(Base):
 
     def __str__(self):
         """String representation of space"""
-        size, n = self.size, len(self.all_tracts)
+        size, n = str(self.size), len(self.all_tracts)
         sp = self.span if self.span is not None else 0
-        return "Space with size %i, %i tracts, and span %i" % (size, n, sp)
+        return "Space with size %s, %i tracts, and span %i" % (size, n, sp)
 
     @property
     def all_tracts(self):

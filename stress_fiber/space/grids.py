@@ -11,7 +11,7 @@ from abc import abstractmethod
 import itertools
 import numpy as np
 
-from ..support.hexmath import cube, axial
+from ..support.hexmath import cube, axial, offset
 from ..base import Base
 
 
@@ -104,7 +104,7 @@ class HexGrid(Grid):
         ## Before all, if within radius of world no mirroring is needed
         if self.within(loc):
             return loc
-        ## Find closest mirrored cente
+        ## Find closest mirrored center
         closest = cube.closest(*loc, self._mirrored_centers)
         ## Subtract that center to shift back into world
         mirrored = np.subtract(loc, closest)
@@ -175,20 +175,7 @@ class HexGrid(Grid):
 
 
 class RectGrid(Grid):
-    """A rectangular grid of n-by-m hexs
-    With (q,r) indices that look like::
-                                            
-         / \ / \ / \ / \   
-        |0 0|1 0|2 0|3 0|  
-         \ / \ / \ / \ / \
-          |0 1|1 1|2 1|3 1|
-         / \ / \ / \ / \ / 
-        |0 2|1 2|2 2|3 2|  
-         \ / \ / \ / \ / \
-          |0 3|1 3|2 3|3 3|
-           \ / \ / \ / \ / 
-
-    """
+    """A rectangular grid of n-by-m hexs"""
 
     def __init__(self, size, mirror=True):
         """Create a rectangular grid that we'll use as a model of tracts
@@ -200,4 +187,108 @@ class RectGrid(Grid):
         mirror: bool (True)
             whether to mirror when calculating neighbors and distances
         """
-        pass
+        self.size, self._mirroring = size, mirror
+        self.array = self._create_grid_array(size)
+        if mirror:
+            assert size[1] % 2 == 0, "Mirroring only works with even heights"
+
+    def __str__(self):
+        typesize = "RectGrid of rows/cols %s. " % str(self.size)
+        mirrored = "Is mirrored." if self._mirroring else "Isn't mirrored."
+        return typesize + mirrored
+
+    def within(self, loc):
+        """Is loc within the non-mirrored grid?"""
+        r, c = self.to_array_indices(loc)
+        if r >= self.size[0] or c >= self.size[1]:
+            return False
+        elif r < 0 or c < 0:
+            return False
+        else:
+            return True
+
+    def validate(self, loc):
+        """Is loc valid within the grid's coordinate system?"""
+        return cube.validate(*loc)
+
+    def mirror(self, loc):
+        """Return loc, mirrored across boundaries if outside the grid"""
+        rn, cn = self.size
+        r, c = self.to_array_indices(loc)
+        loc = self._from_array_indices(r % rn, c % cn)
+        return loc
+
+    def neighbors(self, loc):
+        """Return the coordinates of neighbors"""
+        if self.size == (0, 0):
+            return []
+        neighbors = cube.neighbors(*loc)
+        if self._mirroring:
+            neighbors = [self.mirror(loc) for loc in neighbors]
+        else:
+            neighbors = [loc for loc in neighbors if self.within(loc)]
+        return neighbors
+
+    def _mirrored_locs(self, loc):
+        """Find the real and ghost versions of loc"""
+        # Set it up
+        rn, cn = self.size
+        loc = self.mirror(loc)
+        # Doing all this in offset/xy coordinates
+        rc = np.array(self.to_array_indices(loc))
+        # Wrap around each dimension
+        wraps = ((0, 0), (-rn, 0), (rn, 0), (0, -cn), (0, cn), (-rn, -cn), (rn, cn))
+        rc_locs = [rc + w for w in wraps]
+        locs = [self._from_array_indices(*rc) for rc in rc_locs]
+        return locs
+
+    def distance(self, loc1, loc2):
+        """The distance between the locs on this grid"""
+        if not self.validate(loc1) or not self.validate(loc2):
+            return None
+        if not self._mirroring:
+            ## Kick out if either are out of bounds
+            if not self.within(loc1) or not self.within(loc2):
+                return None
+        else:
+            ## Find the wrapped versions of loc2
+            versions = self._mirrored_locs(loc2)
+            loc2 = cube.closest(*loc1, versions)
+        return cube.distance(*loc1, *loc2)
+
+    def entry(self, loc):
+        """Give the grid entry at the passed loc"""
+        indices = self.to_array_indices(loc)
+        return self.array[indices]
+
+    @property
+    def all_entries(self):
+        """Return all entries in the grid"""
+        return [entry for row in self.array for entry in row]
+
+    @staticmethod
+    def to_array_indices(loc):
+        """Convert to array indices from cube location"""
+        i, j, k = loc
+        r = k
+        # c = -k - j - k // 2
+        c = i + k // 2
+        return c, r
+
+    @staticmethod
+    def _from_array_indices(r, c):
+        """Convert array location to cube coordinates"""
+        i = r - c // 2
+        k = c
+        j = -i - k
+        return i, j, k
+
+    def _create_grid_array(self, size):
+        """Create a grid of hex locations with width, height of size"""
+        row_n, col_n = size
+        grid = []
+        for r in range(row_n):
+            cc = range(col_n)
+            row = [{"cube": self._from_array_indices(r, c)} for c in cc]
+            grid.append(np.array(row))
+        return np.array(grid)
