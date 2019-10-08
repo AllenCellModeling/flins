@@ -11,6 +11,7 @@ import itertools
 import numpy as np
 
 from .base import Protein
+from ..base import Base
 from ..support import spring
 from ..support import units
 from ..support import diffuse
@@ -145,7 +146,7 @@ class AlphaActinin(Protein):
         return d_x
 
 
-class ActininHead:
+class ActininHead(Base):
     """One of the two heads of an α-actinin"""
 
     def __init__(self, actinin, side):
