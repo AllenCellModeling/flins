@@ -69,6 +69,8 @@ class Tract(Base):
             self.mols[kind] = []
         if not kind in self.mols_named:
             self.mols_named[kind] = {}
+        # Make sure we aren't already tracking this protein
+        assert mol not in self.mols[kind], "Can't add mol to tract twice"
         # Create id for this mol
         id = names.unique_name()
         # Append mol to named and unnamed stores
