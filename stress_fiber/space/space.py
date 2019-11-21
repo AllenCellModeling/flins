@@ -22,6 +22,8 @@ class Space(Base):
         """ A generic template for 
         Parameters
         ----------
+        kind: "hex" or "rect"
+            overall shape of the space
         size: int or tuple
             Radius or x/y size of space
         span: None or float
