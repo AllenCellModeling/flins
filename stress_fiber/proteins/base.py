@@ -6,6 +6,7 @@ Base protein class
 import numpy as np
 
 from ..base import Base
+from ..support import binding_site
 
 
 class Protein(Base):
@@ -34,3 +35,29 @@ class Protein(Base):
             return (0, np.inf)
         else:
             return (0, self.tract.space.span)
+
+
+class Head(Protein):
+    """Generic head located on a parent protein"""
+
+    def __init__(self, parent, side):
+        """A head on one side of a parent protein
+
+        Parameters 
+        ----------
+        parent: :obj: `Protein subclass`
+            The protein on which this head is located
+        side: int
+            Index of this head's position on the parent
+        """
+        self.parent = parent
+        self.side = side
+        self.bs = binding_site.BindingSite(self)
+
+    @property
+    def other_head(self):
+        """The other head"""
+        return self.parent.heads[self.side ^ 1]
+
+
+

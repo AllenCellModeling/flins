@@ -104,7 +104,7 @@ class TestActininHead:
         """Other head gives diff head on same protein"""
         other_head = head.other_head
         assert head != other_head
-        assert head.actinin == other_head.actinin
+        assert head.parent == other_head.parent
 
     @pytest.mark.parametrize("head", head_list)
     def test__r01(self, head):

@@ -10,8 +10,7 @@ adjacent actin filaments.
 import itertools
 import numpy as np
 
-from .base import Protein
-from ..base import Base
+from .base import Protein, Head
 from ..support import spring
 from ..support import units
 from ..support import diffuse
@@ -146,14 +145,12 @@ class AlphaActinin(Protein):
         return d_x
 
 
-class ActininHead(Base):
+class ActininHead(Head):
     """One of the two heads of an α-actinin"""
 
     def __init__(self, actinin, side):
-        self.actinin = actinin
-        self.side = side  # Which side of the α-actinin is this on, 0 or 1
+        super().__init__(actinin, side)
         self.address = (actinin.address[:], ("actininhead", side))
-        self.bs = binding_site.BindingSite(self)
         self._update_x()
 
     def __str__(self):
@@ -161,11 +158,6 @@ class ActininHead(Base):
         x_str = "%0.1f" % self.x
         state_str = "unbound" if not self.bs.bound else "bound"
         return "α-act head %s at x=%s" % (state_str, x_str)
-
-    @property
-    def other_head(self):
-        """The other head on this actinin"""
-        return self.actinin.heads[self.side ^ 1]
 
     @property
     def x(self):
@@ -184,11 +176,11 @@ class ActininHead(Base):
         This isn't necessary and we could stop it by linking our updates to a
         global timestep clock.
         """
-        spring = self.actinin.spring
+        spring = self.parent.spring
         if self.side == 0:
-            self._x = self.actinin.x - 0.5 * spring.bop_dx()
+            self._x = self.parent.x - 0.5 * spring.bop_dx()
         elif self.side == 1:
-            self._x = self.actinin.x + spring.rest + 0.5 * spring.bop_dx()
+            self._x = self.parent.x + spring.rest + 0.5 * spring.bop_dx()
 
     def step(self):
         """Take a timestep: bind, unbind, or stay current"""
@@ -200,7 +192,7 @@ class ActininHead(Base):
 
     def _bind_or_not(self):
         """Maybe bind? Can't say for sure."""
-        gactin = self.actinin.tract.nearest_binding_site(self.x)
+        gactin = self.parent.tract.nearest_binding_site(self.x)
         if gactin.bs.bound:  # don't bind if site is already taken
             return
         if self.other_head.bs.bound:
@@ -228,7 +220,7 @@ class ActininHead(Base):
         .. [1] http://dx.doi.org/10.1098/rspb.2013.0697
         """
         tau = 72
-        k = self.actinin.spring.k
+        k = self.parent.spring.k
         kT = units.constants.kT
         rate = tau * np.exp(-(k * dist ** 2) / (2 * kT))
         return rate
@@ -256,7 +248,7 @@ class ActininHead(Base):
         .. [2] https://dx.doi.org/10.1074/jbc.273.16.9570
         """
         deltaG = 62  # pN*nm energy barrier between unbound and bound
-        U = self.actinin.energy
+        U = self.parent.energy
         A = 1
         kT = units.constants.kT
         rate = A * np.exp(-(deltaG - U) / kT)
@@ -302,7 +294,7 @@ class ActininHead(Base):
         Looking at this it becomes obvious that force direction flips are needed
         in cases where the current head is the right-most of the two. 
         """
-        force_fn = self.actinin.spring.force
+        force_fn = self.parent.spring.force
         mult = -1 if self.x > self.other_head.x else 1
         return self._spring_property(force_fn, x) * mult
 
@@ -311,5 +303,5 @@ class ActininHead(Base):
         This exists because we want to be able to propose alternate ActininHead
         locations and find the energy without changing states. 
         """
-        energy_fn = self.actinin.spring.energy
+        energy_fn = self.parent.spring.energy
         return self._spring_property(energy_fn, x)

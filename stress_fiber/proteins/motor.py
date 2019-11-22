@@ -20,8 +20,7 @@ sliding forces::
 import math as m
 import numpy as np
 
-from .base import Protein
-from ..base import Base
+from .base import Protein, Head
 from ..support import units
 from ..support import spring
 from ..support import diffuse
@@ -152,7 +151,7 @@ class Motor(Protein):
                 raise Exception("Head has state other than 0, 1, or 2")
 
 
-class MotorHead(Base):
+class MotorHead(Head):
     """A head that tracks binding, rates, and states"""
 
     def __init__(self, motor, side):
@@ -170,14 +169,8 @@ class MotorHead(Base):
         side: 0 or 1
             Whether this head is on the left (0) or right (1) side of the motor
         """
-        self.parent = motor
-        self.side = side
-        self.bs = binding_site.BindingSite(self)
+        super().__init__(motor, side)
         self.state = 0
-
-    @property
-    def other_head(self):
-        return self.parent.heads[self.side ^ 1]
 
     @property
     def x(self):
