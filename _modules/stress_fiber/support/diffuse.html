@@ -1,0 +1,353 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>stress_fiber.support.diffuse &mdash; stress_fiber 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> stress_fiber
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics.html">Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">stress_fiber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">stress_fiber</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>stress_fiber.support.diffuse</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for stress_fiber.support.diffuse</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Stagger around.</span>
+
+<span class="sd">Allow random diffusion of various shapes in various directions.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">units</span>
+
+
+<div class="viewcode-block" id="Drag"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.diffuse.Drag">[docs]</a><span class="k">class</span> <span class="nc">Drag</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Drag coefficients drawn from Howard_2001_, Pg 107 and Berg_1983_.</span>
+<span class="sd">    We assume that our coefficient of viscosity, :math:`\eta`, defaults to that</span>
+<span class="sd">    of water (0.0114 poise at 288K), referenced from units</span>
+
+<span class="sd">    .. _Howard_2001: http://books.google.com/books?vid=ISBN9780878933334</span>
+<span class="sd">    .. _Berg_1983: https://press.princeton.edu/titles/112.html</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Drag.Cylinder"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.diffuse.Drag.Cylinder">[docs]</a>    <span class="k">class</span> <span class="nc">Cylinder</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Drag coefficients for cylinders.</span>
+<span class="sd">        The cylinder has a length :math:`L`, a radius :math:`r`, and is in a</span>
+<span class="sd">        fluid of viscosity :math:`\eta`.  This assumes :math:`L&gt;&gt;r` and an</span>
+<span class="sd">        unbounded space.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Drag.Cylinder.long_axis_translation"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.diffuse.Drag.Cylinder.long_axis_translation">[docs]</a>        <span class="k">def</span> <span class="nf">long_axis_translation</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">eta</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Drag coefficient for cylinder moving along long axis&quot;&quot;&quot;</span>
+            <span class="n">drag</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">L</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">L</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="p">))</span> <span class="o">-</span> <span class="mf">0.20</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">drag</span></div>
+
+<div class="viewcode-block" id="Drag.Cylinder.short_axis_translation"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.diffuse.Drag.Cylinder.short_axis_translation">[docs]</a>        <span class="k">def</span> <span class="nf">short_axis_translation</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">eta</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Drag coefficient for cylinder moving along the radial axis&quot;&quot;&quot;</span>
+            <span class="n">drag</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">L</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">L</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="p">))</span> <span class="o">+</span> <span class="mf">0.84</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">drag</span></div>
+
+<div class="viewcode-block" id="Drag.Cylinder.long_axis_rotation"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.diffuse.Drag.Cylinder.long_axis_rotation">[docs]</a>        <span class="k">def</span> <span class="nf">long_axis_rotation</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">eta</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Drag coefficient for cylinder rotating about the long axis&quot;&quot;&quot;</span>
+            <span class="n">drag</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">L</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">L</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="p">))</span> <span class="o">-</span> <span class="mf">0.66</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">drag</span></div>
+
+<div class="viewcode-block" id="Drag.Cylinder.short_axis_rotation"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.diffuse.Drag.Cylinder.short_axis_rotation">[docs]</a>        <span class="k">def</span> <span class="nf">short_axis_rotation</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">eta</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Drag coefficient for cylinder rotating about the radial axis&quot;&quot;&quot;</span>
+            <span class="n">drag</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">r</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">L</span>
+            <span class="k">return</span> <span class="n">drag</span></div></div>
+
+<div class="viewcode-block" id="Drag.Ellipsoid"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.diffuse.Drag.Ellipsoid">[docs]</a>    <span class="k">class</span> <span class="nc">Ellipsoid</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Drag coefficients for an ellipsoid.</span>
+<span class="sd">        The ellipsoid has a minor axis radius of :math:`a`, a major axis radius</span>
+<span class="sd">        of :math:`b`, and immersion in a fluid of viscosity :math:`\eta`. This</span>
+<span class="sd">        assumes :math:`b&gt;&gt;a` and an unbounded space.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Drag.Ellipsoid.long_axis_translation"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.diffuse.Drag.Ellipsoid.long_axis_translation">[docs]</a>        <span class="k">def</span> <span class="nf">long_axis_translation</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">eta</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Drag coefficient for an ellipsoid moving along long axis&quot;&quot;&quot;</span>
+            <span class="n">drag</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">b</span> <span class="o">/</span> <span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">drag</span></div>
+
+<div class="viewcode-block" id="Drag.Ellipsoid.short_axis_translation"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.diffuse.Drag.Ellipsoid.short_axis_translation">[docs]</a>        <span class="k">def</span> <span class="nf">short_axis_translation</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">eta</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Drag coefficient for an ellipsoid moving along the minor axis&quot;&quot;&quot;</span>
+            <span class="n">drag</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">b</span> <span class="o">/</span> <span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">drag</span></div>
+
+<div class="viewcode-block" id="Drag.Ellipsoid.long_axis_rotation"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.diffuse.Drag.Ellipsoid.long_axis_rotation">[docs]</a>        <span class="k">def</span> <span class="nf">long_axis_rotation</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">eta</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Drag coefficient for an ellipsoid rotating about the long axis&quot;&quot;&quot;</span>
+            <span class="n">drag</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">b</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">b</span> <span class="o">/</span> <span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">drag</span></div>
+
+<div class="viewcode-block" id="Drag.Ellipsoid.short_axis_rotation"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.diffuse.Drag.Ellipsoid.short_axis_rotation">[docs]</a>        <span class="k">def</span> <span class="nf">short_axis_rotation</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">eta</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Drag coefficient for an ellipsoid rotating about the minor axis&quot;&quot;&quot;</span>
+            <span class="n">drag</span> <span class="o">=</span> <span class="mi">16</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">a</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">b</span>
+            <span class="k">return</span> <span class="n">drag</span></div></div>
+
+<div class="viewcode-block" id="Drag.Sphere"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.diffuse.Drag.Sphere">[docs]</a>    <span class="k">class</span> <span class="nc">Sphere</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Drag coefficients for a sphere.</span>
+<span class="sd">        The sphere has a radius of :math:`r` and is embedded in a fluid of</span>
+<span class="sd">        viscosity :math:`\eta`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Drag.Sphere.translation"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.diffuse.Drag.Sphere.translation">[docs]</a>        <span class="k">def</span> <span class="nf">translation</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">eta</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Drag coefficient for a sphere moving through a fluid&quot;&quot;&quot;</span>
+            <span class="n">drag</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">r</span>
+            <span class="k">return</span> <span class="n">drag</span></div>
+
+<div class="viewcode-block" id="Drag.Sphere.rotation"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.diffuse.Drag.Sphere.rotation">[docs]</a>        <span class="k">def</span> <span class="nf">rotation</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">eta</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Drag coefficient for a sphere rotating in a fluid&quot;&quot;&quot;</span>
+            <span class="n">drag</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">r</span> <span class="o">**</span> <span class="mi">3</span>
+            <span class="k">return</span> <span class="n">drag</span></div></div></div>
+
+
+<div class="viewcode-block" id="Dx"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.diffuse.Dx">[docs]</a><span class="k">def</span> <span class="nf">Dx</span><span class="p">(</span><span class="n">f_drag</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;How far do we move because of diffusion subject to drag?</span>
+<span class="sd">    From the Einstein-Smoluchowski relation via Berg_1983_ we know that the</span>
+<span class="sd">    diffusion coefficient for a particle subject to a viscous drag, :math:`f`</span>
+<span class="sd">    (in :math:`g/s`) is :math:`D=kT/f`. Further, from the same source and</span>
+<span class="sd">    Howard_2001_ we know the drag on cylinders, ellipsoids, and spheres and</span>
+<span class="sd">    calculate them above for reference.</span>
+
+<span class="sd">    We add a correction factor of 1/3.2 to account for the difference in</span>
+<span class="sd">    diffusion between water and eukaryotic cytoplasm (Swaminathan_1997_).</span>
+
+<span class="sd">    An alternate treatment would be to use the Stoke&#39;s radius for all molecules,</span>
+<span class="sd">    approximating them as spheres. There is an argument that anything beyond the</span>
+<span class="sd">    spherical approximation is false precision.</span>
+
+<span class="sd">    .. _Berg_1983: https://press.princeton.edu/titles/112.html</span>
+<span class="sd">    .. _Howard_2001: http://books.google.com/books?vid=ISBN9780878933334</span>
+<span class="sd">    .. _Swaminathan_1997: https://doi.org/10.1016/S0006-3495(97)78835-0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Gather info</span>
+    <span class="n">kT</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">kT</span>
+    <span class="n">D_corr</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">world</span><span class="o">.</span><span class="n">D_cyto_corr</span>  <span class="c1"># Cytoplasm correction factor</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">world</span><span class="o">.</span><span class="n">timestep</span>
+    <span class="c1"># Calculate</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="n">kT</span> <span class="o">/</span> <span class="p">(</span><span class="n">f_drag</span> <span class="o">*</span> <span class="n">D_corr</span><span class="p">)</span>
+    <span class="n">std_dev</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">D</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+    <span class="n">d_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">std_dev</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d_x</span></div>
+
+
+<div class="viewcode-block" id="coerce_to_bounds"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.diffuse.coerce_to_bounds">[docs]</a><span class="k">def</span> <span class="nf">coerce_to_bounds</span><span class="p">(</span><span class="n">mol_start</span><span class="p">,</span> <span class="n">mol_end</span><span class="p">,</span> <span class="n">boundaries</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;When a molecule has diffused out of bounds, coerce it back into bounds</span>
+
+<span class="sd">    A choice is made here to reflect the molecule back into bounds rather than</span>
+<span class="sd">    stopping it dead at the boundary. This is to prevent the boundaries of the</span>
+<span class="sd">    system from acting as absorbing ends that will tend to build up diffusing</span>
+<span class="sd">    proteins over time.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mol_start : `float`</span>
+<span class="sd">        X location of the right side of the protein</span>
+<span class="sd">    mol_end : `float`</span>
+<span class="sd">        X location of left side of the protein</span>
+<span class="sd">    boundaries : `tuple`</span>
+<span class="sd">        Upper and lower bounds of the 1D space the molecule is diffusing within</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">b2</span> <span class="o">=</span> <span class="n">mol_start</span><span class="p">,</span> <span class="n">mol_end</span><span class="p">,</span> <span class="n">boundaries</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">boundaries</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># Do some checking</span>
+    <span class="k">if</span> <span class="n">m2</span> <span class="o">-</span> <span class="n">m1</span> <span class="o">&gt;</span> <span class="n">b2</span> <span class="o">-</span> <span class="n">b1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;molecule is too long to fit in boundaries&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">m1</span> <span class="o">&gt;</span> <span class="n">m2</span> <span class="ow">or</span> <span class="n">b1</span> <span class="o">&gt;</span> <span class="n">b2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;molecule/boundaries passed in reverse order&quot;</span><span class="p">)</span>
+    <span class="c1"># And now the bouncing around</span>
+    <span class="k">if</span> <span class="n">m1</span> <span class="o">&lt;</span> <span class="n">b1</span><span class="p">:</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">b1</span> <span class="o">-</span> <span class="n">m1</span>
+        <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span> <span class="o">=</span> <span class="n">m1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">diff</span><span class="p">,</span> <span class="n">m2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">diff</span>
+        <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span> <span class="o">=</span> <span class="n">coerce_to_bounds</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">boundaries</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">m2</span> <span class="o">&gt;</span> <span class="n">b2</span><span class="p">:</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">m2</span> <span class="o">-</span> <span class="n">b2</span>
+        <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span> <span class="o">=</span> <span class="n">m1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">diff</span><span class="p">,</span> <span class="n">m2</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">diff</span>
+        <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span> <span class="o">=</span> <span class="n">coerce_to_bounds</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">boundaries</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dave Williams
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

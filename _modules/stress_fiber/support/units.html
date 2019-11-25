@@ -1,0 +1,249 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>stress_fiber.support.units &mdash; stress_fiber 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> stress_fiber
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics.html">Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">stress_fiber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">stress_fiber</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>stress_fiber.support.units</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for stress_fiber.support.units</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">To protect constants and serve unit conversions</span>
+
+<span class="sd">Gather all the parameters that define the units in our universe, and the</span>
+<span class="sd">particular section of it we are interested in, into one spot.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="poise"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.units.poise">[docs]</a><span class="k">def</span> <span class="nf">poise</span><span class="p">(</span><span class="n">input_in_poise</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert the input viscosity, in poise, to g/nm*s&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">input_in_poise</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="o">-</span><span class="mi">7</span></div>
+
+
+<div class="viewcode-block" id="joules"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.units.joules">[docs]</a><span class="k">def</span> <span class="nf">joules</span><span class="p">(</span><span class="n">input_in_joules</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert energy, in joules, to pN*nm&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">input_in_joules</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">21</span></div>
+
+
+<div class="viewcode-block" id="kcal"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.units.kcal">[docs]</a><span class="k">def</span> <span class="nf">kcal</span><span class="p">(</span><span class="n">input_in_kcal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert energy, in kcal, to pN*nm&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">input_in_kcal</span> <span class="o">*</span> <span class="mf">4.184</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">24</span></div>
+
+
+<div class="viewcode-block" id="milliseconds"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.units.milliseconds">[docs]</a><span class="k">def</span> <span class="nf">milliseconds</span><span class="p">(</span><span class="n">input_in_ms</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert time, in ms, to seconds&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">input_in_ms</span> <span class="o">*</span> <span class="mf">0.001</span></div>
+
+
+<div class="viewcode-block" id="constants"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.units.constants">[docs]</a><span class="k">class</span> <span class="nc">constants</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Universal constants we don&#39;t expect to change across runs&quot;&quot;&quot;</span>
+
+    <span class="n">temperature</span> <span class="o">=</span> <span class="mi">288</span>  <span class="c1"># Standard temperature, K</span>
+    <span class="n">eta</span> <span class="o">=</span> <span class="n">poise</span><span class="p">(</span><span class="mf">0.0114</span><span class="p">)</span>  <span class="c1"># Viscosity of water at 288K</span>
+    <span class="n">boltzmann</span> <span class="o">=</span> <span class="n">joules</span><span class="p">(</span><span class="mf">1.38</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="o">-</span><span class="mi">23</span><span class="p">)</span>  <span class="c1"># From J/K to pN*nm/K</span>
+    <span class="n">kT</span> <span class="o">=</span> <span class="n">boltzmann</span> <span class="o">*</span> <span class="n">temperature</span>
+    <span class="n">avogadro</span> <span class="o">=</span> <span class="mf">6.022</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">23</span></div>
+
+
+<div class="viewcode-block" id="world"><a class="viewcode-back" href="../../../stress_fiber.support.html#stress_fiber.support.units.world">[docs]</a><span class="k">class</span> <span class="nc">world</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Things that are constant for our (simulated) world</span>
+
+<span class="sd">    * timestep is the number of ms we advance each tick</span>
+<span class="sd">    * D_cyto_corr comes from the difference in diffusion between water and</span>
+<span class="sd">      eukaryotic cytoplasm (Swaminathan_1997_).</span>
+
+<span class="sd">    .. _Swaminathan_1997: https://doi.org/10.1016/S0006-3495(97)78835-0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">timestep</span> <span class="o">=</span> <span class="n">milliseconds</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 1ms timestep</span>
+    <span class="n">D_cyto_corr</span> <span class="o">=</span> <span class="mf">3.2</span>  <span class="c1"># Cytoplasmic crowding sub-diffusion</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dave Williams
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

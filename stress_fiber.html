@@ -1,0 +1,318 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>stress_fiber package &mdash; stress_fiber 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="stress_fiber.proteins package" href="stress_fiber.proteins.html" />
+    <link rel="prev" title="stress_fiber" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> stress_fiber
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics.html">Physics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">stress_fiber</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">stress_fiber package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="stress_fiber.proteins.html">stress_fiber.proteins package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stress_fiber.space.html">stress_fiber.space package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stress_fiber.support.html">stress_fiber.support package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stress_fiber.visualize.html">stress_fiber.visualize package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-stress_fiber.base">stress_fiber.base module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-stress_fiber.construct">stress_fiber.construct module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-stress_fiber">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">stress_fiber</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">stress_fiber</a> &raquo;</li>
+        
+      <li>stress_fiber package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/stress_fiber.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="stress-fiber-package">
+<h1>stress_fiber package<a class="headerlink" href="#stress-fiber-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="stress_fiber.proteins.html">stress_fiber.proteins package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="stress_fiber.proteins.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stress_fiber.proteins.html#module-stress_fiber.proteins.actin">stress_fiber.proteins.actin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stress_fiber.proteins.html#module-stress_fiber.proteins.alpha_actinin">stress_fiber.proteins.alpha_actinin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stress_fiber.proteins.html#module-stress_fiber.proteins.anchor">stress_fiber.proteins.anchor module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stress_fiber.proteins.html#module-stress_fiber.proteins">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="stress_fiber.space.html">stress_fiber.space package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="stress_fiber.space.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stress_fiber.space.html#module-stress_fiber.space.space">stress_fiber.space.space module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stress_fiber.space.html#module-stress_fiber.space">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="stress_fiber.support.html">stress_fiber.support package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="stress_fiber.support.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stress_fiber.support.html#module-stress_fiber.support.binding_site">stress_fiber.support.binding_site module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stress_fiber.support.html#module-stress_fiber.support.diffuse">stress_fiber.support.diffuse module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stress_fiber.support.html#module-stress_fiber.support.spring">stress_fiber.support.spring module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stress_fiber.support.html#module-stress_fiber.support.units">stress_fiber.support.units module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stress_fiber.support.html#module-stress_fiber.support">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="stress_fiber.visualize.html">stress_fiber.visualize package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="stress_fiber.visualize.html#module-stress_fiber.visualize">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-stress_fiber.base">
+<span id="stress-fiber-base-module"></span><h2>stress_fiber.base module<a class="headerlink" href="#module-stress_fiber.base" title="Permalink to this headline">¶</a></h2>
+<p>Base classes we use to create others</p>
+<dl class="class">
+<dt id="stress_fiber.base.Base">
+<em class="property">class </em><code class="sig-prename descclassname">stress_fiber.base.</code><code class="sig-name descname">Base</code><a class="reference internal" href="_modules/stress_fiber/base.html#Base"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stress_fiber.base.Base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Global base class inherited by most classes above</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-stress_fiber.construct">
+<span id="stress-fiber-construct-module"></span><h2>stress_fiber.construct module<a class="headerlink" href="#module-stress_fiber.construct" title="Permalink to this headline">¶</a></h2>
+<p>Make a world</p>
+<p>A whole new world in which we track the execution of a model run.</p>
+<dl class="class">
+<dt id="stress_fiber.construct.World">
+<em class="property">class </em><code class="sig-prename descclassname">stress_fiber.construct.</code><code class="sig-name descname">World</code><span class="sig-paren">(</span><em class="sig-param">tractspace</em>, <em class="sig-param">random_state=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stress_fiber/construct.html#World"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stress_fiber.construct.World" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Keep track of a tract space, simulation time, and metadata</p>
+<p>Save the tractspace, initiate record keeping</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tractspace</strong> (<cite>stress_fiber.space.space.TrackSpace</cite>) – Spatial component of the world</p></li>
+<li><p><strong>random_state</strong> – The internal state of numpy’s Mersenne Twister implementation as
+given by <cite>numpy.random.get_state()</cite>. This allows us to recreate run
+trajectories.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="stress_fiber.construct.World.step">
+<code class="sig-name descname">step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/stress_fiber/construct.html#World.step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stress_fiber.construct.World.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Step forward one tick</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="stress_fiber.construct.create_test_world">
+<code class="sig-prename descclassname">stress_fiber.construct.</code><code class="sig-name descname">create_test_world</code><span class="sig-paren">(</span><em class="sig-param">radius</em>, <em class="sig-param">span</em>, <em class="sig-param">n_actin</em>, <em class="sig-param">n_actinin</em>, <em class="sig-param">n_motors</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stress_fiber/construct.html#create_test_world"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stress_fiber.construct.create_test_world" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a world of given radius with n_actin and n_actinin per tract</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-stress_fiber">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-stress_fiber" title="Permalink to this headline">¶</a></h2>
+<p>Top-level package for stress_fiber.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="stress_fiber.proteins.html" class="btn btn-neutral float-right" title="stress_fiber.proteins package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="modules.html" class="btn btn-neutral float-left" title="stress_fiber" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dave Williams
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,308 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>stress_fiber.support.hexmath package &mdash; stress_fiber 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> stress_fiber
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics.html">Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">stress_fiber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">stress_fiber</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>stress_fiber.support.hexmath package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/stress_fiber.support.hexmath.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="stress-fiber-support-hexmath-package">
+<h1>stress_fiber.support.hexmath package<a class="headerlink" href="#stress-fiber-support-hexmath-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-stress_fiber.support.hexmath.axial">
+<span id="stress-fiber-support-hexmath-axial-module"></span><h2>stress_fiber.support.hexmath.axial module<a class="headerlink" href="#module-stress_fiber.support.hexmath.axial" title="Permalink to this headline">¶</a></h2>
+<p>Grid-scale computing. Axial coordinates.</p>
+<p>Hexagonal axial coordinate helper functions, assuming pointy side up.</p>
+<dl class="function">
+<dt id="stress_fiber.support.hexmath.axial.to_cart">
+<code class="sig-prename descclassname">stress_fiber.support.hexmath.axial.</code><code class="sig-name descname">to_cart</code><span class="sig-paren">(</span><em class="sig-param">q</em>, <em class="sig-param">r</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stress_fiber/support/hexmath/axial.html#to_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stress_fiber.support.hexmath.axial.to_cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert axial coordinates into cartesian coordinates</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stress_fiber.support.hexmath.axial.to_cube">
+<code class="sig-prename descclassname">stress_fiber.support.hexmath.axial.</code><code class="sig-name descname">to_cube</code><span class="sig-paren">(</span><em class="sig-param">q</em>, <em class="sig-param">r</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stress_fiber/support/hexmath/axial.html#to_cube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stress_fiber.support.hexmath.axial.to_cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert axial coordinates to cube coordinates</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-stress_fiber.support.hexmath.cube">
+<span id="stress-fiber-support-hexmath-cube-module"></span><h2>stress_fiber.support.hexmath.cube module<a class="headerlink" href="#module-stress_fiber.support.hexmath.cube" title="Permalink to this headline">¶</a></h2>
+<p>Cubic coordinate helper functions assuming pointy side up.</p>
+<dl class="simple">
+<dt>This draws heavily from the excellent reference:</dt><dd><p><a class="reference external" href="https://www.redblobgames.com/grids/hexagons/">https://www.redblobgames.com/grids/hexagons/</a></p>
+</dd>
+</dl>
+<dl class="function">
+<dt id="stress_fiber.support.hexmath.cube.closest">
+<code class="sig-prename descclassname">stress_fiber.support.hexmath.cube.</code><code class="sig-name descname">closest</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em>, <em class="sig-param">k</em>, <em class="sig-param">points</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stress_fiber/support/hexmath/cube.html#closest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stress_fiber.support.hexmath.cube.closest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Which point (in a list) is closest to a single passed point?</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stress_fiber.support.hexmath.cube.distance">
+<code class="sig-prename descclassname">stress_fiber.support.hexmath.cube.</code><code class="sig-name descname">distance</code><span class="sig-paren">(</span><em class="sig-param">i_1</em>, <em class="sig-param">j_1</em>, <em class="sig-param">k_1</em>, <em class="sig-param">i_2</em>, <em class="sig-param">j_2</em>, <em class="sig-param">k_2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stress_fiber/support/hexmath/cube.html#distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stress_fiber.support.hexmath.cube.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Distance between two hexagons in cube coordinates</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stress_fiber.support.hexmath.cube.neighbors">
+<code class="sig-prename descclassname">stress_fiber.support.hexmath.cube.</code><code class="sig-name descname">neighbors</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em>, <em class="sig-param">k</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stress_fiber/support/hexmath/cube.html#neighbors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stress_fiber.support.hexmath.cube.neighbors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give me a list of neighboring hexagon locations</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stress_fiber.support.hexmath.cube.rotate_about_center">
+<code class="sig-prename descclassname">stress_fiber.support.hexmath.cube.</code><code class="sig-name descname">rotate_about_center</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em>, <em class="sig-param">k</em>, <em class="sig-param">n_steps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stress_fiber/support/hexmath/cube.html#rotate_about_center"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stress_fiber.support.hexmath.cube.rotate_about_center" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rotate the coordinate i,j,k about the 0,0,0 center by n_steps</p>
+<p>Each step is one 60 degree rotation to the right. Negative steps are
+60 degree rotations to the left.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stress_fiber.support.hexmath.cube.to_axial">
+<code class="sig-prename descclassname">stress_fiber.support.hexmath.cube.</code><code class="sig-name descname">to_axial</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em>, <em class="sig-param">k</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stress_fiber/support/hexmath/cube.html#to_axial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stress_fiber.support.hexmath.cube.to_axial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert cube coordinates to axial coordinates</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stress_fiber.support.hexmath.cube.to_cart">
+<code class="sig-prename descclassname">stress_fiber.support.hexmath.cube.</code><code class="sig-name descname">to_cart</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em>, <em class="sig-param">k</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stress_fiber/support/hexmath/cube.html#to_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stress_fiber.support.hexmath.cube.to_cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert cube coordinates to cartesian</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stress_fiber.support.hexmath.cube.to_offset">
+<code class="sig-prename descclassname">stress_fiber.support.hexmath.cube.</code><code class="sig-name descname">to_offset</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em>, <em class="sig-param">k</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stress_fiber/support/hexmath/cube.html#to_offset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stress_fiber.support.hexmath.cube.to_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert cube coordinates to offset coordinates, odd rows shifted by +1/2 col</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stress_fiber.support.hexmath.cube.validate">
+<code class="sig-prename descclassname">stress_fiber.support.hexmath.cube.</code><code class="sig-name descname">validate</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em>, <em class="sig-param">k</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stress_fiber/support/hexmath/cube.html#validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stress_fiber.support.hexmath.cube.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is this a valid cube coordinate?</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stress_fiber.support.hexmath.cube.within_radius">
+<code class="sig-prename descclassname">stress_fiber.support.hexmath.cube.</code><code class="sig-name descname">within_radius</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em>, <em class="sig-param">k</em>, <em class="sig-param">n</em>, <em class="sig-param">original=(0</em>, <em class="sig-param">0</em>, <em class="sig-param">0)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stress_fiber/support/hexmath/cube.html#within_radius"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stress_fiber.support.hexmath.cube.within_radius" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is this new location within a radius from an original (default origin)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-stress_fiber.support.hexmath.offset">
+<span id="stress-fiber-support-hexmath-offset-module"></span><h2>stress_fiber.support.hexmath.offset module<a class="headerlink" href="#module-stress_fiber.support.hexmath.offset" title="Permalink to this headline">¶</a></h2>
+<p>Grid-scale computing. Offset coordinates.</p>
+<p>Hexagonal offset coordinate helper functions, assuming pointy side up.</p>
+<dl class="function">
+<dt id="stress_fiber.support.hexmath.offset.to_cart">
+<code class="sig-prename descclassname">stress_fiber.support.hexmath.offset.</code><code class="sig-name descname">to_cart</code><span class="sig-paren">(</span><em class="sig-param">col</em>, <em class="sig-param">row</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stress_fiber/support/hexmath/offset.html#to_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stress_fiber.support.hexmath.offset.to_cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert offset coordinates (odd row shifted +1/2 col), into Cartesian
+coordinates.
+NOTE: This produces an output rotated by 60deg from that of <cite>axial.to_cart</cite></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stress_fiber.support.hexmath.offset.to_cube">
+<code class="sig-prename descclassname">stress_fiber.support.hexmath.offset.</code><code class="sig-name descname">to_cube</code><span class="sig-paren">(</span><em class="sig-param">col</em>, <em class="sig-param">row</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/stress_fiber/support/hexmath/offset.html#to_cube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stress_fiber.support.hexmath.offset.to_cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert offset coordinates to cube coordinates</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-stress_fiber.support.hexmath">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-stress_fiber.support.hexmath" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dave Williams
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

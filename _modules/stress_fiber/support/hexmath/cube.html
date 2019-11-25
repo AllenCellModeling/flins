@@ -1,0 +1,288 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>stress_fiber.support.hexmath.cube &mdash; stress_fiber 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> stress_fiber
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics.html">Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">stress_fiber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">stress_fiber</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>stress_fiber.support.hexmath.cube</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for stress_fiber.support.hexmath.cube</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Cubic coordinate helper functions assuming pointy side up.</span>
+
+<span class="sd">This draws heavily from the excellent reference:</span>
+<span class="sd">    https://www.redblobgames.com/grids/hexagons/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">axial</span>
+
+
+<div class="viewcode-block" id="to_axial"><a class="viewcode-back" href="../../../../stress_fiber.support.hexmath.html#stress_fiber.support.hexmath.cube.to_axial">[docs]</a><span class="k">def</span> <span class="nf">to_axial</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert cube coordinates to axial coordinates&quot;&quot;&quot;</span>
+    <span class="n">q</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span>
+    <span class="k">return</span> <span class="n">q</span><span class="p">,</span> <span class="n">r</span></div>
+
+
+<div class="viewcode-block" id="to_offset"><a class="viewcode-back" href="../../../../stress_fiber.support.hexmath.html#stress_fiber.support.hexmath.cube.to_offset">[docs]</a><span class="k">def</span> <span class="nf">to_offset</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert cube coordinates to offset coordinates, odd rows shifted by +1/2 col&quot;&quot;&quot;</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="p">(</span><span class="n">j</span> <span class="o">-</span> <span class="p">(</span><span class="n">j</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">))</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">j</span>
+    <span class="k">return</span> <span class="n">col</span><span class="p">,</span> <span class="n">row</span></div>
+
+
+<div class="viewcode-block" id="to_cart"><a class="viewcode-back" href="../../../../stress_fiber.support.hexmath.html#stress_fiber.support.hexmath.cube.to_cart">[docs]</a><span class="k">def</span> <span class="nf">to_cart</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert cube coordinates to cartesian&quot;&quot;&quot;</span>
+    <span class="c1"># col, row = to_offset(i, j, k)</span>
+    <span class="c1"># x, y = offset.to_cart(col, row)</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">axial</span><span class="o">.</span><span class="n">to_cart</span><span class="p">(</span><span class="o">*</span><span class="n">to_axial</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span></div>
+
+
+<div class="viewcode-block" id="distance"><a class="viewcode-back" href="../../../../stress_fiber.support.hexmath.html#stress_fiber.support.hexmath.cube.distance">[docs]</a><span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">i_1</span><span class="p">,</span> <span class="n">j_1</span><span class="p">,</span> <span class="n">k_1</span><span class="p">,</span> <span class="n">i_2</span><span class="p">,</span> <span class="n">j_2</span><span class="p">,</span> <span class="n">k_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Distance between two hexagons in cube coordinates&quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">i_1</span><span class="p">,</span> <span class="n">j_1</span><span class="p">,</span> <span class="n">k_1</span><span class="p">))</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">i_2</span><span class="p">,</span> <span class="n">j_2</span><span class="p">,</span> <span class="n">k_2</span><span class="p">))</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)))</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">dist</span></div>
+
+
+<div class="viewcode-block" id="within_radius"><a class="viewcode-back" href="../../../../stress_fiber.support.hexmath.html#stress_fiber.support.hexmath.cube.within_radius">[docs]</a><span class="k">def</span> <span class="nf">within_radius</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">original</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)):</span>
+    <span class="sd">&quot;&quot;&quot;Is this new location within a radius from an original (default origin)&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">original</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">within_radius</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="nb">abs</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">j</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">k</span><span class="p">)))</span> <span class="o">&lt;=</span> <span class="n">n</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">within_radius</span> <span class="o">=</span> <span class="n">distance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="o">*</span><span class="n">original</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">n</span>
+    <span class="k">return</span> <span class="n">within_radius</span></div>
+
+
+<div class="viewcode-block" id="validate"><a class="viewcode-back" href="../../../../stress_fiber.support.hexmath.html#stress_fiber.support.hexmath.cube.validate">[docs]</a><span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Is this a valid cube coordinate?&quot;&quot;&quot;</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">+</span> <span class="n">k</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">valid</span></div>
+
+
+<div class="viewcode-block" id="neighbors"><a class="viewcode-back" href="../../../../stress_fiber.support.hexmath.html#stress_fiber.support.hexmath.cube.neighbors">[docs]</a><span class="k">def</span> <span class="nf">neighbors</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Give me a list of neighboring hexagon locations&quot;&quot;&quot;</span>
+    <span class="n">neighbors</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">),</span>
+        <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">),</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">neighbors</span></div>
+
+
+<div class="viewcode-block" id="rotate_about_center"><a class="viewcode-back" href="../../../../stress_fiber.support.hexmath.html#stress_fiber.support.hexmath.cube.rotate_about_center">[docs]</a><span class="k">def</span> <span class="nf">rotate_about_center</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Rotate the coordinate i,j,k about the 0,0,0 center by n_steps</span>
+
+<span class="sd">    Each step is one 60 degree rotation to the right. Negative steps are</span>
+<span class="sd">    60 degree rotations to the left.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">coord</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">],</span> <span class="n">n_steps</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">n_steps</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># odd rotations invert signs</span>
+        <span class="n">coord</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="closest"><a class="viewcode-back" href="../../../../stress_fiber.support.hexmath.html#stress_fiber.support.hexmath.cube.closest">[docs]</a><span class="k">def</span> <span class="nf">closest</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">points</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Which point (in a list) is closest to a single passed point?&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">dist</span><span class="p">(</span><span class="n">pt</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">distance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="o">*</span><span class="n">pt</span><span class="p">)</span>
+
+    <span class="n">dists</span> <span class="o">=</span> <span class="p">[</span><span class="n">dist</span><span class="p">(</span><span class="n">pt</span><span class="p">)</span> <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">points</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">points</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">dists</span><span class="p">)]</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dave Williams
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

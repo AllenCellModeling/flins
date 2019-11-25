@@ -1,0 +1,38 @@
+stress\_fiber.support.hexmath package
+=====================================
+
+Submodules
+----------
+
+stress\_fiber.support.hexmath.axial module
+------------------------------------------
+
+.. automodule:: stress_fiber.support.hexmath.axial
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+stress\_fiber.support.hexmath.cube module
+-----------------------------------------
+
+.. automodule:: stress_fiber.support.hexmath.cube
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+stress\_fiber.support.hexmath.offset module
+-------------------------------------------
+
+.. automodule:: stress_fiber.support.hexmath.offset
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: stress_fiber.support.hexmath
+   :members:
+   :undoc-members:
+   :show-inheritance:

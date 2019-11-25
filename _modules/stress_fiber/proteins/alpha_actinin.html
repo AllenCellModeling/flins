@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>stress_fiber.proteins.alpha_actinin &mdash; stress_fiber 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> stress_fiber
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics.html">Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">stress_fiber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">stress_fiber</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>stress_fiber.proteins.alpha_actinin</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for stress_fiber.proteins.alpha_actinin</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">αaas: α-actinin as a service</span>
+
+<span class="sd">But seriously, α-actinin is the primary cross-linker in this system. It requires</span>
+<span class="sd">two heads separated by a flexible (or extensible) backbone that are able to bind</span>
+<span class="sd">adjacent actin filaments.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">Protein</span><span class="p">,</span> <span class="n">Head</span>
+<span class="kn">from</span> <span class="nn">..support</span> <span class="k">import</span> <span class="n">spring</span>
+<span class="kn">from</span> <span class="nn">..support</span> <span class="k">import</span> <span class="n">units</span>
+<span class="kn">from</span> <span class="nn">..support</span> <span class="k">import</span> <span class="n">diffuse</span>
+<span class="kn">from</span> <span class="nn">..support</span> <span class="k">import</span> <span class="n">kinetics</span>
+
+
+<div class="viewcode-block" id="AlphaActinin"><a class="viewcode-back" href="../../../stress_fiber.proteins.html#stress_fiber.proteins.alpha_actinin.AlphaActinin">[docs]</a><span class="k">class</span> <span class="nc">AlphaActinin</span><span class="p">(</span><span class="n">Protein</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;A 1D α-actinin molecule with heads on either end</span>
+
+<span class="sd">    As this head is considered as a semi-physical object, we care about its</span>
+<span class="sd">    dimensions and material properties. The dimensions of α-actinin are readily</span>
+<span class="sd">    available from crystallization, and more recently cryo-EM, studies.</span>
+
+<span class="sd">    =========  =======  ======  ==========</span>
+<span class="sd">    Property   Value    Units   Source</span>
+<span class="sd">    =========  =======  ======  ==========</span>
+<span class="sd">    Length     24-36    nm      [1]_, [2]_</span>
+<span class="sd">    Thickness  0.5-6.5  nm      [1]_, [2]_</span>
+<span class="sd">    =========  =======  ======  ==========</span>
+
+<span class="sd">    Stiffness values are far harder to find. The flexural stiffness and</span>
+<span class="sd">    persistence length of α-actinin have been measured or calculated via</span>
+<span class="sd">    simulation multiple times, but I am unable to locate an extensional</span>
+<span class="sd">    stiffness. So, let&#39;s calculate the Young&#39;s modulus from persistence length</span>
+<span class="sd">    measurements made on generic α-helices and translate that to the specific</span>
+<span class="sd">    dimensions of α-actinin. We take the persistence length of an α-helix to be</span>
+<span class="sd">    80nm [3]_, and therefore for our tetrameric spectrin repeat backbone to be</span>
+<span class="sd">    240nm. This assumes linear scaling, but is supported in [3]_ for scaling</span>
+<span class="sd">    from single helices to coiled-coils. More structural detail can be found,</span>
+<span class="sd">    amongst other places, in Autore_2013_.</span>
+
+<span class="sd">    Persistence length, :math:`L_p`, is related to the bending stiffness,</span>
+<span class="sd">    :math:`B_s`, and therefore to Young&#39;s modulus, :math:`E`, via</span>
+<span class="sd">    :math:`L_p=\frac{B_s}{k_B T}=\frac{E I}{k_B T}` where :math:`I` is the</span>
+<span class="sd">    second moment of area. For a rod :math:`I=\frac{\pi r^4}{4}`.  So our</span>
+<span class="sd">    :math:`E` becomes :math:`E=\frac{4 L_p k_B T}{\pi r^4}`. What we really</span>
+<span class="sd">    want is the spring constant, :math:`k` which we get from :math:`E` by</span>
+<span class="sd">    :math:`k=\frac{E \pi r^2}{L_0}` and thus</span>
+
+<span class="sd">    .. math:: k = \frac{4 L_p k_B T}{r^2 L_0}</span>
+
+<span class="sd">    Where with :math:`L_p=240nm`, :math:`k_B=0.0138pN*nm/K`, :math:`T=288K`,</span>
+<span class="sd">    :math:`r=1.5nm`, and :math:`L_0=36nm` to give :math:`k=3.75pN/nm`</span>
+
+<span class="sd">    While we&#39;ll use this extensional stiffness below, it is worth noting that</span>
+<span class="sd">    bending may be the primary mechanism by which α-actinin deforms (Grum_1999_).</span>
+
+<span class="sd">    =========  =======  ======  ==========</span>
+<span class="sd">    Property   Value    Units   Source</span>
+<span class="sd">    =========  =======  ======  ==========</span>
+<span class="sd">    Stiffness  3.75     pN/nm   [3]_</span>
+<span class="sd">    =========  =======  ======  ==========</span>
+
+<span class="sd">    .. [1] https://dx.doi.org/10.1007/s00018-008-8080-8</span>
+<span class="sd">    .. [2] https://dx.doi.org/10.1016%2Fj.cell.2014.10.056</span>
+<span class="sd">    .. [3] https://dx.doi.org/10.1103/PhysRevLett.97.248101</span>
+<span class="sd">    .. _Autore_2013: https://dx.doi.org/10.1371/journal.pone.0063633</span>
+<span class="sd">    .. _Grum_1999: https://doi.org/10.1016/S0092-8674(00)81980-7</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">tract</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;An α-actinin at location x in a tract&quot;&quot;&quot;</span>
+        <span class="c1"># Store tract if given, else create placeholders</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;actinin&quot;</span><span class="p">,</span> <span class="n">tract</span><span class="p">)</span>
+        <span class="c1"># Create the spring that is our actinin and remember passed values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spring</span> <span class="o">=</span> <span class="n">spring</span><span class="o">.</span><span class="n">Spring</span><span class="p">(</span><span class="mf">3.75</span><span class="p">,</span> <span class="mi">36</span><span class="p">)</span>  <span class="c1"># See class doc for sources</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="c1"># Create the heads at either end of the actinin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heads</span> <span class="o">=</span> <span class="p">[</span><span class="n">ActininHead</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">ActininHead</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;String representation of α-actinin&quot;&quot;&quot;</span>
+        <span class="n">tract_str</span> <span class="o">=</span> <span class="s2">&quot;NA&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tract</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tract</span><span class="o">.</span><span class="n">loc</span><span class="p">)</span>
+        <span class="n">x_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%.1f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">bound_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%i</span><span class="s2"> bound heads&quot;</span> <span class="o">%</span> <span class="nb">sum</span><span class="p">([</span><span class="n">h</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bound</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">heads</span><span class="p">])</span>
+        <span class="k">return</span> <span class="s2">&quot;α-act with </span><span class="si">%s</span><span class="s2"> at x=</span><span class="si">%s</span><span class="s2"> on tract </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bound_str</span><span class="p">,</span> <span class="n">x_str</span><span class="p">,</span> <span class="n">tract_str</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bound</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Are you bound?&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">heads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bound</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">heads</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bound</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fully_bound</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Are both sides bound?&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">heads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bound</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">heads</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bound</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Current energy born by the stretched (or not) α-actinin&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bound</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">heads</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bound</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">heads</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">spring</span><span class="o">.</span><span class="n">energy</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AlphaActinin.step"><a class="viewcode-back" href="../../../stress_fiber.proteins.html#stress_fiber.proteins.alpha_actinin.AlphaActinin.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Take a timestep&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">bound</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">freely_diffuse</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">heads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bound</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">linked</span><span class="o">.</span><span class="n">x</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heads</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">linked</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">spring</span><span class="o">.</span><span class="n">rest</span>
+        <span class="p">[</span><span class="n">head</span><span class="o">.</span><span class="n">step</span><span class="p">()</span> <span class="k">for</span> <span class="n">head</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">heads</span><span class="p">]</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="AlphaActinin.freely_diffuse"><a class="viewcode-back" href="../../../stress_fiber.proteins.html#stress_fiber.proteins.alpha_actinin.AlphaActinin.freely_diffuse">[docs]</a>    <span class="k">def</span> <span class="nf">freely_diffuse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Diffuse to a new location.</span>
+<span class="sd">        We know the approximate dimensions of the α-actinin backbone are 24-36</span>
+<span class="sd">        nm by 0.5-6.5 nm as specified in Sjöblom_2008_ and Ribeiro_2014_. We</span>
+<span class="sd">        treat this as an ellipsoid of radii 18 by 3 nm to account for the heads</span>
+<span class="sd">        at either end.</span>
+
+<span class="sd">        An alternate treatment would be to use the Stoke&#39;s radius for actinin</span>
+<span class="sd">        described in BNID_104395_.</span>
+
+<span class="sd">        .. _Sjöblom_2008: https://dx.doi.org/10.1007/s00018-008-8080-8</span>
+<span class="sd">        .. _Ribeiro_2014: https://dx.doi.org/10.1016%2Fj.cell.2014.10.056</span>
+<span class="sd">        .. _BNID_104395: https://bionumbers.hms.harvard.edu/bionumber.aspx?id=104395</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># NB This is checked well at this time, CDW20190221</span>
+        <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">3</span>
+        <span class="n">f_drag</span> <span class="o">=</span> <span class="n">diffuse</span><span class="o">.</span><span class="n">Drag</span><span class="o">.</span><span class="n">Ellipsoid</span><span class="o">.</span><span class="n">long_axis_translation</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+        <span class="n">d_x</span> <span class="o">=</span> <span class="n">diffuse</span><span class="o">.</span><span class="n">Dx</span><span class="p">(</span><span class="n">f_drag</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="n">d_x</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tract</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># then derive diffusion limits from tract</span>
+            <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">spring</span><span class="o">.</span><span class="n">rest</span>
+            <span class="n">space_limits</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tract</span><span class="o">.</span><span class="n">space</span><span class="o">.</span><span class="n">span</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">diffuse</span><span class="o">.</span><span class="n">coerce_to_bounds</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">space_limits</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">d_x</span></div></div>
+
+
+<div class="viewcode-block" id="ActininHead"><a class="viewcode-back" href="../../../stress_fiber.proteins.html#stress_fiber.proteins.alpha_actinin.ActininHead">[docs]</a><span class="k">class</span> <span class="nc">ActininHead</span><span class="p">(</span><span class="n">Head</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;One of the two heads of an α-actinin&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actinin</span><span class="p">,</span> <span class="n">side</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">actinin</span><span class="p">,</span> <span class="n">side</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="p">(</span><span class="n">actinin</span><span class="o">.</span><span class="n">address</span><span class="p">[:],</span> <span class="p">(</span><span class="s2">&quot;actininhead&quot;</span><span class="p">,</span> <span class="n">side</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_x</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;String representation of α-actinin head&quot;&quot;&quot;</span>
+        <span class="n">x_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%0.1f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">state_str</span> <span class="o">=</span> <span class="s2">&quot;unbound&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bound</span> <span class="k">else</span> <span class="s2">&quot;bound&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;α-act head </span><span class="si">%s</span><span class="s2"> at x=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">state_str</span><span class="p">,</span> <span class="n">x_str</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Location derived from α-actinin&quot;&quot;&quot;</span>
+        <span class="c1"># If bound, you are located at the linked site</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bound</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">linked</span><span class="o">.</span><span class="n">x</span>
+        <span class="c1"># Else from parent α-actinin loc a distribution of parent lengths</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span>
+
+    <span class="k">def</span> <span class="nf">_update_x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update the α-actinin-vibration-based estimate of x</span>
+
+<span class="sd">        NOTE This is recalculating the x even when the actinin-head is bound.</span>
+<span class="sd">        This isn&#39;t necessary and we could stop it by linking our updates to a</span>
+<span class="sd">        global timestep clock.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">spring</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">spring</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">side</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">spring</span><span class="o">.</span><span class="n">bop_dx</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">side</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">spring</span><span class="o">.</span><span class="n">rest</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">spring</span><span class="o">.</span><span class="n">bop_dx</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ActininHead.step"><a class="viewcode-back" href="../../../stress_fiber.proteins.html#stress_fiber.proteins.alpha_actinin.ActininHead.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Take a timestep: bind, unbind, or stay current&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_x</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bound</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bind_or_not</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_unbind_or_not</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_bind_or_not</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Maybe bind? Can&#39;t say for sure.&quot;&quot;&quot;</span>
+        <span class="n">gactin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">tract</span><span class="o">.</span><span class="n">nearest_binding_site</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">gactin</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bound</span><span class="p">:</span>  <span class="c1"># don&#39;t bind if site is already taken</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_head</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bound</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_head</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">linked</span><span class="o">.</span><span class="n">filament</span> <span class="o">==</span> <span class="n">gactin</span><span class="o">.</span><span class="n">filament</span><span class="p">:</span>  <span class="c1"># don&#39;t self bind</span>
+                <span class="k">return</span>
+        <span class="n">rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_r01</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">gactin</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="n">kinetics</span><span class="o">.</span><span class="n">rate_to_prob</span><span class="p">(</span><span class="n">rate</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">world</span><span class="o">.</span><span class="n">timestep</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">prob</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">gactin</span><span class="o">.</span><span class="n">bs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_unbind_or_not</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Maybe unbind? Can&#39;t say for sure.&quot;&quot;&quot;</span>
+        <span class="n">rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_r10</span><span class="p">()</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="n">kinetics</span><span class="o">.</span><span class="n">rate_to_prob</span><span class="p">(</span><span class="n">rate</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">world</span><span class="o">.</span><span class="n">timestep</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">prob</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">unbind</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_r01</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dist</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Binding rate per second, given the distance to binding site.</span>
+
+<span class="sd">        We take the binding rate to be dependent on the energy required to move</span>
+<span class="sd">        from the current position to the binding site, with pre-exponential</span>
+<span class="sd">        terms as in [1]_.</span>
+
+<span class="sd">        .. [1] http://dx.doi.org/10.1098/rspb.2013.0697</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tau</span> <span class="o">=</span> <span class="mi">72</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">spring</span><span class="o">.</span><span class="n">k</span>
+        <span class="n">kT</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">kT</span>
+        <span class="n">rate</span> <span class="o">=</span> <span class="n">tau</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">dist</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">kT</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">rate</span>
+
+    <span class="k">def</span> <span class="nf">_r10</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;See _r01. We have a free energy release of ~ 8kcal/mol when α-actinin</span>
+<span class="sd">        binds to vinculin [1]_. We&#39;ll use that as an approximation for the</span>
+<span class="sd">        energy released when α-actinin binds to actin. This is equivalent to</span>
+<span class="sd">        ~56 pN*nm per binding event. An estimated :math:`\Delta G_{12}` of</span>
+<span class="sd">        56 pN*nm is approximately consistent with other estimates, such as [2]_</span>
+<span class="sd">        which provides ~44 pN*nm. This is ~2x the energy released by the</span>
+<span class="sd">        hydrolysis of ATP and so seems a reasonable estimate. We&#39;ll approximate</span>
+<span class="sd">        the energy landscape as having a ~10% :math:`G_a` barrier of 6 pN*nm</span>
+<span class="sd">        meaning the total energy barrier between the bound and unbound states is</span>
+<span class="sd">        62 pN*nm.</span>
+
+<span class="sd">        How much of that barrier the head has to surmount is dependent on how</span>
+<span class="sd">        stretched the α-actinin backbone is at any point in time, thus</span>
+<span class="sd">        :math:`\DeltaG_{a2}=62pN*nm-0.5*k*x^2`.</span>
+
+<span class="sd">        We don&#39;t include a pre-exponential correction. Or, rather, assume it to</span>
+<span class="sd">        be one.</span>
+
+<span class="sd">        .. [1] https://dx.doi.org/10.1016/j.bpj.2012.08.044</span>
+<span class="sd">        .. [2] https://dx.doi.org/10.1074/jbc.273.16.9570</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">deltaG</span> <span class="o">=</span> <span class="mi">62</span>  <span class="c1"># pN*nm energy barrier between unbound and bound</span>
+        <span class="n">U</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">energy</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">kT</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">kT</span>
+        <span class="n">rate</span> <span class="o">=</span> <span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">deltaG</span> <span class="o">-</span> <span class="n">U</span><span class="p">)</span> <span class="o">/</span> <span class="n">kT</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rate</span>
+
+    <span class="k">def</span> <span class="nf">_spring_property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spring_prop</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate a spring property, energy or force&quot;&quot;&quot;</span>
+        <span class="c1"># If other head isn&#39;t bound, can&#39;t bear energy/strain</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_head</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bound</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="c1"># If no x is given, use current location</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_head</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">spring_prop</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ActininHead.force"><a class="viewcode-back" href="../../../stress_fiber.proteins.html#stress_fiber.proteins.alpha_actinin.ActininHead.force">[docs]</a>    <span class="k">def</span> <span class="nf">force</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;What force does this α-actinin head exert or feel?</span>
+
+<span class="sd">        This accounts for the fact that heads feel equal and opposite forces</span>
+<span class="sd">        and that these forces change as the spring is compressed or extended</span>
+<span class="sd">        from rest. Let&#39;s think of two heads, `a` and `b` at either end of an</span>
+<span class="sd">        α-actinin spring. The default force sign returned from the spring is</span>
+<span class="sd">        negative when the spring is shortened and positive when it is</span>
+<span class="sd">        lengthened. The desired sign is that which reflects the force exerted by</span>
+<span class="sd">        the spring on the binding site.</span>
+
+<span class="sd">        ====  ===========  ======  =======  =======  ============</span>
+<span class="sd">               System state              Force direction</span>
+<span class="sd">        -------------------------  ------------------------------</span>
+<span class="sd">        Head  Orientation  Spring  Default  Desired  Flip needed?</span>
+<span class="sd">        ====  ===========  ======  =======  =======  ============</span>
+<span class="sd">         A        A&gt;B      Short     \-       \+         Yes</span>
+<span class="sd">         A        A&gt;B      Long      \+       \-         Yes</span>
+<span class="sd">         A        B&gt;A      Short     \-       \-         No</span>
+<span class="sd">         A        B&gt;A      Long      \+       \+         No</span>
+<span class="sd">         B        A&gt;B      Short     \-       \-         No</span>
+<span class="sd">         B        A&gt;B      Long      \+       \+         No</span>
+<span class="sd">         B        B&gt;A      Short     \-       \+         Yes</span>
+<span class="sd">         B        B&gt;A      Long      \+       \-         Yes</span>
+<span class="sd">        ====  ===========  ======  =======  =======  ============</span>
+
+<span class="sd">        Looking at this it becomes obvious that force direction flips are needed</span>
+<span class="sd">        in cases where the current head is the right-most of the two.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">force_fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">spring</span><span class="o">.</span><span class="n">force</span>
+        <span class="n">mult</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_head</span><span class="o">.</span><span class="n">x</span> <span class="k">else</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spring_property</span><span class="p">(</span><span class="n">force_fn</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">mult</span></div>
+
+<div class="viewcode-block" id="ActininHead.energy"><a class="viewcode-back" href="../../../stress_fiber.proteins.html#stress_fiber.proteins.alpha_actinin.ActininHead.energy">[docs]</a>    <span class="k">def</span> <span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;What energy is stored in the α-actinin backbone?</span>
+<span class="sd">        This exists because we want to be able to propose alternate ActininHead</span>
+<span class="sd">        locations and find the energy without changing states.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">energy_fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">spring</span><span class="o">.</span><span class="n">energy</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spring_property</span><span class="p">(</span><span class="n">energy_fn</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dave Williams
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

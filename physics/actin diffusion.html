@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Actin diffusion &mdash; stress_fiber 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> stress_fiber
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../physics.html">Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">stress_fiber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">stress_fiber</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Actin diffusion</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/physics/actin diffusion.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="actin-diffusion">
+<h1>Actin diffusion<a class="headerlink" href="#actin-diffusion" title="Permalink to this headline">¶</a></h1>
+<p>On first glance at a model visualization, it appears that actin is trucking
+along at a prodigious rate when unbound. I was initially concerned that I had
+overestimated the diffusive constants for actin filaments. Let’s check to see
+that they are within reason.</p>
+<p>We find the diffusive coefficient for actin by treating it as a cylinder
+diffusing about its long axis. From page 107 of <a class="reference external" href="http://books.google.com/books?vid=ISBN9780878933334">Howard, 2001</a> we get that
+this will produce a drag coefficient of</p>
+<div class="math notranslate nohighlight">
+\[\gamma = \frac{2 \pi \eta L}{\ln(L/2r) - 0.20}\]</div>
+<p>We start with <span class="math notranslate nohighlight">\(\eta\)</span> as the viscosity of water, but multiply it by a
+factor of 3.2 to account for the <a class="reference external" href="https://bionumbers.hms.harvard.edu/bionumber.aspx?id=102561">increased crowding of cytoplasm</a>.  <span class="math notranslate nohighlight">\(L\)</span>
+will vary from filament to filament, but let’s take a short example length of
+14 g-actin pairs or approximately <span class="math notranslate nohighlight">\(40 nm\)</span>.</p>
+<p>From this we can calculate the diffusion constant of our sample actin as</p>
+<div class="math notranslate nohighlight">
+\[D = \frac{k T}{ \gamma }\]</div>
+<p>Now, I’m always a bit paranoid about dimension checking, so let’s explicitly
+calculate the diffusion constant taking units into account. The <a class="reference external" href="https://github.com/cjrh/misu">misu</a> package
+will help here. Here is a summary of our units</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 30%" />
+<col style="width: 26%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Source</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(k\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(1.38E-23\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(J/K\)</span></p></td>
+<td><p><a class="reference external" href="https://www.wolframalpha.com/input/?i=boltzmann+constant">1</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(T\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(277\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(K\)</span></p></td>
+<td><p>choice</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\eta\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(0.00365\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(Pa\,s\)</span></p></td>
+<td><p><a class="reference external" href="https://bionumbers.hms.harvard.edu/bionumber.aspx?id=102561">2</a>, <a class="reference external" href="https://www.wolframalpha.com/input/?i=3.2+*+water+viscosity+at+288K">3</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(40\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(nm\)</span></p></td>
+<td><p>choice</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(r\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(3\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(nm\)</span></p></td>
+<td><p><a class="reference external" href="https://bionumbers.hms.harvard.edu/bionumber.aspx?id=106827">4</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">misu</span> <span class="k">as</span> <span class="nn">m</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">k</span> <span class="o">=</span> <span class="mf">1.38E-23</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">J</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">K</span><span class="o">**-</span><span class="mi">1</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">288</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">K</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="mf">0.00356</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">Pa_s</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">40</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">nanometre</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">nanometre</span>
+
+<span class="n">D</span> <span class="o">=</span> <span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">L</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">L</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">r</span><span class="p">))</span> <span class="o">-</span> <span class="mf">0.20</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;D is </span><span class="si">%0.1f</span><span class="s2"> microns**2/sec&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">D</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">micron</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">m</span><span class="o">.</span><span class="n">s</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">D</span> <span class="ow">is</span> <span class="mf">7.5</span> <span class="n">microns</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">sec</span>
+</pre></div>
+</div>
+<p>That compares very reasonably with an <a class="reference external" href="https://bionumbers.hms.harvard.edu/bionumber.aspx?id=111112">observed diffusion constant</a> of
+<span class="math notranslate nohighlight">\(5.2 \mu m ^2/s\)</span> for <span class="math notranslate nohighlight">\(40 nm\)</span> long actin fragments in yeast cytosol.
+We can be reassured that, while our actin diffusion appears to be quite quick,
+it matches well to observed values.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dave Williams
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
