@@ -1,9 +1,9 @@
 # encoding: utf-8
 """
-Space is the place we store stuff. 
+Space is the place we store stuff.
 
-A space accounts for the interactions of tracts that are arranged according 
-to some grid layout. 
+A space accounts for the interactions of tracts that are arranged according
+to some grid layout.
 """
 
 from .grids import HexGrid, RectGrid
@@ -15,11 +15,11 @@ class Space(Base):
     """A spatial region of filaments/crosslinkers
 
     Each Space is connected to neighbors in a hexagonal grid that gives
-    many of the properties of 3D space but with easier mechanics. 
+    many of the properties of 3D space but with easier mechanics.
     """
 
     def __init__(self, kind, size, span=None, mirror=True):
-        """ A generic template for 
+        """ A generic template for
         Parameters
         ----------
         kind: "hex" or "rect"
@@ -60,7 +60,7 @@ class Space(Base):
 
     def tract(self, loc):
         """Single tract at a given location
-        
+
         Parameters
         ----------
         loc: tuple
@@ -85,14 +85,14 @@ class Space(Base):
 
     def neighbors(self, loc):
         """Give me the neighbors to the specified location"""
-        ## Validate locations and space size
+        # Validate locations and space size
         within = self.grid.within(loc)
         valid = self.grid.validate(loc)
         if not valid or not within:
             return None
         if self.size == 0:
             return []  # space with only one entry
-        ## Find and return neighbors
+        # Find and return neighbors
         n_locs = self.grid.neighbors(loc)
         n_tracts = [self.grid.entry(loc)["tract"] for loc in n_locs]
         n_tracts = list(set(n_tracts))  # dedupe

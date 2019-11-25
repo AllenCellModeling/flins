@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 """
-Test names. 
+Test names.
 """
 
 import stress_fiber.support.names as names
@@ -18,5 +18,6 @@ def test_unique_name():
 
 def test_name_to_uuid():
     """Check that we can roundtrip our names"""
-    roundtrip = lambda name: names.unique_name(names.name_to_uuid(name))
-    assert all([name == roundtrip(name) for name in sample_names])
+    for name in sample_names:
+        roundtrip = names.unique_name(names.name_to_uuid(name))
+        assert name == roundtrip

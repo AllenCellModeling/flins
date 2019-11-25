@@ -22,7 +22,7 @@ def actinin_tract():
 
 def unbound_actinin():
     t = actinin_tract()
-    act = sf.proteins.Actin(t.rand(), t, length=100)
+    _ = sf.proteins.Actin(t.rand(), t, length=100)
     return AlphaActinin(t.rand(), t)
 
 

@@ -5,13 +5,12 @@ Grid-scale computing. Offset coordinates.
 Hexagonal offset coordinate helper functions, assuming pointy side up.
 """
 
-import itertools
 import numpy as np
 
 
 def to_cart(col, row):
     """Convert offset coordinates (odd row shifted +1/2 col), into Cartesian
-    coordinates. 
+    coordinates.
     NOTE: This produces an output rotated by 60deg from that of `axial.to_cart`
     """
     x = np.sqrt(3) * (col + 0.5 * (row & 1))

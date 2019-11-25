@@ -4,10 +4,9 @@
 
 But seriously, α-actinin is the primary cross-linker in this system. It requires
 two heads separated by a flexible (or extensible) backbone that are able to bind
-adjacent actin filaments. 
+adjacent actin filaments.
 """
 
-import itertools
 import numpy as np
 
 from .base import Protein, Head
@@ -15,11 +14,10 @@ from ..support import spring
 from ..support import units
 from ..support import diffuse
 from ..support import kinetics
-from ..support import binding_site
 
 
 class AlphaActinin(Protein):
-    """A 1D α-actinin molecule with heads on either end
+    r"""A 1D α-actinin molecule with heads on either end
 
     As this head is considered as a semi-physical object, we care about its
     dimensions and material properties. The dimensions of α-actinin are readily
@@ -45,13 +43,13 @@ class AlphaActinin(Protein):
 
     Persistence length, :math:`L_p`, is related to the bending stiffness,
     :math:`B_s`, and therefore to Young's modulus, :math:`E`, via
-    :math:`L_p=\\frac{B_s}{k_B T}=\\frac{E I}{k_B T}` where :math:`I` is the
-    second moment of area. For a rod :math:`I=\\frac{\pi r^4}{4}`.  So our
-    :math:`E` becomes :math:`E=\\frac{4 L_p k_B T}{\pi r^4}`. What we really
+    :math:`L_p=\frac{B_s}{k_B T}=\frac{E I}{k_B T}` where :math:`I` is the
+    second moment of area. For a rod :math:`I=\frac{\pi r^4}{4}`.  So our
+    :math:`E` becomes :math:`E=\frac{4 L_p k_B T}{\pi r^4}`. What we really
     want is the spring constant, :math:`k` which we get from :math:`E` by
-    :math:`k=\\frac{E \pi r^2}{L_0}` and thus
+    :math:`k=\frac{E \pi r^2}{L_0}` and thus
 
-    .. math:: k = \\frac{4 L_p k_B T}{r^2 L_0}
+    .. math:: k = \frac{4 L_p k_B T}{r^2 L_0}
 
     Where with :math:`L_p=240nm`, :math:`k_B=0.0138pN*nm/K`, :math:`T=288K`,
     :math:`r=1.5nm`, and :math:`L_0=36nm` to give :math:`k=3.75pN/nm`
@@ -124,7 +122,7 @@ class AlphaActinin(Protein):
         We know the approximate dimensions of the α-actinin backbone are 24-36
         nm by 0.5-6.5 nm as specified in Sjöblom_2008_ and Ribeiro_2014_. We
         treat this as an ellipsoid of radii 18 by 3 nm to account for the heads
-        at either end. 
+        at either end.
 
         An alternate treatment would be to use the Stoke's radius for actinin
         described in BNID_104395_.
@@ -226,7 +224,7 @@ class ActininHead(Head):
         return rate
 
     def _r10(self):
-        """See _r01. We have a free energy release of ~ 8kcal/mol when α-actinin
+        r"""See _r01. We have a free energy release of ~ 8kcal/mol when α-actinin
         binds to vinculin [1]_. We'll use that as an approximation for the
         energy released when α-actinin binds to actin. This is equivalent to
         ~56 pN*nm per binding event. An estimated :math:`\Delta G_{12}` of
@@ -266,7 +264,7 @@ class ActininHead(Head):
         return spring_prop(length)
 
     def force(self, x=None):
-        """What force does this α-actinin head exert or feel?
+        r"""What force does this α-actinin head exert or feel?
 
         This accounts for the fact that heads feel equal and opposite forces
         and that these forces change as the spring is compressed or extended
@@ -274,25 +272,25 @@ class ActininHead(Head):
         α-actinin spring. The default force sign returned from the spring is
         negative when the spring is shortened and positive when it is
         lengthened. The desired sign is that which reflects the force exerted by
-        the spring on the binding site. 
+        the spring on the binding site.
 
         ====  ===========  ======  =======  =======  ============
-               System state              Force direction         
+               System state              Force direction
         -------------------------  ------------------------------
         Head  Orientation  Spring  Default  Desired  Flip needed?
         ====  ===========  ======  =======  =======  ============
-         A        A>B      Short     \-       \+         Yes     
-         A        A>B      Long      \+       \-         Yes     
-         A        B>A      Short     \-       \-         No      
-         A        B>A      Long      \+       \+         No      
-         B        A>B      Short     \-       \-         No      
-         B        A>B      Long      \+       \+         No      
-         B        B>A      Short     \-       \+         Yes     
-         B        B>A      Long      \+       \-         Yes     
+         A        A>B      Short     \-       \+         Yes
+         A        A>B      Long      \+       \-         Yes
+         A        B>A      Short     \-       \-         No
+         A        B>A      Long      \+       \+         No
+         B        A>B      Short     \-       \-         No
+         B        A>B      Long      \+       \+         No
+         B        B>A      Short     \-       \+         Yes
+         B        B>A      Long      \+       \-         Yes
         ====  ===========  ======  =======  =======  ============
-        
+
         Looking at this it becomes obvious that force direction flips are needed
-        in cases where the current head is the right-most of the two. 
+        in cases where the current head is the right-most of the two.
         """
         force_fn = self.parent.spring.force
         mult = -1 if self.x > self.other_head.x else 1
@@ -301,7 +299,7 @@ class ActininHead(Head):
     def energy(self, x=None):
         """What energy is stored in the α-actinin backbone?
         This exists because we want to be able to propose alternate ActininHead
-        locations and find the energy without changing states. 
+        locations and find the energy without changing states.
         """
         energy_fn = self.parent.spring.energy
         return self._spring_property(energy_fn, x)

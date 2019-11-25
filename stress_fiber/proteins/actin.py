@@ -4,7 +4,7 @@ Actin' up.
 
 These actin filaments are the backbones of the stress-fiber. They transmit
 force, are the common binding target for most other proteins, and move in
-response to gradual remodeling. 
+response to gradual remodeling.
 """
 
 import warnings
@@ -22,14 +22,14 @@ class GActinPair(Base):
     """Two g-actin with a site that can bind and unbind."""
 
     def __init__(self, filament, index):
-        """A binding site on actin filament at location index. 
+        """A binding site on actin filament at location index.
 
         Parameters
         ----------
         filament : `stress_fiber.Actin`
             Parent actin filament to this pair.
         index : `int`
-            Pair location in the list of pairs on the parent filament. 
+            Pair location in the list of pairs on the parent filament.
         """
         self.filament = filament
         self.index = index
@@ -80,24 +80,24 @@ class Actin(Protein):
 
     def __init__(self, x, tract=None, n_pair=None, length=None, polarity=None):
         """An actin at x with n pairs of g-actin in a tract.
-        
+
         Parameters
         ----------
         x : `float`
             X location of the actin within the tract. This is where the first
-            pair will be located, with all others calculated in reference to it. 
+            pair will be located, with all others calculated in reference to it.
         tract : `stress_fiber.space.Tract`, optional
             1D tract that the actin lives in. Is the parent of the filament in
-            organizational hierarchy. 
+            organizational hierarchy.
         n_pair : `int`, optional
             Number of g-actin pairs in the filament. We use this to set filament
             length. Takes precedence over length.
         length : `float`, optional
             Alternate method of setting number of g-actin pairs. Will set
             n_pair to number that results in filament extent closest to length.
-        polarity : `boolean`, optional 
+        polarity : `boolean`, optional
             Is the plus end to the right? Governs myosin binding shortening. If
-            not passed, we answer None and let the motors figure it out. 
+            not passed, we answer None and let the motors figure it out.
         """
         # Store tract if given, else create placeholders
         super().__init__("actin", tract)
@@ -129,14 +129,15 @@ class Actin(Protein):
 
     def __str__(self):
         """String representation of actin"""
-        n, l = self.n_pairs, self.length
+        n, length = self.n_pairs, self.length
         xmin, xmax = self.boundaries
         bound = sum([pair.bs.bound for pair in self.pairs])
         unbound = len(self.pairs) - bound
         force, energy = self.force, self.energy
         state = (
-            "Actin w/ %i pairs (%.1fnm), between x=%.1f-%.1f, with %i/%i bound/unbound pairs. Force/energy is %.1fpN/%.1fpN*nm"
-            % (n, l, xmin, xmax, bound, unbound, force, energy)
+            "Actin w/ %i pairs (%.1fnm), between x=%.1f-%.1f, with %i/%i "
+            "bound/unbound pairs. Force/energy is %.1fpN/%.1fpN*nm"
+            % (n, length, xmin, xmax, bound, unbound, force, energy)
         )
         return state
 
@@ -153,7 +154,7 @@ class Actin(Protein):
 
     @property
     def x(self):
-        """What is the starting location of the actin filament? 
+        """What is the starting location of the actin filament?
         It is assumed to go in the positive direction afterwards.
         """
         return self._x
@@ -207,7 +208,7 @@ class Actin(Protein):
 
     def _hypothetical_force(self, x):
         """Assume the filament is, like, really stiff and find the force on it.
-        
+
         This takes the sum of forces exerted by bound α-actinins along the
         filament given a hypothetical actin location, x. This is used to do
         force balances without changing the state of the filament.
@@ -267,7 +268,7 @@ class Actin(Protein):
         representing relaxation into the local lowest-energy state. We then draw
         a Boltzmann distributed energy, use its sign as a directionality
         indicator, and move in the given direction until the energy stored in
-        the system has changed by the drawn amount. 
+        the system has changed by the drawn amount.
         """
         """Take a timestep subject to force balance and diffusion"""
         # Find force balanced location
@@ -292,7 +293,10 @@ class Actin(Protein):
             return self.x
         # X location limits
         x_limits = (self._space_limits[0], self._space_limits[1] - self.length)
-        window_x = lambda x: max(x_limits[0], min(x, x_limits[1]))
+
+        def window_x(x):
+            return max(x_limits[0], min(x, x_limits[1]))
+
         # Balance forces, finding local relaxation point
         optim_out = scipy.optimize.least_squares(self._hypothetical_force, self.x)
         if optim_out.success is not True:
@@ -325,7 +329,7 @@ class Actin(Protein):
 
         Move in the direction specified by the sign of the energy target until
         all the energy used by the drag of the filament and the energy taken up
-        by bound springs has risen to the target energy budget. 
+        by bound springs has risen to the target energy budget.
 
         Parameters
         ----------
@@ -343,7 +347,6 @@ class Actin(Protein):
         if bounds[0] == bounds[1]:  # you are pegged at an edge
             return starting_x
         # Record starting energy and solve for new location
-        base_energy = self._hypothetical_energy(starting_x)
         energy_least_sq = scipy.optimize.least_squares(
             self._energy_difference,
             starting_x,

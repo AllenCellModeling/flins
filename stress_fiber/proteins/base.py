@@ -43,7 +43,7 @@ class Head(Protein):
     def __init__(self, parent, side):
         """A head on one side of a parent protein
 
-        Parameters 
+        Parameters
         ----------
         parent: :obj: `Protein subclass`
             The protein on which this head is located
@@ -58,6 +58,3 @@ class Head(Protein):
     def other_head(self):
         """The other head"""
         return self.parent.heads[self.side ^ 1]
-
-
-

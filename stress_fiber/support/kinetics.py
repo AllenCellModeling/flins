@@ -1,13 +1,11 @@
 # encoding: utf-8
 """
-Transitions are always hard. 
+Transitions are always hard.
 
-Help us decide when we change from one state to another. 
+Help us decide when we change from one state to another.
 """
 
-from numpy import pi, sqrt
 import math as m
-import numpy.random as random
 
 
 def rate_to_prob(rate, obs_duration):
@@ -21,7 +19,7 @@ def rate_to_prob(rate, obs_duration):
     rate : float
         a per ms rate to convert to probability
     obs_duration : float
-        how many seconds we are watching over   
+        how many seconds we are watching over
 
     Returns
     -------
@@ -33,7 +31,7 @@ def rate_to_prob(rate, obs_duration):
 
 def reverse_rate(rate_12, free_energy_1, free_energy_2):
     """What is the balanced reverse rate from state 2 to state 1?
-    
+
     Parameters
     ----------
     rate_12 : float

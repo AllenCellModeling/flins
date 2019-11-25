@@ -65,9 +65,9 @@ class Tract(Base):
     def add_mol(self, kind, mol):
         """Add a molecule to our lists and dicts thereof"""
         # Create entries for this type of protein if seeing for first time
-        if not kind in self.mols:
+        if kind not in self.mols:
             self.mols[kind] = []
-        if not kind in self.mols_named:
+        if kind not in self.mols_named:
             self.mols_named[kind] = {}
         # Make sure we aren't already tracking this protein
         assert mol not in self.mols[kind], "Can't add mol to tract twice"

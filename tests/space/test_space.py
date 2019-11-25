@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 """
-Test space. 
+Test space.
 """
 
 import pytest

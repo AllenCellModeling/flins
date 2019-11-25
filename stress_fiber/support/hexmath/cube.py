@@ -6,10 +6,8 @@ This draws heavily from the excellent reference:
     https://www.redblobgames.com/grids/hexagons/
 """
 
-import itertools
 import numpy as np
 
-from . import offset
 from . import axial
 
 
@@ -73,7 +71,7 @@ def neighbors(i, j, k):
 def rotate_about_center(i, j, k, n_steps):
     """Rotate the coordinate i,j,k about the 0,0,0 center by n_steps
 
-    Each step is one 60 degree rotation to the right. Negative steps are 
+    Each step is one 60 degree rotation to the right. Negative steps are
     60 degree rotations to the left.
     """
     coord = np.roll([i, j, k], n_steps)
@@ -84,6 +82,9 @@ def rotate_about_center(i, j, k, n_steps):
 
 def closest(i, j, k, points):
     """Which point (in a list) is closest to a single passed point?"""
-    dist = lambda pt: distance(i, j, k, *pt)
+
+    def dist(pt):
+        return distance(i, j, k, *pt)
+
     dists = [dist(pt) for pt in points]
     return points[np.argmin(dists)]

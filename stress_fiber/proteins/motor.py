@@ -1,18 +1,18 @@
 # encoding: utf-8
 r"""
-Crank it. 
+Crank it.
 
 This is a simple simple motor. It isn't intended to do more than create some
 sliding forces::
 
       Head 1        Head 2
-         |             | 
+         |             |
          v             v
-                           
+
          *--\/\/\/\/\--*
-                  
-                ^    
-                |    
+
+                ^
+                |
              Backbone
 
 """
@@ -25,7 +25,6 @@ from ..support import units
 from ..support import spring
 from ..support import diffuse
 from ..support import kinetics
-from ..support import binding_site
 
 
 class Motor(Protein):
@@ -130,7 +129,7 @@ class Motor(Protein):
         return d_x
 
     def step(self):
-        """Take one step forward in time. 
+        """Take one step forward in time.
 
         If the motor isn't bound, it freely diffuses. Both heads have the chance
         to transition from their current state to a new one.
@@ -155,12 +154,12 @@ class MotorHead(Head):
     """A head that tracks binding, rates, and states"""
 
     def __init__(self, motor, side):
-        """ Create a motor head. 
+        """ Create a motor head.
 
         A note on states: typically we talk about a motor being in states that
         are one indexed (1, 2, ...) but since lists in python are zero indexed
         (0, 1, ...) we treat states as such to make it far easier to avoid
-        off-by-one errors. 
+        off-by-one errors.
 
         Parameters
         ==========
@@ -192,7 +191,7 @@ class MotorHead(Head):
 
     def _r01(self, dist):
         """dist is distance to binding site"""
-        return 100 * m.exp(-(0.25 * dist) ** 2)
+        return 100 * m.exp(-((0.25 * dist) ** 2))
 
     def _r10(self, length):
         """length is of motor backbone"""
@@ -244,7 +243,10 @@ class MotorHead(Head):
 
     def step(self, bs=None, length=None):
         """Take a timestep, transitioning to a new state as needed"""
-        p = lambda r: kinetics.rate_to_prob(r, units.world.timestep)
+
+        def p(r):
+            return kinetics.rate_to_prob(r, units.world.timestep)
+
         check = np.random.rand()
         if self.state == 0:
             if bs is None:
@@ -254,7 +256,7 @@ class MotorHead(Head):
                 our_fil = bs.parent.filament
                 if other_fil == our_fil:  # Don't self bind
                     return
-            if not bs.parent.polarity in (self.polarity, None):
+            if bs.parent.polarity not in (self.polarity, None):
                 return  # can't bind if polarity doesn't match (or is off)
             dist = abs(bs.parent.x - self.x)
             if p(self._r01(dist)) > check:

@@ -21,13 +21,16 @@ def plot_actin(actin, ax=None, show=False, y=0):
             ylim=(y - 2 * actin._rise, y + 2 * actin._rise),
             aspect=1,
         )
-    circ = lambda x, y: matplotlib.patches.CirclePolygon(
-        (x, y),
-        radius=0.66 * actin._rise,
-        resolution=20,
-        facecolor="skyblue",
-        edgecolor="royalblue",
-    )
+
+    def circ(x, y):
+        return matplotlib.patches.CirclePolygon(
+            (x, y),
+            radius=0.66 * actin._rise,
+            resolution=20,
+            facecolor="skyblue",
+            edgecolor="royalblue",
+        )
+
     # Work through each pair
     for x in [p.x for p in actin.pairs]:
         ax.add_patch(circ(x + actin._rise * 0.1, y + 0.5 * actin._rise))

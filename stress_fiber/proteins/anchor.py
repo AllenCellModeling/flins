@@ -3,7 +3,7 @@
 Don't stray far now.
 
 Anchor keeps a linked binding site strongly attached to a given location. It is
-intended to be used to represent focal adhesions and their movements. 
+intended to be used to represent focal adhesions and their movements.
 """
 
 from .base import Protein
@@ -16,7 +16,7 @@ class Anchor(Protein):
     We need to be able to specify the locations of, e.g., the ends of an actin
     being treated as bound to a focal adhesion or simply a boundary of the
     simulation. To do this while keeping our force solvers happy, we use very
-    stiff springs attached to actin binding sites. 
+    stiff springs attached to actin binding sites.
     """
 
     def __init__(self, x, anchor_to=None, tract=None, k=1000, rest=0):

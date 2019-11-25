@@ -1,8 +1,8 @@
 # encoding: utf-8
 """
-Ged thinks such things are important. 
+Ged thinks such things are important.
 
-Proving a shorter unique name with which to reference objects in the world. 
+Proving a shorter unique name with which to reference objects in the world.
 """
 
 import uuid

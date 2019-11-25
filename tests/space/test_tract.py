@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 """
-Test tracts. 
+Test tracts.
 """
 
 import pytest

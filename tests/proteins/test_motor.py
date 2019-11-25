@@ -22,7 +22,7 @@ def motor_tract():
 
 def unbound_motor():
     t = motor_tract()
-    act = sf.proteins.Actin(t.rand(), t, length=100)
+    _ = sf.proteins.Actin(t.rand(), t, length=100)
     return Motor(t.rand(), t)
 
 

@@ -5,7 +5,7 @@ timestep as an SVG. When changing this, [a list of named
 colors](https://www.december.com/html/spec/colorsvg.html) is useful.
 """
 
-import stress_fiber as sf
+import stress_fiber as sf  # noqa: F401
 
 import numpy as np
 import svgwrite
@@ -66,11 +66,9 @@ def _plot_actin(actin, params):
     # Locally load params
     xm = params["xm"]
     ym = params["ym"]
-    y_span = params["y_span"]
     y = actin.__y
     group = actin.tract.__groups["actin"]
     # Find limits and convert to user units
-    y_edge = np.round(y / y_span) * y_span * ym  # end links at top or bottom
     x = np.multiply(xm, actin.boundaries)
     y *= ym
     # Plot actin
@@ -169,8 +167,7 @@ def plot_world(world, params={}):
         Set how tall tracts are (y_span), how far apart they are (y_sep), and
         the multipliers used to convert SVG units to pixels (ym, xm)
     """
-    ## Visualization parameters
-    # Manage parameters for passing to sub-plotting
+    # Visualization parameters: manage parameters for passing to sub-plotting
     defaults = {
         "y_span": 50,  # how tall we treat tracts as being
         "y_sep": 4,  # distance between tracts
@@ -178,7 +175,7 @@ def plot_world(world, params={}):
         "ym": 2,  # unit to pixel multiplier
     }
     for key, val in defaults.items():
-        if not key in params:
+        if key not in params:
             params[key] = val
     # Locally used params
     y_span = params["y_span"]
@@ -188,8 +185,7 @@ def plot_world(world, params={}):
     n_tracts = len(world.tractspace.all_tracts)  # n to plot
     x_span = world.tractspace.span  # length of tracts
     y_tot = n_tracts * (y_sep + y_span)  # calculated total height
-    ## Plotting
-    # Create drawing
+    # Plotting: Create drawing
     dwg = svgwrite.Drawing(size=(xm * x_span, ym * y_tot), class_="background")
     dwg.defs.add(dwg.style(CSS_STYLES))  # lets us use class defs from CSS_STYLES
     # Create each tract and plot contents

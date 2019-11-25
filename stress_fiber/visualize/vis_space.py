@@ -3,7 +3,6 @@
 Plot things about our hex spaces and their tracts on matplotlib axes
 """
 
-import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 import matplotlib.patches
@@ -14,7 +13,7 @@ def plot_tractspace(ts, callback=None, show=False):
     """Plot the tracts and what's in them, optionally using a callback"""
     # Set up callback
     if callback is None:
-        callback = lambda t: t.loc  # default to cube coordinates
+        callback = lambda t: t.loc  # noqa: E731, default to cube coordinates
     # Set up figure
     fig, ax = plt.subplots(1, 1, figsize=(8, 8))
     ax.axis("off")

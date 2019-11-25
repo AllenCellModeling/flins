@@ -19,7 +19,7 @@ class Spring:
         """Give me a spring
 
         The spring can be extensional or torsional, the module works in both
-        cases. 
+        cases.
 
         Parameters
         ----------
@@ -28,7 +28,7 @@ class Spring:
         rest : float
             Rest angle or length of spring in radians or nm
         """
-        ## Passed variables
+        # Passed variables
         self.k = k
         self.rest = rest
 
@@ -43,7 +43,7 @@ class Spring:
 
     def _update_bop_distribution(self):
         """Update the mean, std used to energy-bop this spring"""
-        ## Diffusion governors
+        # Diffusion governors
         kT = units.constants.kT
         # Normalize: a factor used to normalize the PDF of the segment values
         self._normalize = sqrt(2 * pi * kT / self.k)
@@ -67,7 +67,7 @@ class Spring:
     def force(self, length):
         """Given a current length/angle, return the force/torque.
 
-        This is given signs as though the spring is attached at origin 
+        This is given signs as though the spring is attached at origin
         and we are looking at the force needed to hold the spring in place.
 
         Parameters

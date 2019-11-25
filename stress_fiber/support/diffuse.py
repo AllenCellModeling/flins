@@ -2,7 +2,7 @@
 """
 Stagger around.
 
-Allow random diffusion of various shapes in various directions. 
+Allow random diffusion of various shapes in various directions.
 """
 
 import numpy as np
@@ -11,7 +11,7 @@ from . import units
 
 
 class Drag:
-    """Drag coefficients drawn from Howard_2001_, Pg 107 and Berg_1983_.
+    r"""Drag coefficients drawn from Howard_2001_, Pg 107 and Berg_1983_.
     We assume that our coefficient of viscosity, :math:`\eta`, defaults to that
     of water (0.0114 poise at 288K), referenced from units
 
@@ -20,10 +20,10 @@ class Drag:
     """
 
     class Cylinder:
-        """Drag coefficients for cylinders.
+        r"""Drag coefficients for cylinders.
         The cylinder has a length :math:`L`, a radius :math:`r`, and is in a
         fluid of viscosity :math:`\eta`.  This assumes :math:`L>>r` and an
-        unbounded space. 
+        unbounded space.
         """
 
         def long_axis_translation(L, r, eta=units.constants.eta):
@@ -47,7 +47,7 @@ class Drag:
             return drag
 
     class Ellipsoid:
-        """Drag coefficients for an ellipsoid.
+        r"""Drag coefficients for an ellipsoid.
         The ellipsoid has a minor axis radius of :math:`a`, a major axis radius
         of :math:`b`, and immersion in a fluid of viscosity :math:`\eta`. This
         assumes :math:`b>>a` and an unbounded space.
@@ -74,7 +74,7 @@ class Drag:
             return drag
 
     class Sphere:
-        """Drag coefficients for a sphere.
+        r"""Drag coefficients for a sphere.
         The sphere has a radius of :math:`r` and is embedded in a fluid of
         viscosity :math:`\eta`.
         """
@@ -96,14 +96,14 @@ def Dx(f_drag):
     diffusion coefficient for a particle subject to a viscous drag, :math:`f`
     (in :math:`g/s`) is :math:`D=kT/f`. Further, from the same source and
     Howard_2001_ we know the drag on cylinders, ellipsoids, and spheres and
-    calculate them above for reference. 
+    calculate them above for reference.
 
     We add a correction factor of 1/3.2 to account for the difference in
     diffusion between water and eukaryotic cytoplasm (Swaminathan_1997_).
 
     An alternate treatment would be to use the Stoke's radius for all molecules,
     approximating them as spheres. There is an argument that anything beyond the
-    spherical approximation is false precision. 
+    spherical approximation is false precision.
 
     .. _Berg_1983: https://press.princeton.edu/titles/112.html
     .. _Howard_2001: http://books.google.com/books?vid=ISBN9780878933334
@@ -126,7 +126,7 @@ def coerce_to_bounds(mol_start, mol_end, boundaries):
     A choice is made here to reflect the molecule back into bounds rather than
     stopping it dead at the boundary. This is to prevent the boundaries of the
     system from acting as absorbing ends that will tend to build up diffusing
-    proteins over time. 
+    proteins over time.
 
     Parameters
     ----------
@@ -138,12 +138,12 @@ def coerce_to_bounds(mol_start, mol_end, boundaries):
         Upper and lower bounds of the 1D space the molecule is diffusing within
     """
     m1, m2, b1, b2 = mol_start, mol_end, boundaries[0], boundaries[1]
-    ## Do some checking
+    # Do some checking
     if m2 - m1 > b2 - b1:
         raise Exception("molecule is too long to fit in boundaries")
     if m1 > m2 or b1 > b2:
         raise Exception("molecule/boundaries passed in reverse order")
-    ## And now the bouncing around
+    # And now the bouncing around
     if m1 < b1:
         diff = b1 - m1
         m1, m2 = m1 + 2 * diff, m2 + 2 * diff

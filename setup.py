@@ -15,7 +15,14 @@ requirements = ["numpy", "scipy", "matplotlib", "svgwrite", "ipython"]
 
 setup_requirements = ["pytest-runner"]
 
-test_requirements = ["pytest", "pytest-cov", "pytest-raises", "codecov", "flake8"]
+test_requirements = [
+    "pytest",
+    "pytest-cov",
+    "pytest-raises",
+    "codecov",
+    "flake8",
+    "black",
+]
 
 dev_requirements = [
     "black",

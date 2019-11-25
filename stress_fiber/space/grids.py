@@ -2,7 +2,7 @@
 """
 Be a spatial divider, not a uniter
 
-Support the calculation of adjacency, distance, and mirroring on hexagonal 
+Support the calculation of adjacency, distance, and mirroring on hexagonal
 grids with various shapes.
 """
 
@@ -11,7 +11,7 @@ from abc import abstractmethod
 import itertools
 import numpy as np
 
-from ..support.hexmath import cube, axial, offset
+from ..support.hexmath import cube, axial
 from ..base import Base
 
 
@@ -89,7 +89,7 @@ class HexGrid(Grid):
 
         These are the locations that the centers of worlds of equal radius would
         occupy in a greater-world coordinate system. These are used to calculate
-        wrapping when walking off the edge of the world. 
+        wrapping when walking off the edge of the world.
         """
         loc = (2 * self.size + 1, -self.size, -self.size - 1)
         mirrored = [cube.rotate_about_center(*loc, n) for n in range(6)]
@@ -101,12 +101,12 @@ class HexGrid(Grid):
         Use pre-calculated mirrored centers if given, else calculate them.
         Reference here: https://gamedev.stackexchange.com/questions/137603
         """
-        ## Before all, if within radius of world no mirroring is needed
+        # Before all, if within radius of world no mirroring is needed
         if self.within(loc):
             return loc
-        ## Find closest mirrored center
+        # Find closest mirrored center
         closest = cube.closest(*loc, self._mirrored_centers)
-        ## Subtract that center to shift back into world
+        # Subtract that center to shift back into world
         mirrored = np.subtract(loc, closest)
         return list(mirrored)
 
@@ -127,7 +127,7 @@ class HexGrid(Grid):
         if not self.validate(loc1) or not self.validate(loc2):
             return None
         if not self._mirroring:
-            ## Kick out if either are out of bounds
+            # Kick out if either are out of bounds
             if not self.within(loc1) or not self.within(loc2):
                 return None
         else:
@@ -163,7 +163,10 @@ class HexGrid(Grid):
         scan = list(range(-n, n + 1))
         grid = [[[] for q in scan] for r in scan]
         # Create tests to ensure location is within roi and valid
-        belongs = lambda loc: self.within(loc) and self.validate(loc)
+
+        def belongs(loc):
+            return self.within(loc) and self.validate(loc)
+
         # Populate grid with coordinates
         for q, r in itertools.product(scan, scan):
             loc = axial.to_cube(q, r)
@@ -247,11 +250,11 @@ class RectGrid(Grid):
         if not self.validate(loc1) or not self.validate(loc2):
             return None
         if not self._mirroring:
-            ## Kick out if either are out of bounds
+            # Kick out if either are out of bounds
             if not self.within(loc1) or not self.within(loc2):
                 return None
         else:
-            ## Find the wrapped versions of loc2
+            # Find the wrapped versions of loc2
             versions = self._mirrored_locs(loc2)
             loc2 = cube.closest(*loc1, versions)
         return cube.distance(*loc1, *loc2)

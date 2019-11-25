@@ -5,7 +5,6 @@ Make a world
 A whole new world in which we track the execution of a model run.
 """
 
-import itertools
 import numpy as np
 
 from . import space
@@ -39,17 +38,17 @@ def create_test_world(radius, span, n_actin, n_actinin, n_motors):
 class World:
     """Keep track of a tract space, simulation time, and metadata"""
 
-    def __init__(self, tractspace, random_state=None):
-        """Save the tractspace, initiate record keeping 
-        
+    def __init__(self, tractspace, random_state=None, **kwargs):
+        """Save the tractspace, initiate record keeping
+
         Parameters
         ----------
         tractspace : `stress_fiber.space.space.TrackSpace`
             Spatial component of the world
-        random_state : 
+        random_state :
             The internal state of numpy's Mersenne Twister implementation as
             given by `numpy.random.get_state()`. This allows us to recreate run
-            trajectories. 
+            trajectories.
         """
         if random_state is None:
             np.random.seed()  # Ensure proper seeding, making each world unique

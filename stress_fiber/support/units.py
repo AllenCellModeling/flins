@@ -3,10 +3,10 @@
 To protect constants and serve unit conversions
 
 Gather all the parameters that define the units in our universe, and the
-particular section of it we are interested in, into one spot. 
+particular section of it we are interested in, into one spot.
 """
 
-## Conversion
+
 def poise(input_in_poise):
     """Convert the input viscosity, in poise, to g/nm*s"""
     return input_in_poise * 10 ** -7
@@ -39,7 +39,7 @@ class constants:
 
 class world:
     """Things that are constant for our (simulated) world
-    
+
     * timestep is the number of ms we advance each tick
     * D_cyto_corr comes from the difference in diffusion between water and
       eukaryotic cytoplasm (Swaminathan_1997_).
