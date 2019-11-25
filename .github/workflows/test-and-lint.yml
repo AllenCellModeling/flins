@@ -22,7 +22,7 @@ jobs:
         pip install .[test]
     - name: Test with pytest
       run: |
-        pytest timelapse_tools/tests/
+        pytest tests/
 
   lint:
     runs-on: ubuntu-latest
@@ -39,4 +39,4 @@ jobs:
         pip install .[test]
     - name: Lint with flake8
       run: |
-        flake8 timelapse_tools --count --verbose --max-line-length=88 --show-source --statistics
+        flake8 stress_fiber --count --verbose --max-line-length=88 --show-source --statistics
