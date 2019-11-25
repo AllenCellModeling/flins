@@ -6,16 +6,16 @@ stress_fiber
 .. .. image:: https://img.shields.io/pypi/v/stress_fiber.svg
 ..         :target: https://pypi.python.org/pypi/stress_fiber
 
-.. image:: https://readthedocs.org/projects/stress-fiber/badge/?version=latest
-        :target: https://stress-fiber.readthedocs.io/en/latest/?badge=latest
+.. image:: https://github.com/AllenCellModeling/stress_fiber/workflows/Documentation/badge.svg
+        :target: https://AllenCellModeling.github.io/stress_fiber
         :alt: Documentation Status
 
 .. image:: https://codecov.io/gh/AllenCellModeling/stress_fiber/branch/master/graph/badge.svg
         :target: https://codecov.io/gh/AllenCellModeling/stress_fiber
         :alt: Code Coverage Status
 
-.. image:: https://travis-ci.com/AllenCellModeling/stress_fiber.svg?branch=master
-        :target: https://travis-ci.com/AllenCellModeling/stress_fiber
+.. image:: https://github.com/AllenCellModeling/stress_fiber/workflows/Build%20Master/badge.svg
+        :target: https://github.com/AllenCellModeling/stress_fiber/actions
         :alt: Continuous Integration Status
 
 Overview
