@@ -11,7 +11,16 @@ with open("README.rst") as readme_file:
 with open("HISTORY.rst") as history_file:
     history = history_file.read()
 
-requirements = ["numpy", "scipy", "matplotlib", "svgwrite", "ipython"]
+requirements = [
+    "numpy",
+    "scipy",
+    "matplotlib",
+    "ipython",
+    "tqdm",
+    "svgwrite",
+    "runman",
+    "ipython",
+]
 
 setup_requirements = ["pytest-runner"]
 
@@ -50,7 +59,7 @@ setup(
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
-        "License :: Allen Institute Software License",
+        "License :: Free for non-commercial use",
         "Natural Language :: English",
         "Programming Language :: Python :: 3.7",
     ],
