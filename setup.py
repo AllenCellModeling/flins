@@ -50,6 +50,7 @@ dev_requirements = [
 extra_requirements = {
     "test": test_requirements,
     "setup": setup_requirements,
+    "dev": dev_requirements,
     "all": [*requirements, *test_requirements, *setup_requirements, *dev_requirements],
 }
 
