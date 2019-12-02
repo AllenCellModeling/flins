@@ -7,6 +7,7 @@
    installation
    usage
    physics
+   api
    modules
    history
    license
