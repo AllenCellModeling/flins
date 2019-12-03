@@ -6,4 +6,4 @@ __author__ = """Dave Williams"""
 __email__ = "cdave@uw.edu"
 __version__ = "0.1.0"
 
-from . import construct  # noqa: F401
+from .construct import test, World  # noqa: F401
