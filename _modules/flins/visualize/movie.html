@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>flins.visualize.movie &mdash; flins 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> flins
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics.html">Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">flins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">flins</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>flins.visualize.movie</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for flins.visualize.movie</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Support for movie generation</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">tqdm</span>
+<span class="kn">import</span> <span class="nn">IPython.display</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">svg</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">flat_render</span>
+
+
+<div class="viewcode-block" id="MovieGen"><a class="viewcode-back" href="../../../flins.visualize.html#flins.visualize.movie.MovieGen">[docs]</a><span class="k">class</span> <span class="nc">MovieGen</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Generate a movie from a set of steps in the world or SVGs&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">outname</span><span class="o">=</span><span class="s2">&quot;out&quot;</span><span class="p">,</span> <span class="n">temp_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">zoom</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Support the creation of movies from runs</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        outname: str (out)</span>
+<span class="sd">            Relative path for the output file</span>
+<span class="sd">        temp_dir: str</span>
+<span class="sd">            Dir where we&#39;ll do our work, deleted on exit if not specified</span>
+<span class="sd">        fps: int</span>
+<span class="sd">            How many frames per sec for resulting movie</span>
+<span class="sd">        zoom: tuple of floats</span>
+<span class="sd">            x and y zoom levels</span>
+<span class="sd">        quiet: boolean</span>
+<span class="sd">            don&#39;t show current status if True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create the dir where we&#39;ll do the processing</span>
+        <span class="k">if</span> <span class="n">temp_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">temp_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">temp_delete</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">temp_dir</span> <span class="o">=</span> <span class="n">temp_dir</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">temp_dir</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">temp_dir</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">temp_delete</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">temp_delete</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># Create the lists to store our processes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">svgs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pngs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outname</span> <span class="o">=</span> <span class="n">outname</span> <span class="k">if</span> <span class="n">outname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.mp4&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">outname</span> <span class="o">+</span> <span class="s2">&quot;.mp4&quot;</span>
+        <span class="c1"># Save params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fps</span> <span class="o">=</span> <span class="n">fps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_zoom</span> <span class="o">=</span> <span class="n">zoom</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_quiet</span> <span class="o">=</span> <span class="n">quiet</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_save_renders</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># secret way to save files</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_movie_written</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="MovieGen.clean_up"><a class="viewcode-back" href="../../../flins.visualize.html#flins.visualize.movie.MovieGen.clean_up">[docs]</a>    <span class="k">def</span> <span class="nf">clean_up</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete the temporary renders and the temp dirs if they were</span>
+<span class="sd">        automatically created</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">temp_delete</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">temp_dir</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save_renders</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">svgs</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pngs</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">temp_dir</span><span class="p">,</span> <span class="n">fn</span><span class="p">))</span>
+                <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+                    <span class="k">pass</span>  <span class="c1"># we don&#39;t care if the files were already cleaned</span></div>
+
+    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Call clean up if not already done&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clean_up</span><span class="p">()</span>
+
+<div class="viewcode-block" id="MovieGen.add_world"><a class="viewcode-back" href="../../../flins.visualize.html#flins.visualize.movie.MovieGen.add_world">[docs]</a>    <span class="k">def</span> <span class="nf">add_world</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">world</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a world and render it as an svg&quot;&quot;&quot;</span>
+        <span class="n">xm</span><span class="p">,</span> <span class="n">ym</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zoom</span>
+        <span class="n">dwg</span> <span class="o">=</span> <span class="n">flat_render</span><span class="o">.</span><span class="n">plot_world</span><span class="p">(</span><span class="n">world</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;xm&quot;</span><span class="p">:</span> <span class="n">xm</span><span class="p">,</span> <span class="s2">&quot;ym&quot;</span><span class="p">:</span> <span class="n">ym</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_svg</span><span class="p">(</span><span class="n">dwg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MovieGen.add_svg"><a class="viewcode-back" href="../../../flins.visualize.html#flins.visualize.movie.MovieGen.add_svg">[docs]</a>    <span class="k">def</span> <span class="nf">add_svg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dwg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Render an svg to the temp dir&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">svgs</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1_000_000</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">temp_dir</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%06i</span><span class="s2">.svg&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">svgs</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">svg</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">dwg</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">svgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MovieGen.write_movie"><a class="viewcode-back" href="../../../flins.visualize.html#flins.visualize.movie.MovieGen.write_movie">[docs]</a>    <span class="k">def</span> <span class="nf">write_movie</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert svgs to pngs and then to an mp4 via ffmpeg&quot;&quot;&quot;</span>
+        <span class="c1"># Writing svgs to pngs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pngs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_quiet</span><span class="p">:</span>
+            <span class="n">svg_iter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">svgs</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">svg_iter</span> <span class="o">=</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">svgs</span><span class="p">,</span> <span class="s2">&quot;svg-&gt;png&quot;</span><span class="p">,</span> <span class="n">leave</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">svg_fn</span> <span class="ow">in</span> <span class="n">svg_iter</span><span class="p">:</span>
+            <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">svg_fn</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">call</span> <span class="o">=</span> <span class="s2">&quot;rsvg-convert -o </span><span class="si">%s</span><span class="s2">.png </span><span class="si">%s</span><span class="s2">.svg&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">fn</span><span class="p">)</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">call</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pngs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fn</span> <span class="o">+</span> <span class="s2">&quot;.png&quot;</span><span class="p">)</span>
+        <span class="c1"># Convert pngs to mp4</span>
+        <span class="n">call</span> <span class="o">=</span> <span class="s2">&quot;ffmpeg -y -r </span><span class="si">%f</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fps</span>
+        <span class="n">call</span> <span class="o">+=</span> <span class="s2">&quot;-i </span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">temp_dir</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%06d</span><span class="s2">.png&quot;</span><span class="p">)</span>
+        <span class="n">call</span> <span class="o">+=</span> <span class="s2">&quot;-c:v libx264 -vf fps=25 -pix_fmt yuv420p </span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">outname</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_quiet</span><span class="p">:</span>
+            <span class="n">call</span> <span class="o">+=</span> <span class="s2">&quot;-loglevel panic&quot;</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">call</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_movie_written</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="MovieGen.show"><a class="viewcode-back" href="../../../flins.visualize.html#flins.visualize.movie.MovieGen.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Use ipython to display movie, intended for use in notebooks&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_movie_written</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_movie</span><span class="p">()</span>
+        <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">Video</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outname</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dave Williams
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

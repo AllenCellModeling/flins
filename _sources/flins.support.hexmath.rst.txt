@@ -1,0 +1,38 @@
+flins.support.hexmath package
+=============================
+
+Submodules
+----------
+
+flins.support.hexmath.axial module
+----------------------------------
+
+.. automodule:: flins.support.hexmath.axial
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+flins.support.hexmath.cube module
+---------------------------------
+
+.. automodule:: flins.support.hexmath.cube
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+flins.support.hexmath.offset module
+-----------------------------------
+
+.. automodule:: flins.support.hexmath.offset
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: flins.support.hexmath
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,38 @@
+flins.construct package
+=======================
+
+Submodules
+----------
+
+flins.construct.locations module
+--------------------------------
+
+.. automodule:: flins.construct.locations
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+flins.construct.test module
+---------------------------
+
+.. automodule:: flins.construct.test
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+flins.construct.world module
+----------------------------
+
+.. automodule:: flins.construct.world
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: flins.construct
+   :members:
+   :undoc-members:
+   :show-inheritance:

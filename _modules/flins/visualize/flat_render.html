@@ -1,0 +1,419 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>flins.visualize.flat_render &mdash; flins 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> flins
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics.html">Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">flins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">flins</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>flins.visualize.flat_render</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for flins.visualize.flat_render</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Support for rendering the tracts (and proteins within them) at the current</span>
+<span class="sd">timestep as an SVG. When changing this, [a list of named</span>
+<span class="sd">colors](https://www.december.com/html/spec/colorsvg.html) is useful.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">flins</span> <span class="k">as</span> <span class="nn">fl</span>  <span class="c1"># noqa: F401</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">svgwrite</span>
+
+
+<span class="c1"># Can globally set the style of the render via CSS</span>
+<span class="n">CSS_STYLES</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    .background { background-color: oldlace; }</span>
+<span class="s2">    .actin { stroke: cornflowerblue; stroke-width: 3px; }</span>
+<span class="s2">    .anchor { stroke: tan; fill: tan;}</span>
+<span class="s2">    .actinin { stroke: limegreen; fill: limegreen; stroke-width: 2px; }</span>
+<span class="s2">    .motor { stroke: firebrick; fill: firebrick; stroke-width: 2px; }</span>
+<span class="s2">    .post { stroke-width: 4px; }</span>
+<span class="s2">    .tract { stroke: darkslategray; fill: whitesmoke; stroke-width: 3px; }</span>
+<span class="s2">    .clear { fill-opacity: 0.0; }</span>
+<span class="s2">    .fade { opacity: 0.3; }</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">_plot_anchor</span><span class="p">(</span><span class="n">anchor</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot anc as part of group at y&quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">anchor</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;xm&quot;</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">anchor</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">linked</span><span class="o">.</span><span class="n">filament</span><span class="o">.</span><span class="n">__y</span> <span class="o">*</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;ym&quot;</span><span class="p">]</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">anchor</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">linked</span><span class="o">.</span><span class="n">filament</span><span class="o">.</span><span class="n">tract</span><span class="o">.</span><span class="n">__groups</span><span class="p">[</span><span class="s2">&quot;anchor&quot;</span><span class="p">]</span>
+    <span class="n">group</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">svgwrite</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="mi">4</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s2">&quot;anchor&quot;</span><span class="p">))</span>
+    <span class="k">return</span>
+
+
+<span class="k">def</span> <span class="nf">_plot_motor</span><span class="p">(</span><span class="n">motor</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot an actinin as part of group within y_lim&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">motor</span><span class="o">.</span><span class="n">bound</span><span class="p">:</span>  <span class="c1"># none bound</span>
+        <span class="n">_plot_unbound</span><span class="p">(</span><span class="n">motor</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="s2">&quot;motor&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">([</span><span class="n">h</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bound</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">motor</span><span class="o">.</span><span class="n">heads</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># both bound</span>
+        <span class="k">if</span> <span class="n">motor</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">_plot_body</span><span class="p">(</span><span class="n">motor</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="s2">&quot;motor.post&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_plot_body</span><span class="p">(</span><span class="n">motor</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="s2">&quot;motor&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">head</span> <span class="ow">in</span> <span class="n">motor</span><span class="o">.</span><span class="n">heads</span><span class="p">:</span>
+        <span class="n">_plot_head</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="s2">&quot;motor&quot;</span><span class="p">)</span>
+    <span class="k">return</span>
+
+
+<span class="k">def</span> <span class="nf">_plot_actinin</span><span class="p">(</span><span class="n">actinin</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot an actinin as part of group within y_lim&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">actinin</span><span class="o">.</span><span class="n">bound</span><span class="p">:</span>  <span class="c1"># none bound</span>
+        <span class="n">_plot_unbound</span><span class="p">(</span><span class="n">actinin</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="s2">&quot;actinin&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">([</span><span class="n">h</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bound</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">actinin</span><span class="o">.</span><span class="n">heads</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># both bound</span>
+        <span class="n">_plot_body</span><span class="p">(</span><span class="n">actinin</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="s2">&quot;actinin&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">head</span> <span class="ow">in</span> <span class="n">actinin</span><span class="o">.</span><span class="n">heads</span><span class="p">:</span>
+        <span class="n">_plot_head</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="s2">&quot;actinin&quot;</span><span class="p">)</span>
+    <span class="k">return</span>
+
+
+<span class="k">def</span> <span class="nf">_plot_actin</span><span class="p">(</span><span class="n">actin</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot actin and affiliated proteins as part of group within y_lim&quot;&quot;&quot;</span>
+    <span class="c1"># Locally load params</span>
+    <span class="n">xm</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;xm&quot;</span><span class="p">]</span>
+    <span class="n">ym</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;ym&quot;</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">actin</span><span class="o">.</span><span class="n">__y</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">actin</span><span class="o">.</span><span class="n">tract</span><span class="o">.</span><span class="n">__groups</span><span class="p">[</span><span class="s2">&quot;actin&quot;</span><span class="p">]</span>
+    <span class="c1"># Find limits and convert to user units</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">xm</span><span class="p">,</span> <span class="n">actin</span><span class="o">.</span><span class="n">boundaries</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">*=</span> <span class="n">ym</span>
+    <span class="c1"># Plot actin</span>
+    <span class="n">group</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">svgwrite</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">Line</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">)))</span>
+    <span class="k">return</span>
+
+
+<span class="k">def</span> <span class="nf">_plot_unbound</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">kind</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot a free floating ellipse for an unbound component&quot;&quot;&quot;</span>
+    <span class="n">y</span> <span class="o">*=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;ym&quot;</span><span class="p">]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;xm&quot;</span><span class="p">]</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">tract</span><span class="o">.</span><span class="n">__groups</span><span class="p">[</span><span class="s2">&quot;unbound_&quot;</span> <span class="o">+</span> <span class="n">kind</span><span class="p">]</span>
+    <span class="n">group</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">svgwrite</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">Ellipse</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+    <span class="k">return</span>
+
+
+<span class="k">def</span> <span class="nf">_plot_head</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">kind</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot actinin head on actin&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">head</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">bound</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;xm&quot;</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">linked</span><span class="o">.</span><span class="n">filament</span><span class="o">.</span><span class="n">__y</span> <span class="o">*</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;ym&quot;</span><span class="p">]</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">linked</span><span class="o">.</span><span class="n">filament</span><span class="o">.</span><span class="n">tract</span><span class="o">.</span><span class="n">__groups</span><span class="p">[</span><span class="s2">&quot;bound_&quot;</span> <span class="o">+</span> <span class="n">kind</span><span class="p">]</span>
+    <span class="n">group</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">svgwrite</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="mi">2</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="n">kind</span><span class="p">))</span>
+    <span class="k">return</span>
+
+
+<span class="k">def</span> <span class="nf">_plot_body</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">kind</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Only plot body in case where both heads are bound&quot;&quot;&quot;</span>
+    <span class="n">tracts</span> <span class="o">=</span> <span class="p">[</span><span class="n">head</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">linked</span><span class="o">.</span><span class="n">filament</span><span class="o">.</span><span class="n">tract</span> <span class="k">for</span> <span class="n">head</span> <span class="ow">in</span> <span class="n">mol</span><span class="o">.</span><span class="n">heads</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">tracts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">tracts</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>  <span class="c1"># same tract</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">head</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;xm&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">head</span> <span class="ow">in</span> <span class="n">mol</span><span class="o">.</span><span class="n">heads</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">linked</span><span class="o">.</span><span class="n">filament</span><span class="o">.</span><span class="n">__y</span> <span class="o">*</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;ym&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">mol</span><span class="o">.</span><span class="n">heads</span><span class="p">]</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="n">tracts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">__groups</span><span class="p">[</span><span class="s2">&quot;bound_&quot;</span> <span class="o">+</span> <span class="n">kind</span><span class="p">]</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">svgwrite</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">Line</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">class_</span><span class="o">=</span><span class="n">kind</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># different tracts</span>
+        <span class="k">for</span> <span class="n">head</span><span class="p">,</span> <span class="n">tract</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">mol</span><span class="o">.</span><span class="n">heads</span><span class="p">,</span> <span class="n">tracts</span><span class="p">):</span>
+            <span class="n">x_i</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;xm&quot;</span><span class="p">]</span>
+            <span class="n">x_f</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">other_head</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;xm&quot;</span><span class="p">]</span>
+            <span class="n">ym</span><span class="p">,</span> <span class="n">y_span</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;ym&quot;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;y_span&quot;</span><span class="p">]</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">bs</span><span class="o">.</span><span class="n">linked</span><span class="o">.</span><span class="n">filament</span><span class="o">.</span><span class="n">__y</span>
+            <span class="n">y_i</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">ym</span>
+            <span class="n">y_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">y</span> <span class="o">/</span> <span class="n">y_span</span><span class="p">)</span> <span class="o">*</span> <span class="n">y_span</span> <span class="o">*</span> <span class="n">ym</span>  <span class="c1"># end links at top or bottom</span>
+            <span class="n">group</span> <span class="o">=</span> <span class="n">tract</span><span class="o">.</span><span class="n">__groups</span><span class="p">[</span><span class="s2">&quot;bound_&quot;</span> <span class="o">+</span> <span class="n">kind</span><span class="p">]</span>
+            <span class="n">group</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">svgwrite</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">Line</span><span class="p">((</span><span class="n">x_i</span><span class="p">,</span> <span class="n">y_i</span><span class="p">),</span> <span class="p">(</span><span class="n">x_f</span><span class="p">,</span> <span class="n">y_f</span><span class="p">),</span> <span class="n">class_</span><span class="o">=</span><span class="n">kind</span><span class="p">))</span>
+        <span class="k">return</span>
+
+
+<span class="k">def</span> <span class="nf">_plot_tract</span><span class="p">(</span><span class="n">dwg</span><span class="p">,</span> <span class="n">tract</span><span class="p">,</span> <span class="n">tract_i</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot tract in dwg offset to loc for tract_i&quot;&quot;&quot;</span>
+    <span class="c1"># Locally load params</span>
+    <span class="n">ym</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;ym&quot;</span><span class="p">]</span>
+    <span class="n">y_span</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;y_span&quot;</span><span class="p">]</span>
+    <span class="n">y_sep</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;y_sep&quot;</span><span class="p">]</span>
+    <span class="c1"># Find tract y loc</span>
+    <span class="n">tract_y_offset</span> <span class="o">=</span> <span class="n">ym</span> <span class="o">*</span> <span class="p">(</span><span class="n">tract_i</span> <span class="o">*</span> <span class="n">y_span</span> <span class="o">+</span> <span class="p">(</span><span class="n">tract_i</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">y_sep</span><span class="p">)</span>
+    <span class="c1"># Create tract group and plot outline</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">dwg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dwg</span><span class="o">.</span><span class="n">g</span><span class="p">())</span>
+    <span class="n">group</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+        <span class="n">svgwrite</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">dwg</span><span class="o">.</span><span class="n">attribs</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">],</span> <span class="n">ym</span> <span class="o">*</span> <span class="n">y_span</span><span class="p">),</span> <span class="n">class_</span><span class="o">=</span><span class="s2">&quot;tract&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">group</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tract_y_offset</span><span class="p">)</span>
+    <span class="n">tract</span><span class="o">.</span><span class="n">__groups</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;self&quot;</span><span class="p">:</span> <span class="n">group</span><span class="p">,</span>
+        <span class="s2">&quot;actin&quot;</span><span class="p">:</span> <span class="n">group</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">svgwrite</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">Group</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">&quot;actin&quot;</span><span class="p">)),</span>
+        <span class="s2">&quot;anchor&quot;</span><span class="p">:</span> <span class="n">group</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">svgwrite</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">Group</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">&quot;anchor&quot;</span><span class="p">)),</span>
+        <span class="s2">&quot;bound_actinin&quot;</span><span class="p">:</span> <span class="n">group</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">svgwrite</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">Group</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">&quot;actinin&quot;</span><span class="p">)),</span>
+        <span class="s2">&quot;unbound_actinin&quot;</span><span class="p">:</span> <span class="n">group</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">svgwrite</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">Group</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">&quot;actinin fade&quot;</span><span class="p">)),</span>
+        <span class="s2">&quot;bound_motor&quot;</span><span class="p">:</span> <span class="n">group</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">svgwrite</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">Group</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">&quot;motor&quot;</span><span class="p">)),</span>
+        <span class="s2">&quot;bound_motor.post&quot;</span><span class="p">:</span> <span class="n">group</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">svgwrite</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">Group</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">&quot;motor post&quot;</span><span class="p">)),</span>
+        <span class="s2">&quot;unbound_motor&quot;</span><span class="p">:</span> <span class="n">group</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">svgwrite</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">Group</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">&quot;motor fade&quot;</span><span class="p">)),</span>
+    <span class="p">}</span>
+    <span class="n">group</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+        <span class="n">svgwrite</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span>
+            <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">dwg</span><span class="o">.</span><span class="n">attribs</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">],</span> <span class="n">ym</span> <span class="o">*</span> <span class="n">y_span</span><span class="p">),</span> <span class="n">class_</span><span class="o">=</span><span class="s2">&quot;clear tract&quot;</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">group</span>
+
+
+<span class="k">def</span> <span class="nf">_entry_or_empty_list</span><span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Give the value of the key or, if not present, an empty list&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+
+<div class="viewcode-block" id="plot_world"><a class="viewcode-back" href="../../../flins.visualize.html#flins.visualize.flat_render.plot_world">[docs]</a><span class="k">def</span> <span class="nf">plot_world</span><span class="p">(</span><span class="n">world</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="sd">&quot;&quot;&quot;Plot a world as a flat, unrolled, svg</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ---------</span>
+<span class="sd">    world: flins.construct.World</span>
+<span class="sd">        World to render as svg</span>
+<span class="sd">    params: dict keys in (y_span, y_sep, xm, ym)</span>
+<span class="sd">        Set how tall tracts are (y_span), how far apart they are (y_sep), and</span>
+<span class="sd">        the multipliers used to convert SVG units to pixels (ym, xm)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Visualization parameters: manage parameters for passing to sub-plotting</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;y_span&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>  <span class="c1"># how tall we treat tracts as being</span>
+        <span class="s2">&quot;y_sep&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>  <span class="c1"># distance between tracts</span>
+        <span class="s2">&quot;xm&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>  <span class="c1"># unit to pixel multiplier</span>
+        <span class="s2">&quot;ym&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>  <span class="c1"># unit to pixel multiplier</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+    <span class="c1"># Locally used params</span>
+    <span class="n">y_span</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;y_span&quot;</span><span class="p">]</span>
+    <span class="n">y_sep</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;y_sep&quot;</span><span class="p">]</span>
+    <span class="n">xm</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;xm&quot;</span><span class="p">]</span>
+    <span class="n">ym</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;ym&quot;</span><span class="p">]</span>
+    <span class="n">n_tracts</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">world</span><span class="o">.</span><span class="n">tractspace</span><span class="o">.</span><span class="n">all_tracts</span><span class="p">)</span>  <span class="c1"># n to plot</span>
+    <span class="n">x_span</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">tractspace</span><span class="o">.</span><span class="n">span</span>  <span class="c1"># length of tracts</span>
+    <span class="n">y_tot</span> <span class="o">=</span> <span class="n">n_tracts</span> <span class="o">*</span> <span class="p">(</span><span class="n">y_sep</span> <span class="o">+</span> <span class="n">y_span</span><span class="p">)</span>  <span class="c1"># calculated total height</span>
+    <span class="c1"># Plotting: Create drawing</span>
+    <span class="n">dwg</span> <span class="o">=</span> <span class="n">svgwrite</span><span class="o">.</span><span class="n">Drawing</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">xm</span> <span class="o">*</span> <span class="n">x_span</span><span class="p">,</span> <span class="n">ym</span> <span class="o">*</span> <span class="n">y_tot</span><span class="p">),</span> <span class="n">class_</span><span class="o">=</span><span class="s2">&quot;background&quot;</span><span class="p">)</span>
+    <span class="n">dwg</span><span class="o">.</span><span class="n">defs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dwg</span><span class="o">.</span><span class="n">style</span><span class="p">(</span><span class="n">CSS_STYLES</span><span class="p">))</span>  <span class="c1"># lets us use class defs from CSS_STYLES</span>
+    <span class="c1"># Create each tract and plot contents</span>
+    <span class="c1"># Tracts</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tract</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">world</span><span class="o">.</span><span class="n">tractspace</span><span class="o">.</span><span class="n">all_tracts</span><span class="p">):</span>
+        <span class="n">_plot_tract</span><span class="p">(</span><span class="n">dwg</span><span class="p">,</span> <span class="n">tract</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="c1"># Actins</span>
+    <span class="k">for</span> <span class="n">tract</span> <span class="ow">in</span> <span class="n">world</span><span class="o">.</span><span class="n">tractspace</span><span class="o">.</span><span class="n">all_tracts</span><span class="p">:</span>
+        <span class="n">actins</span> <span class="o">=</span> <span class="n">_entry_or_empty_list</span><span class="p">(</span><span class="n">tract</span><span class="o">.</span><span class="n">mols</span><span class="p">,</span> <span class="s2">&quot;actin&quot;</span><span class="p">)</span>
+        <span class="n">n_actin</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">actins</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">actin</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">actins</span><span class="p">):</span>
+            <span class="n">actin</span><span class="o">.</span><span class="n">__y</span> <span class="o">=</span> <span class="n">y_span</span> <span class="o">*</span> <span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n_actin</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">_plot_actin</span><span class="p">(</span><span class="n">actin</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="c1"># Alpha-actinins</span>
+    <span class="k">for</span> <span class="n">tract</span> <span class="ow">in</span> <span class="n">world</span><span class="o">.</span><span class="n">tractspace</span><span class="o">.</span><span class="n">all_tracts</span><span class="p">:</span>
+        <span class="n">actinins</span> <span class="o">=</span> <span class="n">_entry_or_empty_list</span><span class="p">(</span><span class="n">tract</span><span class="o">.</span><span class="n">mols</span><span class="p">,</span> <span class="s2">&quot;actinin&quot;</span><span class="p">)</span>
+        <span class="n">n_actinin</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">actinins</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">actinin</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">actinins</span><span class="p">):</span>
+            <span class="n">y_actinin</span> <span class="o">=</span> <span class="n">y_span</span> <span class="o">*</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n_actinin</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">_plot_actinin</span><span class="p">(</span><span class="n">actinin</span><span class="p">,</span> <span class="n">y_actinin</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="c1"># Motors</span>
+    <span class="k">for</span> <span class="n">tract</span> <span class="ow">in</span> <span class="n">world</span><span class="o">.</span><span class="n">tractspace</span><span class="o">.</span><span class="n">all_tracts</span><span class="p">:</span>
+        <span class="n">motors</span> <span class="o">=</span> <span class="n">_entry_or_empty_list</span><span class="p">(</span><span class="n">tract</span><span class="o">.</span><span class="n">mols</span><span class="p">,</span> <span class="s2">&quot;motor&quot;</span><span class="p">)</span>
+        <span class="n">n_motor</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">motors</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">motor</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">motors</span><span class="p">):</span>
+            <span class="n">y_motor</span> <span class="o">=</span> <span class="n">y_span</span> <span class="o">*</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n_motor</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">_plot_motor</span><span class="p">(</span><span class="n">motor</span><span class="p">,</span> <span class="n">y_motor</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="c1"># Anchors</span>
+    <span class="k">for</span> <span class="n">tract</span> <span class="ow">in</span> <span class="n">world</span><span class="o">.</span><span class="n">tractspace</span><span class="o">.</span><span class="n">all_tracts</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;anchor&quot;</span> <span class="ow">in</span> <span class="n">tract</span><span class="o">.</span><span class="n">mols</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">anchor</span> <span class="ow">in</span> <span class="n">tract</span><span class="o">.</span><span class="n">mols</span><span class="p">[</span><span class="s2">&quot;anchor&quot;</span><span class="p">]:</span>
+                <span class="n">_plot_anchor</span><span class="p">(</span><span class="n">anchor</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dwg</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dave Williams
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

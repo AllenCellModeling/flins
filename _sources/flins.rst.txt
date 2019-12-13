@@ -1,0 +1,33 @@
+flins package
+=============
+
+Subpackages
+-----------
+
+.. toctree::
+
+   flins.construct
+   flins.proteins
+   flins.space
+   flins.support
+   flins.visualize
+
+Submodules
+----------
+
+flins.base module
+-----------------
+
+.. automodule:: flins.base
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: flins
+   :members:
+   :undoc-members:
+   :show-inheritance:

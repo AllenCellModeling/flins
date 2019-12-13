@@ -1,0 +1,54 @@
+flins.proteins package
+======================
+
+Submodules
+----------
+
+flins.proteins.actin module
+---------------------------
+
+.. automodule:: flins.proteins.actin
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+flins.proteins.alpha\_actinin module
+------------------------------------
+
+.. automodule:: flins.proteins.alpha_actinin
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+flins.proteins.anchor module
+----------------------------
+
+.. automodule:: flins.proteins.anchor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+flins.proteins.base module
+--------------------------
+
+.. automodule:: flins.proteins.base
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+flins.proteins.motor module
+---------------------------
+
+.. automodule:: flins.proteins.motor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: flins.proteins
+   :members:
+   :undoc-members:
+   :show-inheritance:

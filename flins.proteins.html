@@ -1,0 +1,854 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>flins.proteins package &mdash; flins 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="flins.space package" href="flins.space.html" />
+    <link rel="prev" title="flins.construct package" href="flins.construct.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> flins
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics.html">Physics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">flins</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="flins.html">flins package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="flins.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="flins.construct.html">flins.construct package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">flins.proteins package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="flins.space.html">flins.space package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="flins.support.html">flins.support package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="flins.visualize.html">flins.visualize package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="flins.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="flins.html#module-flins.base">flins.base module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="flins.html#module-flins">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">flins</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">flins</a> &raquo;</li>
+        
+          <li><a href="flins.html">flins package</a> &raquo;</li>
+        
+      <li>flins.proteins package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/flins.proteins.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="flins-proteins-package">
+<h1>flins.proteins package<a class="headerlink" href="#flins-proteins-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-flins.proteins.actin">
+<span id="flins-proteins-actin-module"></span><h2>flins.proteins.actin module<a class="headerlink" href="#module-flins.proteins.actin" title="Permalink to this headline">¶</a></h2>
+<p>Actin’ up.</p>
+<p>These actin filaments are the backbones of the filament systems. They transmit
+force, are the common binding target for most other proteins, and move in
+response to gradual remodeling.</p>
+<dl class="class">
+<dt id="flins.proteins.actin.Actin">
+<em class="property">class </em><code class="sig-prename descclassname">flins.proteins.actin.</code><code class="sig-name descname">Actin</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">tract=None</em>, <em class="sig-param">n_pair=None</em>, <em class="sig-param">length=None</em>, <em class="sig-param">polarity=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/actin.html#Actin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.actin.Actin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#flins.proteins.base.Protein" title="flins.proteins.base.Protein"><code class="xref py py-class docutils literal notranslate"><span class="pre">flins.proteins.base.Protein</span></code></a></p>
+<p>A 1D actin filament that has binding sites, diffusion behavior, etc.</p>
+<p>An actin at x with n pairs of g-actin in a tract.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<cite>float</cite>) – X location of the actin within the tract. This is where the first
+pair will be located, with all others calculated in reference to it.</p></li>
+<li><p><strong>tract</strong> (<cite>flins.space.Tract</cite>, optional) – 1D tract that the actin lives in. Is the parent of the filament in
+organizational hierarchy.</p></li>
+<li><p><strong>n_pair</strong> (<cite>int</cite>, optional) – Number of g-actin pairs in the filament. We use this to set filament
+length. Takes precedence over length.</p></li>
+<li><p><strong>length</strong> (<cite>float</cite>, optional) – Alternate method of setting number of g-actin pairs. Will set
+n_pair to number that results in filament extent closest to length.</p></li>
+<li><p><strong>polarity</strong> (<cite>boolean</cite>, optional) – Is the plus end to the right? Governs myosin binding shortening. If
+not passed, we answer None and let the motors figure it out.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="flins.proteins.actin.Actin.bound">
+<em class="property">property </em><code class="sig-name descname">bound</code><a class="headerlink" href="#flins.proteins.actin.Actin.bound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do you have any attached pairs?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.actin.Actin.boundaries">
+<em class="property">property </em><code class="sig-name descname">boundaries</code><a class="headerlink" href="#flins.proteins.actin.Actin.boundaries" title="Permalink to this definition">¶</a></dt>
+<dd><p>How far do you extend?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.actin.Actin.energy">
+<em class="property">property </em><code class="sig-name descname">energy</code><a class="headerlink" href="#flins.proteins.actin.Actin.energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>How much energy does the filament bear at its current location?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.actin.Actin.force">
+<em class="property">property </em><code class="sig-name descname">force</code><a class="headerlink" href="#flins.proteins.actin.Actin.force" title="Permalink to this definition">¶</a></dt>
+<dd><p>How much force does the filament feel at its current location?
+See <cite>_hypothetical_force</cite> for more detail.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.actin.Actin.freely_diffuse">
+<code class="sig-name descname">freely_diffuse</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/actin.html#Actin.freely_diffuse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.actin.Actin.freely_diffuse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move around a bit, see AlphaActinin.diffuse for more explanation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.actin.Actin.length">
+<em class="property">property </em><code class="sig-name descname">length</code><a class="headerlink" href="#flins.proteins.actin.Actin.length" title="Permalink to this definition">¶</a></dt>
+<dd><p>How long are you?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.actin.Actin.nearest">
+<code class="sig-name descname">nearest</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/actin.html#Actin.nearest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.actin.Actin.nearest" title="Permalink to this definition">¶</a></dt>
+<dd><p>What is the nearest pair to the given location</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.actin.Actin.nearest_unbound">
+<code class="sig-name descname">nearest_unbound</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/actin.html#Actin.nearest_unbound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.actin.Actin.nearest_unbound" title="Permalink to this definition">¶</a></dt>
+<dd><p>What is the nearest unbound pair to the given location</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.actin.Actin.step">
+<code class="sig-name descname">step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/actin.html#Actin.step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.actin.Actin.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take a timestep: move subject to force and diffusion
+As with α-actinin, we take free diffusion to be subject to an
+Einstein-Smoluchowski diffusive processes (as documented in
+<cite>flins.support.diffuse</cite>).</p>
+<p>When bound we treat the movement of actin as subject to equipartition of
+energy stored in each of the bound α-actinins. We first find the
+x-location where the force from bound α-actinins is balanced,
+representing relaxation into the local lowest-energy state. We then draw
+a Boltzmann distributed energy, use its sign as a directionality
+indicator, and move in the given direction until the energy stored in
+the system has changed by the drawn amount.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.actin.Actin.x">
+<em class="property">property </em><code class="sig-name descname">x</code><a class="headerlink" href="#flins.proteins.actin.Actin.x" title="Permalink to this definition">¶</a></dt>
+<dd><p>What is the starting location of the actin filament?
+It is assumed to go in the positive direction afterwards.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="flins.proteins.actin.GActinPair">
+<em class="property">class </em><code class="sig-prename descclassname">flins.proteins.actin.</code><code class="sig-name descname">GActinPair</code><span class="sig-paren">(</span><em class="sig-param">filament</em>, <em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/actin.html#GActinPair"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.actin.GActinPair" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="flins.html#flins.base.Base" title="flins.base.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">flins.base.Base</span></code></a></p>
+<p>Two g-actin with a site that can bind and unbind.</p>
+<p>A binding site on actin filament at location index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filament</strong> (<cite>flins.Actin</cite>) – Parent actin filament to this pair.</p></li>
+<li><p><strong>index</strong> (<cite>int</cite>) – Pair location in the list of pairs on the parent filament.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="flins.proteins.actin.GActinPair.energy">
+<code class="sig-name descname">energy</code><span class="sig-paren">(</span><em class="sig-param">x=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/actin.html#GActinPair.energy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.actin.GActinPair.energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>What energy does this g-actin store?</p>
+<p>Energy is only stored in the case that the binding site is attached,
+since we are treating actin as inflexible.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.actin.GActinPair.force">
+<code class="sig-name descname">force</code><span class="sig-paren">(</span><em class="sig-param">x=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/actin.html#GActinPair.force"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.actin.GActinPair.force" title="Permalink to this definition">¶</a></dt>
+<dd><p>What force does the g-actin experience?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.actin.GActinPair.polarity">
+<em class="property">property </em><code class="sig-name descname">polarity</code><a class="headerlink" href="#flins.proteins.actin.GActinPair.polarity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Myosin is plus-end directed.
+For a review of polarity in the sarcomere, see <a class="reference external" href="https://www.ncbi.nlm.nih.gov/books/NBK9961/">this book section</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Is the plus end to the right? NB</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.actin.GActinPair.x">
+<em class="property">property </em><code class="sig-name descname">x</code><a class="headerlink" href="#flins.proteins.actin.GActinPair.x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Where are you at? Referenced from parent actin.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.proteins.alpha_actinin">
+<span id="flins-proteins-alpha-actinin-module"></span><h2>flins.proteins.alpha_actinin module<a class="headerlink" href="#module-flins.proteins.alpha_actinin" title="Permalink to this headline">¶</a></h2>
+<p>αaas: α-actinin as a service</p>
+<p>But seriously, α-actinin is the primary cross-linker in this system. It requires
+two heads separated by a flexible (or extensible) backbone that are able to bind
+adjacent actin filaments.</p>
+<dl class="class">
+<dt id="flins.proteins.alpha_actinin.ActininHead">
+<em class="property">class </em><code class="sig-prename descclassname">flins.proteins.alpha_actinin.</code><code class="sig-name descname">ActininHead</code><span class="sig-paren">(</span><em class="sig-param">actinin</em>, <em class="sig-param">side</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/alpha_actinin.html#ActininHead"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.alpha_actinin.ActininHead" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#flins.proteins.base.Head" title="flins.proteins.base.Head"><code class="xref py py-class docutils literal notranslate"><span class="pre">flins.proteins.base.Head</span></code></a></p>
+<p>One of the two heads of an α-actinin</p>
+<p>A head on one side of a parent protein</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> (:obj: <cite>Protein subclass</cite>) – The protein on which this head is located</p></li>
+<li><p><strong>side</strong> (<em>int</em>) – Index of this head’s position on the parent</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="flins.proteins.alpha_actinin.ActininHead.energy">
+<code class="sig-name descname">energy</code><span class="sig-paren">(</span><em class="sig-param">x=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/alpha_actinin.html#ActininHead.energy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.alpha_actinin.ActininHead.energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>What energy is stored in the α-actinin backbone?
+This exists because we want to be able to propose alternate ActininHead
+locations and find the energy without changing states.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.alpha_actinin.ActininHead.force">
+<code class="sig-name descname">force</code><span class="sig-paren">(</span><em class="sig-param">x=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/alpha_actinin.html#ActininHead.force"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.alpha_actinin.ActininHead.force" title="Permalink to this definition">¶</a></dt>
+<dd><p>What force does this α-actinin head exert or feel?</p>
+<p>This accounts for the fact that heads feel equal and opposite forces
+and that these forces change as the spring is compressed or extended
+from rest. Let’s think of two heads, <cite>a</cite> and <cite>b</cite> at either end of an
+α-actinin spring. The default force sign returned from the spring is
+negative when the spring is shortened and positive when it is
+lengthened. The desired sign is that which reflects the force exerted by
+the spring on the binding site.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 23%" />
+<col style="width: 13%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"></th>
+<th class="head" colspan="3"></th>
+</tr>
+<tr class="row-even"><th class="head"><p>Head</p></th>
+<th class="head"><p>Orientation</p></th>
+<th class="head"><p>Spring</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Desired</p></th>
+<th class="head"><p>Flip needed?</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>A</p></td>
+<td><p>A&gt;B</p></td>
+<td><p>Short</p></td>
+<td><p>-</p></td>
+<td><p>+</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p>A</p></td>
+<td><p>A&gt;B</p></td>
+<td><p>Long</p></td>
+<td><p>+</p></td>
+<td><p>-</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>A</p></td>
+<td><p>B&gt;A</p></td>
+<td><p>Short</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-even"><td><p>A</p></td>
+<td><p>B&gt;A</p></td>
+<td><p>Long</p></td>
+<td><p>+</p></td>
+<td><p>+</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p>B</p></td>
+<td><p>A&gt;B</p></td>
+<td><p>Short</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-even"><td><p>B</p></td>
+<td><p>A&gt;B</p></td>
+<td><p>Long</p></td>
+<td><p>+</p></td>
+<td><p>+</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p>B</p></td>
+<td><p>B&gt;A</p></td>
+<td><p>Short</p></td>
+<td><p>-</p></td>
+<td><p>+</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p>B</p></td>
+<td><p>B&gt;A</p></td>
+<td><p>Long</p></td>
+<td><p>+</p></td>
+<td><p>-</p></td>
+<td><p>Yes</p></td>
+</tr>
+</tbody>
+</table>
+<p>Looking at this it becomes obvious that force direction flips are needed
+in cases where the current head is the right-most of the two.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.alpha_actinin.ActininHead.step">
+<code class="sig-name descname">step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/alpha_actinin.html#ActininHead.step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.alpha_actinin.ActininHead.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take a timestep: bind, unbind, or stay current</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.alpha_actinin.ActininHead.x">
+<em class="property">property </em><code class="sig-name descname">x</code><a class="headerlink" href="#flins.proteins.alpha_actinin.ActininHead.x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Location derived from α-actinin</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="flins.proteins.alpha_actinin.AlphaActinin">
+<em class="property">class </em><code class="sig-prename descclassname">flins.proteins.alpha_actinin.</code><code class="sig-name descname">AlphaActinin</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">tract=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/alpha_actinin.html#AlphaActinin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.alpha_actinin.AlphaActinin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#flins.proteins.base.Protein" title="flins.proteins.base.Protein"><code class="xref py py-class docutils literal notranslate"><span class="pre">flins.proteins.base.Protein</span></code></a></p>
+<p>A 1D α-actinin molecule with heads on either end</p>
+<p>As this head is considered as a semi-physical object, we care about its
+dimensions and material properties. The dimensions of α-actinin are readily
+available from crystallization, and more recently cryo-EM, studies.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 22%" />
+<col style="width: 19%" />
+<col style="width: 31%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Source</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Length</p></td>
+<td><p>24-36</p></td>
+<td><p>nm</p></td>
+<td><p><a class="footnote-reference brackets" href="#id8" id="id1">1</a>, <a class="footnote-reference brackets" href="#id9" id="id2">2</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Thickness</p></td>
+<td><p>0.5-6.5</p></td>
+<td><p>nm</p></td>
+<td><p><a class="footnote-reference brackets" href="#id8" id="id3">1</a>, <a class="footnote-reference brackets" href="#id9" id="id4">2</a></p></td>
+</tr>
+</tbody>
+</table>
+<p>Stiffness values are far harder to find. The flexural stiffness and
+persistence length of α-actinin have been measured or calculated via
+simulation multiple times, but I am unable to locate an extensional
+stiffness. So, let’s calculate the Young’s modulus from persistence length
+measurements made on generic α-helices and translate that to the specific
+dimensions of α-actinin. We take the persistence length of an α-helix to be
+80nm <a class="footnote-reference brackets" href="#id10" id="id5">3</a>, and therefore for our tetrameric spectrin repeat backbone to be
+240nm. This assumes linear scaling, but is supported in <a class="footnote-reference brackets" href="#id10" id="id6">3</a> for scaling
+from single helices to coiled-coils. More structural detail can be found,
+amongst other places, in <a class="reference external" href="https://dx.doi.org/10.1371/journal.pone.0063633">Autore_2013</a>.</p>
+<p>Persistence length, <span class="math notranslate nohighlight">\(L_p\)</span>, is related to the bending stiffness,
+<span class="math notranslate nohighlight">\(B_s\)</span>, and therefore to Young’s modulus, <span class="math notranslate nohighlight">\(E\)</span>, via
+<span class="math notranslate nohighlight">\(L_p=\frac{B_s}{k_B T}=\frac{E I}{k_B T}\)</span> where <span class="math notranslate nohighlight">\(I\)</span> is the
+second moment of area. For a rod <span class="math notranslate nohighlight">\(I=\frac{\pi r^4}{4}\)</span>.  So our
+<span class="math notranslate nohighlight">\(E\)</span> becomes <span class="math notranslate nohighlight">\(E=\frac{4 L_p k_B T}{\pi r^4}\)</span>. What we really
+want is the spring constant, <span class="math notranslate nohighlight">\(k\)</span> which we get from <span class="math notranslate nohighlight">\(E\)</span> by
+<span class="math notranslate nohighlight">\(k=\frac{E \pi r^2}{L_0}\)</span> and thus</p>
+<div class="math notranslate nohighlight">
+\[k = \frac{4 L_p k_B T}{r^2 L_0}\]</div>
+<p>Where with <span class="math notranslate nohighlight">\(L_p=240nm\)</span>, <span class="math notranslate nohighlight">\(k_B=0.0138pN*nm/K\)</span>, <span class="math notranslate nohighlight">\(T=288K\)</span>,
+<span class="math notranslate nohighlight">\(r=1.5nm\)</span>, and <span class="math notranslate nohighlight">\(L_0=36nm\)</span> to give <span class="math notranslate nohighlight">\(k=3.75pN/nm\)</span></p>
+<p>While we’ll use this extensional stiffness below, it is worth noting that
+bending may be the primary mechanism by which α-actinin deforms (<a class="reference external" href="https://doi.org/10.1016/S0092-8674(00)81980-7">Grum_1999</a>).</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 22%" />
+<col style="width: 19%" />
+<col style="width: 31%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Source</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Stiffness</p></td>
+<td><p>3.75</p></td>
+<td><p>pN/nm</p></td>
+<td><p><a class="footnote-reference brackets" href="#id10" id="id7">3</a></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="footnote brackets">
+<dt class="label" id="id8"><span class="brackets">1</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id3">2</a>)</span></dt>
+<dd><p><a class="reference external" href="https://dx.doi.org/10.1007/s00018-008-8080-8">https://dx.doi.org/10.1007/s00018-008-8080-8</a></p>
+</dd>
+<dt class="label" id="id9"><span class="brackets">2</span><span class="fn-backref">(<a href="#id2">1</a>,<a href="#id4">2</a>)</span></dt>
+<dd><p><a class="reference external" href="https://dx.doi.org/10.1016%2Fj.cell.2014.10.056">https://dx.doi.org/10.1016%2Fj.cell.2014.10.056</a></p>
+</dd>
+<dt class="label" id="id10"><span class="brackets">3</span><span class="fn-backref">(<a href="#id5">1</a>,<a href="#id6">2</a>,<a href="#id7">3</a>)</span></dt>
+<dd><p><a class="reference external" href="https://dx.doi.org/10.1103/PhysRevLett.97.248101">https://dx.doi.org/10.1103/PhysRevLett.97.248101</a></p>
+</dd>
+</dl>
+<p>An α-actinin at location x in a tract</p>
+<dl class="method">
+<dt id="flins.proteins.alpha_actinin.AlphaActinin.bound">
+<em class="property">property </em><code class="sig-name descname">bound</code><a class="headerlink" href="#flins.proteins.alpha_actinin.AlphaActinin.bound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Are you bound?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.alpha_actinin.AlphaActinin.energy">
+<em class="property">property </em><code class="sig-name descname">energy</code><a class="headerlink" href="#flins.proteins.alpha_actinin.AlphaActinin.energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current energy born by the stretched (or not) α-actinin</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.alpha_actinin.AlphaActinin.freely_diffuse">
+<code class="sig-name descname">freely_diffuse</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/alpha_actinin.html#AlphaActinin.freely_diffuse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.alpha_actinin.AlphaActinin.freely_diffuse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Diffuse to a new location.
+We know the approximate dimensions of the α-actinin backbone are 24-36
+nm by 0.5-6.5 nm as specified in <a class="reference external" href="https://dx.doi.org/10.1007/s00018-008-8080-8">Sjöblom_2008</a> and <a class="reference external" href="https://dx.doi.org/10.1016%2Fj.cell.2014.10.056">Ribeiro_2014</a>. We
+treat this as an ellipsoid of radii 18 by 3 nm to account for the heads
+at either end.</p>
+<p>An alternate treatment would be to use the Stoke’s radius for actinin
+described in <a class="reference external" href="https://bionumbers.hms.harvard.edu/bionumber.aspx?id=104395">BNID_104395</a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.alpha_actinin.AlphaActinin.fully_bound">
+<em class="property">property </em><code class="sig-name descname">fully_bound</code><a class="headerlink" href="#flins.proteins.alpha_actinin.AlphaActinin.fully_bound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Are both sides bound?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.alpha_actinin.AlphaActinin.step">
+<code class="sig-name descname">step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/alpha_actinin.html#AlphaActinin.step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.alpha_actinin.AlphaActinin.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take a timestep</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.proteins.anchor">
+<span id="flins-proteins-anchor-module"></span><h2>flins.proteins.anchor module<a class="headerlink" href="#module-flins.proteins.anchor" title="Permalink to this headline">¶</a></h2>
+<p>Don’t stray far now.</p>
+<p>Anchor keeps a linked binding site strongly attached to a given location. It is
+intended to be used to represent focal adhesions and their movements.</p>
+<dl class="class">
+<dt id="flins.proteins.anchor.Anchor">
+<em class="property">class </em><code class="sig-prename descclassname">flins.proteins.anchor.</code><code class="sig-name descname">Anchor</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">anchor_to=None</em>, <em class="sig-param">tract=None</em>, <em class="sig-param">k=1000</em>, <em class="sig-param">rest=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/anchor.html#Anchor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.anchor.Anchor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#flins.proteins.base.Protein" title="flins.proteins.base.Protein"><code class="xref py py-class docutils literal notranslate"><span class="pre">flins.proteins.base.Protein</span></code></a></p>
+<p>A strongly anchored spring that stays put
+We need to be able to specify the locations of, e.g., the ends of an actin
+being treated as bound to a focal adhesion or simply a boundary of the
+simulation. To do this while keeping our force solvers happy, we use very
+stiff springs attached to actin binding sites.</p>
+<p>Create our anchor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – Initial x location of the anchor</p></li>
+<li><p><strong>anchor_to</strong> (<em>component with BindingSite, optional</em>) – Protein segment with a binding site to anchor down</p></li>
+<li><p><strong>tract</strong> (<em>flins.space.Tract, optional</em>) – Tract in which this anchor exists</p></li>
+<li><p><strong>k</strong> (<em>float, optional</em>) – Stiffness of the anchor’s attachment to its location in pN/nm [1000]</p></li>
+<li><p><strong>rest</strong> (<em>float, optional</em>) – Rest length of the spring tethering the anchor in nm [0]</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="flins.proteins.anchor.Anchor.energy">
+<code class="sig-name descname">energy</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/anchor.html#Anchor.energy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.anchor.Anchor.energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Energy stored in anchor spring with other end stretched to x</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.anchor.Anchor.force">
+<code class="sig-name descname">force</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/anchor.html#Anchor.force"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.anchor.Anchor.force" title="Permalink to this definition">¶</a></dt>
+<dd><p>Force exerted by anchor if other end is stretched to x</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.anchor.Anchor.step">
+<code class="sig-name descname">step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/anchor.html#Anchor.step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.anchor.Anchor.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sit there and remain bound</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.proteins.base">
+<span id="flins-proteins-base-module"></span><h2>flins.proteins.base module<a class="headerlink" href="#module-flins.proteins.base" title="Permalink to this headline">¶</a></h2>
+<p>Base protein class</p>
+<dl class="class">
+<dt id="flins.proteins.base.Head">
+<em class="property">class </em><code class="sig-prename descclassname">flins.proteins.base.</code><code class="sig-name descname">Head</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">side</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/base.html#Head"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.base.Head" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#flins.proteins.base.Protein" title="flins.proteins.base.Protein"><code class="xref py py-class docutils literal notranslate"><span class="pre">flins.proteins.base.Protein</span></code></a></p>
+<p>Generic head located on a parent protein</p>
+<p>A head on one side of a parent protein</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> (:obj: <cite>Protein subclass</cite>) – The protein on which this head is located</p></li>
+<li><p><strong>side</strong> (<em>int</em>) – Index of this head’s position on the parent</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="flins.proteins.base.Head.other_head">
+<em class="property">property </em><code class="sig-name descname">other_head</code><a class="headerlink" href="#flins.proteins.base.Head.other_head" title="Permalink to this definition">¶</a></dt>
+<dd><p>The other head</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="flins.proteins.base.Protein">
+<em class="property">class </em><code class="sig-prename descclassname">flins.proteins.base.</code><code class="sig-name descname">Protein</code><span class="sig-paren">(</span><em class="sig-param">kind</em>, <em class="sig-param">tract=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/base.html#Protein"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.base.Protein" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="flins.html#flins.base.Base" title="flins.base.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">flins.base.Base</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.proteins.motor">
+<span id="flins-proteins-motor-module"></span><h2>flins.proteins.motor module<a class="headerlink" href="#module-flins.proteins.motor" title="Permalink to this headline">¶</a></h2>
+<p>Crank it.</p>
+<p>This is a simple simple motor. It isn’t intended to do more than create some
+sliding forces:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Head</span> <span class="mi">1</span>        <span class="n">Head</span> <span class="mi">2</span>
+   <span class="o">|</span>             <span class="o">|</span>
+   <span class="n">v</span>             <span class="n">v</span>
+
+   <span class="o">*--</span>\<span class="o">/</span>\<span class="o">/</span>\<span class="o">/</span>\<span class="o">/</span>\<span class="o">--*</span>
+
+          <span class="o">^</span>
+          <span class="o">|</span>
+       <span class="n">Backbone</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="flins.proteins.motor.Motor">
+<em class="property">class </em><code class="sig-prename descclassname">flins.proteins.motor.</code><code class="sig-name descname">Motor</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">tract=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/motor.html#Motor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.motor.Motor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#flins.proteins.base.Protein" title="flins.proteins.base.Protein"><code class="xref py py-class docutils literal notranslate"><span class="pre">flins.proteins.base.Protein</span></code></a></p>
+<dl class="method">
+<dt id="flins.proteins.motor.Motor.bopped_locs">
+<em class="property">property </em><code class="sig-name descname">bopped_locs</code><a class="headerlink" href="#flins.proteins.motor.Motor.bopped_locs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Locations after perturbation, may not need this?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.motor.Motor.bound">
+<em class="property">property </em><code class="sig-name descname">bound</code><a class="headerlink" href="#flins.proteins.motor.Motor.bound" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.motor.Motor.fully_bound">
+<em class="property">property </em><code class="sig-name descname">fully_bound</code><a class="headerlink" href="#flins.proteins.motor.Motor.fully_bound" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.motor.Motor.locs">
+<em class="property">property </em><code class="sig-name descname">locs</code><a class="headerlink" href="#flins.proteins.motor.Motor.locs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Location of each node in motor. 2 in this case</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.motor.Motor.state">
+<em class="property">property </em><code class="sig-name descname">state</code><a class="headerlink" href="#flins.proteins.motor.Motor.state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.motor.Motor.step">
+<code class="sig-name descname">step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/motor.html#Motor.step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.motor.Motor.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take one step forward in time.</p>
+<p>If the motor isn’t bound, it freely diffuses. Both heads have the chance
+to transition from their current state to a new one.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.motor.Motor.x">
+<em class="property">property </em><code class="sig-name descname">x</code><a class="headerlink" href="#flins.proteins.motor.Motor.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="flins.proteins.motor.MotorHead">
+<em class="property">class </em><code class="sig-prename descclassname">flins.proteins.motor.</code><code class="sig-name descname">MotorHead</code><span class="sig-paren">(</span><em class="sig-param">motor</em>, <em class="sig-param">side</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/motor.html#MotorHead"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.motor.MotorHead" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#flins.proteins.base.Head" title="flins.proteins.base.Head"><code class="xref py py-class docutils literal notranslate"><span class="pre">flins.proteins.base.Head</span></code></a></p>
+<p>A head that tracks binding, rates, and states</p>
+<p>Create a motor head.</p>
+<p>A note on states: typically we talk about a motor being in states that
+are one indexed (1, 2, …) but since lists in python are zero indexed
+(0, 1, …) we treat states as such to make it far easier to avoid
+off-by-one errors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>motor</strong> (<em>Motor</em>) – The parent motor to this head</p></li>
+<li><p><strong>side</strong> (<em>0 or 1</em>) – Whether this head is on the left (0) or right (1) side of the motor</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="flins.proteins.motor.MotorHead.energy">
+<code class="sig-name descname">energy</code><span class="sig-paren">(</span><em class="sig-param">x=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/motor.html#MotorHead.energy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.motor.MotorHead.energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>What energy is stored in the motor backbone?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.motor.MotorHead.force">
+<code class="sig-name descname">force</code><span class="sig-paren">(</span><em class="sig-param">x=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/motor.html#MotorHead.force"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.motor.MotorHead.force" title="Permalink to this definition">¶</a></dt>
+<dd><p>What force does this head exert or feel?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.motor.MotorHead.polarity">
+<em class="property">property </em><code class="sig-name descname">polarity</code><a class="headerlink" href="#flins.proteins.motor.MotorHead.polarity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true if this is the right-most head.</p>
+<p>The polarity of the actin filaments is defined as True when the plus end
+is to the right. As myosin is <a class="reference external" href="https://www.ncbi.nlm.nih.gov/books/NBK9961/">plus-end directed</a> we want it to bind
+only when the backbone-to-face direction is facing the plus end of the
+actin filament. So we’ll return a polarity of <code class="docutils literal notranslate"><span class="pre">True</span></code> when this head’s
+location is greater than the other head’s and <code class="docutils literal notranslate"><span class="pre">False</span></code> when it isn’t.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.motor.MotorHead.step">
+<code class="sig-name descname">step</code><span class="sig-paren">(</span><em class="sig-param">bs=None</em>, <em class="sig-param">length=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/proteins/motor.html#MotorHead.step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.proteins.motor.MotorHead.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take a timestep, transitioning to a new state as needed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.proteins.motor.MotorHead.x">
+<em class="property">property </em><code class="sig-name descname">x</code><a class="headerlink" href="#flins.proteins.motor.MotorHead.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.proteins">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-flins.proteins" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="flins.space.html" class="btn btn-neutral float-right" title="flins.space package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="flins.construct.html" class="btn btn-neutral float-left" title="flins.construct package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dave Williams
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

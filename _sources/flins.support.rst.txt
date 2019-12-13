@@ -1,0 +1,69 @@
+flins.support package
+=====================
+
+Subpackages
+-----------
+
+.. toctree::
+
+   flins.support.hexmath
+
+Submodules
+----------
+
+flins.support.binding\_site module
+----------------------------------
+
+.. automodule:: flins.support.binding_site
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+flins.support.diffuse module
+----------------------------
+
+.. automodule:: flins.support.diffuse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+flins.support.kinetics module
+-----------------------------
+
+.. automodule:: flins.support.kinetics
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+flins.support.names module
+--------------------------
+
+.. automodule:: flins.support.names
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+flins.support.spring module
+---------------------------
+
+.. automodule:: flins.support.spring
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+flins.support.units module
+--------------------------
+
+.. automodule:: flins.support.units
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: flins.support
+   :members:
+   :undoc-members:
+   :show-inheritance:

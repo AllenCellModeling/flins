@@ -1,0 +1,374 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>flins.visualize package &mdash; flins 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="History" href="history.html" />
+    <link rel="prev" title="flins.support.hexmath package" href="flins.support.hexmath.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> flins
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics.html">Physics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">flins</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="flins.html">flins package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="flins.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="flins.construct.html">flins.construct package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="flins.proteins.html">flins.proteins package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="flins.space.html">flins.space package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="flins.support.html">flins.support package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">flins.visualize package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="flins.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="flins.html#module-flins.base">flins.base module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="flins.html#module-flins">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">flins</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">flins</a> &raquo;</li>
+        
+          <li><a href="flins.html">flins package</a> &raquo;</li>
+        
+      <li>flins.visualize package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/flins.visualize.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="flins-visualize-package">
+<h1>flins.visualize package<a class="headerlink" href="#flins-visualize-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-flins.visualize.flat_render">
+<span id="flins-visualize-flat-render-module"></span><h2>flins.visualize.flat_render module<a class="headerlink" href="#module-flins.visualize.flat_render" title="Permalink to this headline">¶</a></h2>
+<p>Support for rendering the tracts (and proteins within them) at the current
+timestep as an SVG. When changing this, [a list of named
+colors](<a class="reference external" href="https://www.december.com/html/spec/colorsvg.html">https://www.december.com/html/spec/colorsvg.html</a>) is useful.</p>
+<dl class="function">
+<dt id="flins.visualize.flat_render.plot_world">
+<code class="sig-prename descclassname">flins.visualize.flat_render.</code><code class="sig-name descname">plot_world</code><span class="sig-paren">(</span><em class="sig-param">world</em>, <em class="sig-param">params={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/visualize/flat_render.html#plot_world"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.visualize.flat_render.plot_world" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a world as a flat, unrolled, svg
+:Parameters: * <strong>world</strong> (<em>flins.construct.World</em>) – World to render as svg</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>params</strong> (<em>dict keys in (y_span, y_sep, xm, ym)</em>) – Set how tall tracts are (y_span), how far apart they are (y_sep), and
+the multipliers used to convert SVG units to pixels (ym, xm)</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.visualize.movie">
+<span id="flins-visualize-movie-module"></span><h2>flins.visualize.movie module<a class="headerlink" href="#module-flins.visualize.movie" title="Permalink to this headline">¶</a></h2>
+<p>Support for movie generation</p>
+<dl class="class">
+<dt id="flins.visualize.movie.MovieGen">
+<em class="property">class </em><code class="sig-prename descclassname">flins.visualize.movie.</code><code class="sig-name descname">MovieGen</code><span class="sig-paren">(</span><em class="sig-param">outname='out'</em>, <em class="sig-param">temp_dir=None</em>, <em class="sig-param">fps=25</em>, <em class="sig-param">zoom=(1.0</em>, <em class="sig-param">1.0)</em>, <em class="sig-param">quiet=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/visualize/movie.html#MovieGen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.visualize.movie.MovieGen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Generate a movie from a set of steps in the world or SVGs</p>
+<p>Support the creation of movies from runs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>outname</strong> (<em>str (out)</em>) – Relative path for the output file</p></li>
+<li><p><strong>temp_dir</strong> (<em>str</em>) – Dir where we’ll do our work, deleted on exit if not specified</p></li>
+<li><p><strong>fps</strong> (<em>int</em>) – How many frames per sec for resulting movie</p></li>
+<li><p><strong>zoom</strong> (<em>tuple of floats</em>) – x and y zoom levels</p></li>
+<li><p><strong>quiet</strong> (<em>boolean</em>) – don’t show current status if True</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="flins.visualize.movie.MovieGen.add_svg">
+<code class="sig-name descname">add_svg</code><span class="sig-paren">(</span><em class="sig-param">dwg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/visualize/movie.html#MovieGen.add_svg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.visualize.movie.MovieGen.add_svg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render an svg to the temp dir</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.visualize.movie.MovieGen.add_world">
+<code class="sig-name descname">add_world</code><span class="sig-paren">(</span><em class="sig-param">world</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/visualize/movie.html#MovieGen.add_world"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.visualize.movie.MovieGen.add_world" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a world and render it as an svg</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.visualize.movie.MovieGen.clean_up">
+<code class="sig-name descname">clean_up</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/visualize/movie.html#MovieGen.clean_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.visualize.movie.MovieGen.clean_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the temporary renders and the temp dirs if they were
+automatically created</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.visualize.movie.MovieGen.show">
+<code class="sig-name descname">show</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/visualize/movie.html#MovieGen.show"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.visualize.movie.MovieGen.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use ipython to display movie, intended for use in notebooks</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.visualize.movie.MovieGen.write_movie">
+<code class="sig-name descname">write_movie</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/visualize/movie.html#MovieGen.write_movie"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.visualize.movie.MovieGen.write_movie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert svgs to pngs and then to an mp4 via ffmpeg</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.visualize.svg">
+<span id="flins-visualize-svg-module"></span><h2>flins.visualize.svg module<a class="headerlink" href="#module-flins.visualize.svg" title="Permalink to this headline">¶</a></h2>
+<p>Support for saving and displaying SVGs</p>
+<dl class="function">
+<dt id="flins.visualize.svg.display">
+<code class="sig-prename descclassname">flins.visualize.svg.</code><code class="sig-name descname">display</code><span class="sig-paren">(</span><em class="sig-param">dwg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/visualize/svg.html#display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.visualize.svg.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save to a temporary file and open (only on MacOS)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dwg</strong> (<em>SVG write.Drawing</em>) – SVG to render to disk and open in Safari</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="flins.visualize.svg.jupyter">
+<code class="sig-prename descclassname">flins.visualize.svg.</code><code class="sig-name descname">jupyter</code><span class="sig-paren">(</span><em class="sig-param">dwg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/visualize/svg.html#jupyter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.visualize.svg.jupyter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the drawing in jupyter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dwg</strong> (<em>SVG write.Drawing</em>) – SVG to render via IPython.display</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="flins.visualize.svg.save">
+<code class="sig-prename descclassname">flins.visualize.svg.</code><code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">dwg</em>, <em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/visualize/svg.html#save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.visualize.svg.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save an SVGA to a local file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dwg</strong> (<em>SVG write.Drawing</em>) – SVG to render as a string and save to disk</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – Local filename to save to. Will append ‘.svg’ if not present.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.visualize.vis_actin">
+<span id="flins-visualize-vis-actin-module"></span><h2>flins.visualize.vis_actin module<a class="headerlink" href="#module-flins.visualize.vis_actin" title="Permalink to this headline">¶</a></h2>
+<p>Plot fancy versions of our proteins on matplotlib axes</p>
+<p>This was transferred here from the protein classes themselves and is mostly for
+storage at this point.</p>
+<dl class="function">
+<dt id="flins.visualize.vis_actin.plot_actin">
+<code class="sig-prename descclassname">flins.visualize.vis_actin.</code><code class="sig-name descname">plot_actin</code><span class="sig-paren">(</span><em class="sig-param">actin</em>, <em class="sig-param">ax=None</em>, <em class="sig-param">show=False</em>, <em class="sig-param">y=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/visualize/vis_actin.html#plot_actin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.visualize.vis_actin.plot_actin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot an actin filament on an axis</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.visualize.vis_space">
+<span id="flins-visualize-vis-space-module"></span><h2>flins.visualize.vis_space module<a class="headerlink" href="#module-flins.visualize.vis_space" title="Permalink to this headline">¶</a></h2>
+<p>Plot things about our hex spaces and their tracts on matplotlib axes</p>
+<dl class="function">
+<dt id="flins.visualize.vis_space.plot_tractspace">
+<code class="sig-prename descclassname">flins.visualize.vis_space.</code><code class="sig-name descname">plot_tractspace</code><span class="sig-paren">(</span><em class="sig-param">ts</em>, <em class="sig-param">callback=None</em>, <em class="sig-param">show=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/visualize/vis_space.html#plot_tractspace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.visualize.vis_space.plot_tractspace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the tracts and what’s in them, optionally using a callback</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.visualize">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-flins.visualize" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="history.html" class="btn btn-neutral float-right" title="History" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="flins.support.hexmath.html" class="btn btn-neutral float-left" title="flins.support.hexmath package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dave Williams
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

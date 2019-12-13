@@ -1,0 +1,265 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>flins.construct.locations &mdash; flins 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> flins
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics.html">Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">flins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">flins</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>flins.construct.locations</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for flins.construct.locations</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Functions that support the creation of new worlds</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="normal_length_distribution"><a class="viewcode-back" href="../../../flins.construct.html#flins.construct.locations.normal_length_distribution">[docs]</a><span class="k">def</span> <span class="nf">normal_length_distribution</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">peak</span><span class="p">,</span> <span class="n">scale</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Normally distributed set of lengths, negative values thrown out</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n: int</span>
+<span class="sd">        Number of lengths to return</span>
+<span class="sd">    peak: float</span>
+<span class="sd">        Mean length value (assuming no rejected negative values)</span>
+<span class="sd">    scale: float</span>
+<span class="sd">        Spread of length value</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">peak</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">scale</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Length peak and scale must be positive&quot;</span><span class="p">)</span>
+    <span class="n">lengths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">peak</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">lengths</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">replace</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">lengths</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">lengths</span><span class="p">[</span><span class="n">lengths</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">normal_length_distribution</span><span class="p">(</span><span class="n">replace</span><span class="p">,</span> <span class="n">peak</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">lengths</span></div>
+
+
+<div class="viewcode-block" id="location_end_pushed"><a class="viewcode-back" href="../../../flins.construct.html#flins.construct.locations.location_end_pushed">[docs]</a><span class="k">def</span> <span class="nf">location_end_pushed</span><span class="p">(</span><span class="n">lengths</span><span class="p">,</span> <span class="n">span</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Randomly distribute along span, forcing end overlaps inwards</span>
+<span class="sd">    If a protein is poking out of the span (negative or past the span value),</span>
+<span class="sd">    push it back into the valid range. This maintains the length distribution</span>
+<span class="sd">    but gives an uneven protein density across space.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    lengths: array of floats</span>
+<span class="sd">        Length of each protein</span>
+<span class="sd">    span: float</span>
+<span class="sd">        Span of the space</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">locations</span> <span class="o">=</span> <span class="p">(</span><span class="n">lengths</span> <span class="o">+</span> <span class="n">span</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">lengths</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">-</span> <span class="n">lengths</span>
+    <span class="n">locations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">locations</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">span</span> <span class="o">-</span> <span class="n">lengths</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">locations</span><span class="p">,</span> <span class="n">lengths</span></div>
+
+
+<div class="viewcode-block" id="location_end_cut"><a class="viewcode-back" href="../../../flins.construct.html#flins.construct.locations.location_end_cut">[docs]</a><span class="k">def</span> <span class="nf">location_end_cut</span><span class="p">(</span><span class="n">lengths</span><span class="p">,</span> <span class="n">span</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Randomly distribute along span, shorten end proteins if they protrude</span>
+<span class="sd">    If a protein is poking out of the span, adjust its length so that it no</span>
+<span class="sd">    longer does. This maintains a constant protein density across space at</span>
+<span class="sd">    the cost of altering the distribution of lengths. </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    lengths: array of floats</span>
+<span class="sd">        Length of each protein</span>
+<span class="sd">    span: float</span>
+<span class="sd">        Span of the space</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">locations</span> <span class="o">=</span> <span class="p">(</span><span class="n">lengths</span> <span class="o">+</span> <span class="n">span</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">lengths</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">-</span> <span class="n">lengths</span>
+    <span class="n">lengths</span><span class="p">[</span><span class="n">locations</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">locations</span><span class="p">[</span><span class="n">locations</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">ends</span> <span class="o">=</span> <span class="n">locations</span> <span class="o">+</span> <span class="n">lengths</span>
+    <span class="n">lengths</span><span class="p">[</span><span class="n">ends</span> <span class="o">&gt;</span> <span class="n">span</span><span class="p">]</span> <span class="o">-=</span> <span class="n">locations</span><span class="p">[</span><span class="n">ends</span> <span class="o">&gt;</span> <span class="n">span</span><span class="p">]</span> <span class="o">+</span> <span class="n">lengths</span><span class="p">[</span><span class="n">ends</span> <span class="o">&gt;</span> <span class="n">span</span><span class="p">]</span> <span class="o">-</span> <span class="n">span</span>
+    <span class="n">locations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">locations</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">span</span> <span class="o">-</span> <span class="n">lengths</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">locations</span><span class="p">,</span> <span class="n">lengths</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dave Williams
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

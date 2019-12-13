@@ -1,0 +1,662 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>flins.support package &mdash; flins 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="flins.support.hexmath package" href="flins.support.hexmath.html" />
+    <link rel="prev" title="flins.space package" href="flins.space.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> flins
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics.html">Physics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">flins</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="flins.html">flins package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="flins.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="flins.construct.html">flins.construct package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="flins.proteins.html">flins.proteins package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="flins.space.html">flins.space package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">flins.support package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="flins.visualize.html">flins.visualize package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="flins.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="flins.html#module-flins.base">flins.base module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="flins.html#module-flins">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">flins</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">flins</a> &raquo;</li>
+        
+          <li><a href="flins.html">flins package</a> &raquo;</li>
+        
+      <li>flins.support package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/flins.support.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="flins-support-package">
+<h1>flins.support package<a class="headerlink" href="#flins-support-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="flins.support.hexmath.html">flins.support.hexmath package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="flins.support.hexmath.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flins.support.hexmath.html#module-flins.support.hexmath.axial">flins.support.hexmath.axial module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flins.support.hexmath.html#module-flins.support.hexmath.cube">flins.support.hexmath.cube module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flins.support.hexmath.html#module-flins.support.hexmath.offset">flins.support.hexmath.offset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flins.support.hexmath.html#module-flins.support.hexmath">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-flins.support.binding_site">
+<span id="flins-support-binding-site-module"></span><h2>flins.support.binding_site module<a class="headerlink" href="#module-flins.support.binding_site" title="Permalink to this headline">¶</a></h2>
+<p>What is bound to what.</p>
+<p>Let different proteins link to and unlink from each other.</p>
+<dl class="class">
+<dt id="flins.support.binding_site.BindingSite">
+<em class="property">class </em><code class="sig-prename descclassname">flins.support.binding_site.</code><code class="sig-name descname">BindingSite</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/binding_site.html#BindingSite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.binding_site.BindingSite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A link between this (thing) and that (thing)</p>
+<p>Create the binding site</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parent</strong> (<cite>protein</cite>) – Protein on which this binding site is located</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="flins.support.binding_site.BindingSite.bind">
+<code class="sig-name descname">bind</code><span class="sig-paren">(</span><em class="sig-param">other</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/binding_site.html#BindingSite.bind"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.binding_site.BindingSite.bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bind to other object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.support.binding_site.BindingSite.bound">
+<em class="property">property </em><code class="sig-name descname">bound</code><a class="headerlink" href="#flins.support.binding_site.BindingSite.bound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Are you currently bound?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.support.binding_site.BindingSite.linked">
+<em class="property">property </em><code class="sig-name descname">linked</code><a class="headerlink" href="#flins.support.binding_site.BindingSite.linked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the parent object of the linked site (None if unbound)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.support.binding_site.BindingSite.unbind">
+<code class="sig-name descname">unbind</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/binding_site.html#BindingSite.unbind"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.binding_site.BindingSite.unbind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unbind from other object</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.support.diffuse">
+<span id="flins-support-diffuse-module"></span><h2>flins.support.diffuse module<a class="headerlink" href="#module-flins.support.diffuse" title="Permalink to this headline">¶</a></h2>
+<p>Stagger around.</p>
+<p>Allow random diffusion of various shapes in various directions.</p>
+<dl class="class">
+<dt id="flins.support.diffuse.Drag">
+<em class="property">class </em><code class="sig-prename descclassname">flins.support.diffuse.</code><code class="sig-name descname">Drag</code><a class="reference internal" href="_modules/flins/support/diffuse.html#Drag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.diffuse.Drag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Drag coefficients drawn from <a class="reference external" href="http://books.google.com/books?vid=ISBN9780878933334">Howard_2001</a>, Pg 107 and <a class="reference external" href="https://press.princeton.edu/titles/112.html">Berg_1983</a>.
+We assume that our coefficient of viscosity, <span class="math notranslate nohighlight">\(\eta\)</span>, defaults to that
+of water (0.0114 poise at 288K), referenced from units</p>
+<dl class="class">
+<dt id="flins.support.diffuse.Drag.Cylinder">
+<em class="property">class </em><code class="sig-name descname">Cylinder</code><a class="reference internal" href="_modules/flins/support/diffuse.html#Drag.Cylinder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.diffuse.Drag.Cylinder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Drag coefficients for cylinders.
+The cylinder has a length <span class="math notranslate nohighlight">\(L\)</span>, a radius <span class="math notranslate nohighlight">\(r\)</span>, and is in a
+fluid of viscosity <span class="math notranslate nohighlight">\(\eta\)</span>.  This assumes <span class="math notranslate nohighlight">\(L&gt;&gt;r\)</span> and an
+unbounded space.</p>
+<dl class="method">
+<dt id="flins.support.diffuse.Drag.Cylinder.long_axis_rotation">
+<code class="sig-name descname">long_axis_rotation</code><span class="sig-paren">(</span><em class="sig-param">r</em>, <em class="sig-param">eta=1.14e-09</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/diffuse.html#Drag.Cylinder.long_axis_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.diffuse.Drag.Cylinder.long_axis_rotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drag coefficient for cylinder rotating about the long axis</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.support.diffuse.Drag.Cylinder.long_axis_translation">
+<code class="sig-name descname">long_axis_translation</code><span class="sig-paren">(</span><em class="sig-param">r</em>, <em class="sig-param">eta=1.14e-09</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/diffuse.html#Drag.Cylinder.long_axis_translation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.diffuse.Drag.Cylinder.long_axis_translation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drag coefficient for cylinder moving along long axis</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.support.diffuse.Drag.Cylinder.short_axis_rotation">
+<code class="sig-name descname">short_axis_rotation</code><span class="sig-paren">(</span><em class="sig-param">r</em>, <em class="sig-param">eta=1.14e-09</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/diffuse.html#Drag.Cylinder.short_axis_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.diffuse.Drag.Cylinder.short_axis_rotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drag coefficient for cylinder rotating about the radial axis</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.support.diffuse.Drag.Cylinder.short_axis_translation">
+<code class="sig-name descname">short_axis_translation</code><span class="sig-paren">(</span><em class="sig-param">r</em>, <em class="sig-param">eta=1.14e-09</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/diffuse.html#Drag.Cylinder.short_axis_translation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.diffuse.Drag.Cylinder.short_axis_translation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drag coefficient for cylinder moving along the radial axis</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="flins.support.diffuse.Drag.Ellipsoid">
+<em class="property">class </em><code class="sig-name descname">Ellipsoid</code><a class="reference internal" href="_modules/flins/support/diffuse.html#Drag.Ellipsoid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.diffuse.Drag.Ellipsoid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Drag coefficients for an ellipsoid.
+The ellipsoid has a minor axis radius of <span class="math notranslate nohighlight">\(a\)</span>, a major axis radius
+of <span class="math notranslate nohighlight">\(b\)</span>, and immersion in a fluid of viscosity <span class="math notranslate nohighlight">\(\eta\)</span>. This
+assumes <span class="math notranslate nohighlight">\(b&gt;&gt;a\)</span> and an unbounded space.</p>
+<dl class="method">
+<dt id="flins.support.diffuse.Drag.Ellipsoid.long_axis_rotation">
+<code class="sig-name descname">long_axis_rotation</code><span class="sig-paren">(</span><em class="sig-param">a</em>, <em class="sig-param">eta=1.14e-09</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/diffuse.html#Drag.Ellipsoid.long_axis_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.diffuse.Drag.Ellipsoid.long_axis_rotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drag coefficient for an ellipsoid rotating about the long axis</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.support.diffuse.Drag.Ellipsoid.long_axis_translation">
+<code class="sig-name descname">long_axis_translation</code><span class="sig-paren">(</span><em class="sig-param">a</em>, <em class="sig-param">eta=1.14e-09</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/diffuse.html#Drag.Ellipsoid.long_axis_translation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.diffuse.Drag.Ellipsoid.long_axis_translation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drag coefficient for an ellipsoid moving along long axis</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.support.diffuse.Drag.Ellipsoid.short_axis_rotation">
+<code class="sig-name descname">short_axis_rotation</code><span class="sig-paren">(</span><em class="sig-param">a</em>, <em class="sig-param">eta=1.14e-09</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/diffuse.html#Drag.Ellipsoid.short_axis_rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.diffuse.Drag.Ellipsoid.short_axis_rotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drag coefficient for an ellipsoid rotating about the minor axis</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.support.diffuse.Drag.Ellipsoid.short_axis_translation">
+<code class="sig-name descname">short_axis_translation</code><span class="sig-paren">(</span><em class="sig-param">a</em>, <em class="sig-param">eta=1.14e-09</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/diffuse.html#Drag.Ellipsoid.short_axis_translation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.diffuse.Drag.Ellipsoid.short_axis_translation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drag coefficient for an ellipsoid moving along the minor axis</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="flins.support.diffuse.Drag.Sphere">
+<em class="property">class </em><code class="sig-name descname">Sphere</code><a class="reference internal" href="_modules/flins/support/diffuse.html#Drag.Sphere"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.diffuse.Drag.Sphere" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Drag coefficients for a sphere.
+The sphere has a radius of <span class="math notranslate nohighlight">\(r\)</span> and is embedded in a fluid of
+viscosity <span class="math notranslate nohighlight">\(\eta\)</span>.</p>
+<dl class="method">
+<dt id="flins.support.diffuse.Drag.Sphere.rotation">
+<code class="sig-name descname">rotation</code><span class="sig-paren">(</span><em class="sig-param">eta=1.14e-09</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/diffuse.html#Drag.Sphere.rotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.diffuse.Drag.Sphere.rotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drag coefficient for a sphere rotating in a fluid</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.support.diffuse.Drag.Sphere.translation">
+<code class="sig-name descname">translation</code><span class="sig-paren">(</span><em class="sig-param">eta=1.14e-09</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/diffuse.html#Drag.Sphere.translation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.diffuse.Drag.Sphere.translation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drag coefficient for a sphere moving through a fluid</p>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="flins.support.diffuse.Dx">
+<code class="sig-prename descclassname">flins.support.diffuse.</code><code class="sig-name descname">Dx</code><span class="sig-paren">(</span><em class="sig-param">f_drag</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/diffuse.html#Dx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.diffuse.Dx" title="Permalink to this definition">¶</a></dt>
+<dd><p>How far do we move because of diffusion subject to drag?
+From the Einstein-Smoluchowski relation via <a class="reference external" href="https://press.princeton.edu/titles/112.html">Berg_1983</a> we know that the
+diffusion coefficient for a particle subject to a viscous drag, <span class="math notranslate nohighlight">\(f\)</span>
+(in <span class="math notranslate nohighlight">\(g/s\)</span>) is <span class="math notranslate nohighlight">\(D=kT/f\)</span>. Further, from the same source and
+<a class="reference external" href="http://books.google.com/books?vid=ISBN9780878933334">Howard_2001</a> we know the drag on cylinders, ellipsoids, and spheres and
+calculate them above for reference.</p>
+<p>We add a correction factor of 1/3.2 to account for the difference in
+diffusion between water and eukaryotic cytoplasm (<a class="reference external" href="https://doi.org/10.1016/S0006-3495(97)78835-0">Swaminathan_1997</a>).</p>
+<p>An alternate treatment would be to use the Stoke’s radius for all molecules,
+approximating them as spheres. There is an argument that anything beyond the
+spherical approximation is false precision.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="flins.support.diffuse.coerce_to_bounds">
+<code class="sig-prename descclassname">flins.support.diffuse.</code><code class="sig-name descname">coerce_to_bounds</code><span class="sig-paren">(</span><em class="sig-param">mol_start</em>, <em class="sig-param">mol_end</em>, <em class="sig-param">boundaries</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/diffuse.html#coerce_to_bounds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.diffuse.coerce_to_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>When a molecule has diffused out of bounds, coerce it back into bounds</p>
+<p>A choice is made here to reflect the molecule back into bounds rather than
+stopping it dead at the boundary. This is to prevent the boundaries of the
+system from acting as absorbing ends that will tend to build up diffusing
+proteins over time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mol_start</strong> (<cite>float</cite>) – X location of the right side of the protein</p></li>
+<li><p><strong>mol_end</strong> (<cite>float</cite>) – X location of left side of the protein</p></li>
+<li><p><strong>boundaries</strong> (<cite>tuple</cite>) – Upper and lower bounds of the 1D space the molecule is diffusing within</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.support.kinetics">
+<span id="flins-support-kinetics-module"></span><h2>flins.support.kinetics module<a class="headerlink" href="#module-flins.support.kinetics" title="Permalink to this headline">¶</a></h2>
+<p>Transitions are always hard.</p>
+<p>Help us decide when we change from one state to another.</p>
+<dl class="function">
+<dt id="flins.support.kinetics.rate_to_prob">
+<code class="sig-prename descclassname">flins.support.kinetics.</code><code class="sig-name descname">rate_to_prob</code><span class="sig-paren">(</span><em class="sig-param">rate</em>, <em class="sig-param">obs_duration</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/kinetics.html#rate_to_prob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.kinetics.rate_to_prob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a rate to a probability, based on an observation duration
+length and the assumption that the rate is for a Poisson process.
+We are asking, what is the probability that at least one Poisson
+distributed value would occur during the timestep.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rate</strong> (<em>float</em>) – a per ms rate to convert to probability</p></li>
+<li><p><strong>obs_duration</strong> (<em>float</em>) – how many seconds we are watching over</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>probability</strong> – probability the event occurs during the ms we watched</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="flins.support.kinetics.reverse_rate">
+<code class="sig-prename descclassname">flins.support.kinetics.</code><code class="sig-name descname">reverse_rate</code><span class="sig-paren">(</span><em class="sig-param">rate_12</em>, <em class="sig-param">free_energy_1</em>, <em class="sig-param">free_energy_2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/kinetics.html#reverse_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.kinetics.reverse_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>What is the balanced reverse rate from state 2 to state 1?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rate_12</strong> (<em>float</em>) – transition rate from state 1 to state 2</p></li>
+<li><p><strong>free_energy_1</strong> (<em>float</em>) – free energy in state 1, state we are querying reversing into</p></li>
+<li><p><strong>free_energy_2</strong> (<em>float</em>) – free energy in state 2, state we are currently in</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>rate</strong> – per ms rate of transitioning from state 1 back to state 2</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.support.names">
+<span id="flins-support-names-module"></span><h2>flins.support.names module<a class="headerlink" href="#module-flins.support.names" title="Permalink to this headline">¶</a></h2>
+<p>Ged thinks such things are important.</p>
+<p>Proving a shorter unique name with which to reference objects in the world.</p>
+<dl class="function">
+<dt id="flins.support.names.name_to_uuid">
+<code class="sig-prename descclassname">flins.support.names.</code><code class="sig-name descname">name_to_uuid</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/names.html#name_to_uuid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.names.name_to_uuid" title="Permalink to this definition">¶</a></dt>
+<dd><p>If, for some reason, you want the name back to UUID format</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="flins.support.names.unique_name">
+<code class="sig-prename descclassname">flins.support.names.</code><code class="sig-name descname">unique_name</code><span class="sig-paren">(</span><em class="sig-param">name_uuid=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/names.html#unique_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.names.unique_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a unique name, from uuid if given</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.support.spring">
+<span id="flins-support-spring-module"></span><h2>flins.support.spring module<a class="headerlink" href="#module-flins.support.spring" title="Permalink to this headline">¶</a></h2>
+<p>Spring forward, an elastic helper</p>
+<p>Provide a linear spring that can be subject to thermal forcing.</p>
+<dl class="class">
+<dt id="flins.support.spring.Spring">
+<em class="property">class </em><code class="sig-prename descclassname">flins.support.spring.</code><code class="sig-name descname">Spring</code><span class="sig-paren">(</span><em class="sig-param">k</em>, <em class="sig-param">rest</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/spring.html#Spring"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.spring.Spring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A generic one-state spring</p>
+<p>Give me a spring</p>
+<p>The spring can be extensional or torsional, the module works in both
+cases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>k</strong> (<em>float</em>) – Spring constant in pN per nm</p></li>
+<li><p><strong>rest</strong> (<em>float</em>) – Rest angle or length of spring in radians or nm</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="flins.support.spring.Spring.bop_dx">
+<code class="sig-name descname">bop_dx</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/spring.html#Spring.bop_dx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.spring.Spring.bop_dx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bop for a displacement from rest length
+Assume an exponential energy distribution.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.support.spring.Spring.bop_length">
+<code class="sig-name descname">bop_length</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/spring.html#Spring.bop_length"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.spring.Spring.bop_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bop for a new spring length that differs from rest value by dx
+Assume an exponential energy distribution.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.support.spring.Spring.energy">
+<code class="sig-name descname">energy</code><span class="sig-paren">(</span><em class="sig-param">length</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/spring.html#Spring.energy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.spring.Spring.energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a current length/angle, return stored energy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>length</strong> (<em>float</em>) – a spring length or angle in radians or nm</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the energy required to achieve the given value</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>energy</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.support.spring.Spring.force">
+<code class="sig-name descname">force</code><span class="sig-paren">(</span><em class="sig-param">length</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/spring.html#Spring.force"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.spring.Spring.force" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a current length/angle, return the force/torque.</p>
+<p>This is given signs as though the spring is attached at origin
+and we are looking at the force needed to hold the spring in place.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>length</strong> (<em>float</em>) – a spring length or angle in radians or nm</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>force exerted by the spring at current length/angle</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>force</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.support.spring.Spring.k">
+<em class="property">property </em><code class="sig-name descname">k</code><a class="headerlink" href="#flins.support.spring.Spring.k" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.support.units">
+<span id="flins-support-units-module"></span><h2>flins.support.units module<a class="headerlink" href="#module-flins.support.units" title="Permalink to this headline">¶</a></h2>
+<p>To protect constants and serve unit conversions</p>
+<p>Gather all the parameters that define the units in our universe, and the
+particular section of it we are interested in, into one spot.</p>
+<dl class="class">
+<dt id="flins.support.units.constants">
+<em class="property">class </em><code class="sig-prename descclassname">flins.support.units.</code><code class="sig-name descname">constants</code><a class="reference internal" href="_modules/flins/support/units.html#constants"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.units.constants" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Universal constants we don’t expect to change across runs</p>
+<dl class="attribute">
+<dt id="flins.support.units.constants.avogadro">
+<code class="sig-name descname">avogadro</code><em class="property"> = 6.0219999999999996e+23</em><a class="headerlink" href="#flins.support.units.constants.avogadro" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="flins.support.units.constants.boltzmann">
+<code class="sig-name descname">boltzmann</code><em class="property"> = 0.013799999999999998</em><a class="headerlink" href="#flins.support.units.constants.boltzmann" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="flins.support.units.constants.eta">
+<code class="sig-name descname">eta</code><em class="property"> = 1.14e-09</em><a class="headerlink" href="#flins.support.units.constants.eta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="flins.support.units.constants.kT">
+<code class="sig-name descname">kT</code><em class="property"> = 3.9743999999999993</em><a class="headerlink" href="#flins.support.units.constants.kT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="flins.support.units.constants.temperature">
+<code class="sig-name descname">temperature</code><em class="property"> = 288</em><a class="headerlink" href="#flins.support.units.constants.temperature" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="flins.support.units.joules">
+<code class="sig-prename descclassname">flins.support.units.</code><code class="sig-name descname">joules</code><span class="sig-paren">(</span><em class="sig-param">input_in_joules</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/units.html#joules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.units.joules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert energy, in joules, to pN*nm</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="flins.support.units.kcal">
+<code class="sig-prename descclassname">flins.support.units.</code><code class="sig-name descname">kcal</code><span class="sig-paren">(</span><em class="sig-param">input_in_kcal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/units.html#kcal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.units.kcal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert energy, in kcal, to pN*nm</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="flins.support.units.milliseconds">
+<code class="sig-prename descclassname">flins.support.units.</code><code class="sig-name descname">milliseconds</code><span class="sig-paren">(</span><em class="sig-param">input_in_ms</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/units.html#milliseconds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.units.milliseconds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert time, in ms, to seconds</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="flins.support.units.poise">
+<code class="sig-prename descclassname">flins.support.units.</code><code class="sig-name descname">poise</code><span class="sig-paren">(</span><em class="sig-param">input_in_poise</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/support/units.html#poise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.units.poise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the input viscosity, in poise, to g/nm*s</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="flins.support.units.world">
+<em class="property">class </em><code class="sig-prename descclassname">flins.support.units.</code><code class="sig-name descname">world</code><a class="reference internal" href="_modules/flins/support/units.html#world"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.support.units.world" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Things that are constant for our (simulated) world</p>
+<ul class="simple">
+<li><p>timestep is the number of ms we advance each tick</p></li>
+<li><p>D_cyto_corr comes from the difference in diffusion between water and
+eukaryotic cytoplasm (<a class="reference external" href="https://doi.org/10.1016/S0006-3495(97)78835-0">Swaminathan_1997</a>).</p></li>
+</ul>
+<dl class="attribute">
+<dt id="flins.support.units.world.D_cyto_corr">
+<code class="sig-name descname">D_cyto_corr</code><em class="property"> = 3.2</em><a class="headerlink" href="#flins.support.units.world.D_cyto_corr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="flins.support.units.world.timestep">
+<code class="sig-name descname">timestep</code><em class="property"> = 0.001</em><a class="headerlink" href="#flins.support.units.world.timestep" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.support">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-flins.support" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="flins.support.hexmath.html" class="btn btn-neutral float-right" title="flins.support.hexmath package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="flins.space.html" class="btn btn-neutral float-left" title="flins.space package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dave Williams
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

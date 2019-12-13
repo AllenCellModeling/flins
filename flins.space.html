@@ -1,0 +1,522 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>flins.space package &mdash; flins 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="flins.support package" href="flins.support.html" />
+    <link rel="prev" title="flins.proteins package" href="flins.proteins.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> flins
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics.html">Physics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">flins</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="flins.html">flins package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="flins.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="flins.construct.html">flins.construct package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="flins.proteins.html">flins.proteins package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">flins.space package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="flins.support.html">flins.support package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="flins.visualize.html">flins.visualize package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="flins.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="flins.html#module-flins.base">flins.base module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="flins.html#module-flins">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">flins</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">flins</a> &raquo;</li>
+        
+          <li><a href="flins.html">flins package</a> &raquo;</li>
+        
+      <li>flins.space package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/flins.space.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="flins-space-package">
+<h1>flins.space package<a class="headerlink" href="#flins-space-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-flins.space.grids">
+<span id="flins-space-grids-module"></span><h2>flins.space.grids module<a class="headerlink" href="#module-flins.space.grids" title="Permalink to this headline">¶</a></h2>
+<p>Be a spatial divider, not a uniter</p>
+<p>Support the calculation of adjacency, distance, and mirroring on hexagonal
+grids with various shapes.</p>
+<dl class="class">
+<dt id="flins.space.grids.Grid">
+<em class="property">class </em><code class="sig-prename descclassname">flins.space.grids.</code><code class="sig-name descname">Grid</code><a class="reference internal" href="_modules/flins/space/grids.html#Grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.Grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="flins.html#flins.base.Base" title="flins.base.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">flins.base.Base</span></code></a></p>
+<dl class="method">
+<dt id="flins.space.grids.Grid.all_entries">
+<em class="property">abstract property </em><code class="sig-name descname">all_entries</code><a class="headerlink" href="#flins.space.grids.Grid.all_entries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all entries in the grid</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.Grid.distance">
+<em class="property">abstract </em><code class="sig-name descname">distance</code><span class="sig-paren">(</span><em class="sig-param">loc1</em>, <em class="sig-param">loc2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#Grid.distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.Grid.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>The distance between the locs on this grid</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.Grid.entry">
+<em class="property">abstract </em><code class="sig-name descname">entry</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#Grid.entry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.Grid.entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give the grid entry at the passed loc</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.Grid.mirror">
+<em class="property">abstract </em><code class="sig-name descname">mirror</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#Grid.mirror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.Grid.mirror" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return loc, mirrored across boundaries if outside the grid</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.Grid.neighbors">
+<em class="property">abstract </em><code class="sig-name descname">neighbors</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#Grid.neighbors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.Grid.neighbors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the coordinates of neighbors</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.Grid.validate">
+<em class="property">abstract </em><code class="sig-name descname">validate</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#Grid.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.Grid.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is loc valid within the grid’s coordinate system?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.Grid.within">
+<em class="property">abstract </em><code class="sig-name descname">within</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#Grid.within"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.Grid.within" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is loc within the grid?</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="flins.space.grids.HexGrid">
+<em class="property">class </em><code class="sig-prename descclassname">flins.space.grids.</code><code class="sig-name descname">HexGrid</code><span class="sig-paren">(</span><em class="sig-param">n</em>, <em class="sig-param">mirror=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#HexGrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.HexGrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#flins.space.grids.Grid" title="flins.space.grids.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">flins.space.grids.Grid</span></code></a></p>
+<p>A world that is in a hexagonal shape with a radius of n hexes</p>
+<p>Create a hexagonal grid that we’ll use as a model of tracts</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – radius of the world. 0 is a single tract, 1 is seven and so on</p></li>
+<li><p><strong>mirror</strong> (<em>bool (True)</em>) – whether to mirror when calculating neighbors and distances</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="flins.space.grids.HexGrid.all_entries">
+<em class="property">property </em><code class="sig-name descname">all_entries</code><a class="headerlink" href="#flins.space.grids.HexGrid.all_entries" title="Permalink to this definition">¶</a></dt>
+<dd><p>All entries in the grid</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.HexGrid.distance">
+<code class="sig-name descname">distance</code><span class="sig-paren">(</span><em class="sig-param">loc1</em>, <em class="sig-param">loc2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#HexGrid.distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.HexGrid.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the distance between two locations, potentially mirroring</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.HexGrid.entry">
+<code class="sig-name descname">entry</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#HexGrid.entry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.HexGrid.entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give the grid entry at that location</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.HexGrid.mirror">
+<code class="sig-name descname">mirror</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#HexGrid.mirror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.HexGrid.mirror" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the location, mirrored across the boundary if needed</p>
+<p>Use pre-calculated mirrored centers if given, else calculate them.
+Reference here: <a class="reference external" href="https://gamedev.stackexchange.com/questions/137603">https://gamedev.stackexchange.com/questions/137603</a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.HexGrid.neighbors">
+<code class="sig-name descname">neighbors</code><span class="sig-paren">(</span><em class="sig-param">loc: tuple</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#HexGrid.neighbors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.HexGrid.neighbors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return neighboring coordinates, mirroring if desired</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.HexGrid.to_array_indices">
+<code class="sig-name descname">to_array_indices</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#HexGrid.to_array_indices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.HexGrid.to_array_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert cube coordinates to array location</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.HexGrid.validate">
+<code class="sig-name descname">validate</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#HexGrid.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.HexGrid.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the passed loc a valid one in cube coords?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.HexGrid.within">
+<code class="sig-name descname">within</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#HexGrid.within"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.HexGrid.within" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the passed loc within the non-mirrored grid?</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="flins.space.grids.RectGrid">
+<em class="property">class </em><code class="sig-prename descclassname">flins.space.grids.</code><code class="sig-name descname">RectGrid</code><span class="sig-paren">(</span><em class="sig-param">size</em>, <em class="sig-param">mirror=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#RectGrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.RectGrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#flins.space.grids.Grid" title="flins.space.grids.Grid"><code class="xref py py-class docutils literal notranslate"><span class="pre">flins.space.grids.Grid</span></code></a></p>
+<p>A rectangular grid of n-by-m hexs</p>
+<p>Create a rectangular grid that we’ll use as a model of tracts</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<em>tuple (n, m)</em>) – size of the world, n rows and m columns</p></li>
+<li><p><strong>mirror</strong> (<em>bool (True)</em>) – whether to mirror when calculating neighbors and distances</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="flins.space.grids.RectGrid.all_entries">
+<em class="property">property </em><code class="sig-name descname">all_entries</code><a class="headerlink" href="#flins.space.grids.RectGrid.all_entries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all entries in the grid</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.RectGrid.distance">
+<code class="sig-name descname">distance</code><span class="sig-paren">(</span><em class="sig-param">loc1</em>, <em class="sig-param">loc2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#RectGrid.distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.RectGrid.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>The distance between the locs on this grid</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.RectGrid.entry">
+<code class="sig-name descname">entry</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#RectGrid.entry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.RectGrid.entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give the grid entry at the passed loc</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.RectGrid.mirror">
+<code class="sig-name descname">mirror</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#RectGrid.mirror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.RectGrid.mirror" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return loc, mirrored across boundaries if outside the grid</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.RectGrid.neighbors">
+<code class="sig-name descname">neighbors</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#RectGrid.neighbors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.RectGrid.neighbors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the coordinates of neighbors</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.RectGrid.to_array_indices">
+<em class="property">static </em><code class="sig-name descname">to_array_indices</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#RectGrid.to_array_indices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.RectGrid.to_array_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert to array indices from cube location</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.RectGrid.validate">
+<code class="sig-name descname">validate</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#RectGrid.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.RectGrid.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is loc valid within the grid’s coordinate system?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.grids.RectGrid.within">
+<code class="sig-name descname">within</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/grids.html#RectGrid.within"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.grids.RectGrid.within" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is loc within the non-mirrored grid?</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.space.space">
+<span id="flins-space-space-module"></span><h2>flins.space.space module<a class="headerlink" href="#module-flins.space.space" title="Permalink to this headline">¶</a></h2>
+<p>Space is the place we store stuff.</p>
+<p>A space accounts for the interactions of tracts that are arranged according
+to some grid layout.</p>
+<dl class="class">
+<dt id="flins.space.space.Space">
+<em class="property">class </em><code class="sig-prename descclassname">flins.space.space.</code><code class="sig-name descname">Space</code><span class="sig-paren">(</span><em class="sig-param">kind</em>, <em class="sig-param">size</em>, <em class="sig-param">span=None</em>, <em class="sig-param">mirror=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/space.html#Space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.space.Space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="flins.html#flins.base.Base" title="flins.base.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">flins.base.Base</span></code></a></p>
+<p>A spatial region of filaments/crosslinkers</p>
+<p>Each Space is connected to neighbors in a hexagonal grid that gives
+many of the properties of 3D space but with easier mechanics.</p>
+<p>A generic template for
+:Parameters: * <strong>kind</strong> (<em>“hex” or “rect”</em>) – overall shape of the space</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>size</strong> (<em>int or tuple</em>) – Radius or x/y size of space</p></li>
+<li><p><strong>span</strong> (<em>None or float</em>) – Length of the tracts in x dimension, optional</p></li>
+<li><p><strong>tracts</strong> (<em>None or list</em>) – List of tracts</p></li>
+</ul>
+</div></blockquote>
+<dl class="method">
+<dt id="flins.space.space.Space.all_tracts">
+<em class="property">property </em><code class="sig-name descname">all_tracts</code><a class="headerlink" href="#flins.space.space.Space.all_tracts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give all the tracts back</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.space.Space.neighbors">
+<code class="sig-name descname">neighbors</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/space.html#Space.neighbors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.space.Space.neighbors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give me the neighbors to the specified location</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.space.Space.tract">
+<code class="sig-name descname">tract</code><span class="sig-paren">(</span><em class="sig-param">loc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/space.html#Space.tract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.space.Space.tract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single tract at a given location</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>loc</strong> (<em>tuple</em>) – coordinates for the tract we want</p></li>
+<li><p><strong>mirror</strong> (<em>boolean (True)</em>) – Whether or not to mirror across tractspace edges</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tract or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.space.tract">
+<span id="flins-space-tract-module"></span><h2>flins.space.tract module<a class="headerlink" href="#module-flins.space.tract" title="Permalink to this headline">¶</a></h2>
+<p>Just a slice of the cake^h^h^h^h space.</p>
+<p>Tracts are sections of space that extend in a long direction and have adjacent
+neighboring tracts that also extend in a long direction.</p>
+<dl class="class">
+<dt id="flins.space.tract.Tract">
+<em class="property">class </em><code class="sig-prename descclassname">flins.space.tract.</code><code class="sig-name descname">Tract</code><span class="sig-paren">(</span><em class="sig-param">loc</em>, <em class="sig-param">space</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/tract.html#Tract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.tract.Tract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="flins.html#flins.base.Base" title="flins.base.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">flins.base.Base</span></code></a></p>
+<p>A single tract in a Space</p>
+<p>A single tract in a space</p>
+<dl class="method">
+<dt id="flins.space.tract.Tract.add_mol">
+<code class="sig-name descname">add_mol</code><span class="sig-paren">(</span><em class="sig-param">kind</em>, <em class="sig-param">mol</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/tract.html#Tract.add_mol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.tract.Tract.add_mol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a molecule to our lists and dicts thereof</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.tract.Tract.nearest_binding_site">
+<code class="sig-name descname">nearest_binding_site</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flins/space/tract.html#Tract.nearest_binding_site"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flins.space.tract.Tract.nearest_binding_site" title="Permalink to this definition">¶</a></dt>
+<dd><p>The nearest reachable actin binding site</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.tract.Tract.neighbors">
+<em class="property">property </em><code class="sig-name descname">neighbors</code><a class="headerlink" href="#flins.space.tract.Tract.neighbors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Who are your neighbors?
+We don’t want to calculate this each time, but we can’t populate it on
+creation as there are neighbors that haven’t yet been created. So we
+populate this list on the first call and then reference the stored
+version thereafter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flins.space.tract.Tract.reachable">
+<em class="property">property </em><code class="sig-name descname">reachable</code><a class="headerlink" href="#flins.space.tract.Tract.reachable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reachable tracts from here. Neighbors and self.</p>
+<p>See neighbors documentation for creation method.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-flins.space">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-flins.space" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="flins.support.html" class="btn btn-neutral float-right" title="flins.support package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="flins.proteins.html" class="btn btn-neutral float-left" title="flins.proteins package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dave Williams
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

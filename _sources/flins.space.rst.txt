@@ -1,0 +1,38 @@
+flins.space package
+===================
+
+Submodules
+----------
+
+flins.space.grids module
+------------------------
+
+.. automodule:: flins.space.grids
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+flins.space.space module
+------------------------
+
+.. automodule:: flins.space.space
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+flins.space.tract module
+------------------------
+
+.. automodule:: flins.space.tract
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: flins.space
+   :members:
+   :undoc-members:
+   :show-inheritance:
