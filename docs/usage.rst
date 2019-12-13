@@ -2,6 +2,6 @@
 Usage
 =====
 
-To use stress_fiber in a project::
+To use flins in a project::
 
-    import stress_fiber
+    import flins

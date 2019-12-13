@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=.
 set BUILDDIR=_build
-set SPHINXPROJ=stress_fiber
+set SPHINXPROJ=flins
 
 if "%1" == "" goto help
 

@@ -8,9 +8,9 @@ Test grids
 import pytest
 import random
 
-import stress_fiber as sf
+import flins as fl
 
-grids = sf.space.grids
+grids = fl.space.grids
 
 
 grid_list = [grids.HexGrid(n, True) for n in (0, 1, 2, 3)]

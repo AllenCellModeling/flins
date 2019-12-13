@@ -28,7 +28,7 @@ class Anchor(Protein):
             Initial x location of the anchor
         anchor_to : component with BindingSite, optional
             Protein segment with a binding site to anchor down
-        tract : stress_fiber.space.Tract, optional
+        tract : flins.space.Tract, optional
             Tract in which this anchor exists
         k : float, optional
             Stiffness of the anchor's attachment to its location in pN/nm [1000]

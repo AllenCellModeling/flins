@@ -8,7 +8,7 @@ Test space.
 import pytest
 import random
 
-import stress_fiber.space as space
+import flins.space as space
 
 
 space_list = [space.Space("hex", r, 100, True) for r in (0, 1, 2, 3)]
