@@ -4,8 +4,8 @@
 Create a movie of a simple model.
 """
 
-import stress_fiber as sf
-import stress_fiber.visualize
+import flins as fl
+import flins.visualize
 
 import os
 import subprocess
@@ -14,7 +14,7 @@ import shutil
 
 # Supporting functions
 def to_svg(dwg, f):
-    return sf.visualize.svg.save(dwg, f + ".svg")
+    return fl.visualize.svg.save(dwg, f + ".svg")
 
 
 def to_png(outputfn, zoom=1.0):
@@ -34,7 +34,7 @@ def to_mp4(framerate, fnformat="%03d", outputfn="out.mp4"):
 
 
 # Create world
-world = sf.construct.create_test_world(1, 2000, 10, 100)
+world = fl.construct.create_test_world(1, 2000, 10, 100)
 
 # Create space to save world
 tmp_dir = "./tmp/"
@@ -44,7 +44,7 @@ if not os.path.isdir(tmp_dir):
 # Run world and save SVGs and PNGs
 for i in range(100):
     print(i)
-    dwg = sf.visualize.flat_render.plot_world(world)
+    dwg = fl.visualize.flat_render.plot_world(world)
     fn = os.path.join(tmp_dir, "%03i" % i)
     to_svg(dwg, fn)
     to_png(fn, 1)

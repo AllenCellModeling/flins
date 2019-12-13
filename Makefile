@@ -44,14 +44,15 @@ clean:  ## clean all build, python, and testing files
 	rm -fr coverage.xml
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
+	rm -fr docs/flins.*
 
 build: ## run tox / run tests and lint
 	tox
 
 gen-docs: ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/stress_fiber.rst
+	rm -f docs/flins.rst
 	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ stress_fiber
+	sphinx-apidoc -o docs/ flins
 	$(MAKE) -C docs html
 
 docs: ## generate Sphinx HTML documentation, including API docs, and serve to browser
@@ -62,7 +63,7 @@ test: ## run tests quickly with the default Python
 	py.test
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source stress_fiber -m pytest
+	coverage run --source flins -m pytest
 	coverage report -m
 	coverage html
 	$(BROWSER) htmlcov/index.html

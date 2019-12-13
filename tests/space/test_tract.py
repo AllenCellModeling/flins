@@ -7,7 +7,7 @@ Test tracts.
 
 import pytest
 
-import stress_fiber.space as space
+import flins.space as space
 
 space_list = [space.Space("hex", r, 100) for r in (0, 1, 2, 3)]
 tract_list = [t for s in space_list for t in s.all_tracts]

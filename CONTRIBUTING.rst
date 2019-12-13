@@ -44,7 +44,7 @@ Types of Contributions
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/AllenCellModeling/stress_fiber/issues.
+Report bugs at https://github.com/AllenCellModeling/flins/issues.
 
 If you are reporting a bug, please include:
 
@@ -67,14 +67,14 @@ and "help wanted" is open to whoever wants to implement it.
 Write Documentation
 ~~~~~~~~~~~~~~~~~~~
 
-stress_fiber could always use more documentation, whether as part of the
-official stress_fiber docs, in docstrings, or even on the web in blog posts,
+Flins could always use more documentation, whether as part of the
+official Flins docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
-The best way to send feedback is to file an issue at https://github.com/AllenCellModeling/stress_fiber/issues.
+The best way to send feedback is to file an issue at https://github.com/AllenCellModeling/flins/issues.
 
 If you are proposing a feature:
 

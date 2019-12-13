@@ -5,7 +5,7 @@
 Test names.
 """
 
-import stress_fiber.support.names as names
+import flins.support.names as names
 
 
 sample_names = [names.unique_name() for i in range(20)]

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Top-level package for stress_fiber."""
+"""Top-level package for flins."""
 
 __author__ = """Dave Williams"""
 __email__ = "cdave@uw.edu"

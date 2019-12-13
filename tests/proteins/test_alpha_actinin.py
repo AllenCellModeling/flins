@@ -8,13 +8,13 @@ Test α-actinin
 import pytest
 
 import numpy as np
-import stress_fiber as sf
-from stress_fiber.proteins.alpha_actinin import AlphaActinin
+import flins as fl
+from flins.proteins.alpha_actinin import AlphaActinin
 
 
 def actinin_tract():
     span = 10000
-    tractspace = sf.space.Space("hex", 0, span)
+    tractspace = fl.space.Space("hex", 0, span)
     t = tractspace.all_tracts[0]
     t.rand = lambda: span * (np.random.rand() * 0.5 + 0.25)
     return t
@@ -22,14 +22,14 @@ def actinin_tract():
 
 def unbound_actinin():
     t = actinin_tract()
-    _ = sf.proteins.Actin(t.rand(), t, length=100)
+    _ = fl.proteins.Actin(t.rand(), t, length=100)
     return AlphaActinin(t.rand(), t)
 
 
 def one_side_bound_actinin(head_i=0):
     t = actinin_tract()
     alph = AlphaActinin(t.rand(), t)
-    act = sf.proteins.Actin(alph.heads[head_i].x, t, length=100)
+    act = fl.proteins.Actin(alph.heads[head_i].x, t, length=100)
     gact = act.pairs[0]
     alph.heads[head_i].bs.bind(gact.bs)
     return alph
@@ -38,7 +38,7 @@ def one_side_bound_actinin(head_i=0):
 def both_sides_bound_actinin():
     t = actinin_tract()
     alph = AlphaActinin(t.rand(), t)
-    acts = [sf.proteins.Actin(head.x, t, length=100) for head in alph.heads]
+    acts = [fl.proteins.Actin(head.x, t, length=100) for head in alph.heads]
     gacts = acts[0].pairs[0], acts[1].pairs[0]
     alph.heads[0].bs.bind(gacts[0].bs)
     alph.heads[1].bs.bind(gacts[1].bs)
@@ -60,7 +60,7 @@ head_list = [head for actinin in actinin_list for head in actinin.heads]
 
 def test_actinin_world():
     """Create a world with some actinins and run it for a bit"""
-    w = sf.construct.create_test_world(1, 1000, 2, 10, 0)
+    w = fl.construct.create_test_world(1, 1000, 2, 10, 0)
     _ = [w.step() for i in range(10)]
     tracts = w.tractspace.all_tracts
     actinins = [a for t in tracts for a in t.mols["actinin"]]

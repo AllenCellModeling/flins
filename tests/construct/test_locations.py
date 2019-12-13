@@ -10,8 +10,8 @@ import pytest
 import numpy as np
 import scipy as sp
 import scipy.stats
-import stress_fiber as sf
-from stress_fiber.construct import locations
+import flins as fl
+from flins.construct import locations
 
 np.random.seed(0)
 distributions = (

@@ -5,7 +5,7 @@
 Test hexmath
 """
 
-import stress_fiber.support.hexmath as hm
+import flins.support.hexmath as hm
 
 
 class TestCube:

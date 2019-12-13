@@ -2,7 +2,7 @@
 """
 Actin' up.
 
-These actin filaments are the backbones of the stress-fiber. They transmit
+These actin filaments are the backbones of the filament systems. They transmit
 force, are the common binding target for most other proteins, and move in
 response to gradual remodeling.
 """
@@ -26,7 +26,7 @@ class GActinPair(Base):
 
         Parameters
         ----------
-        filament : `stress_fiber.Actin`
+        filament : `flins.Actin`
             Parent actin filament to this pair.
         index : `int`
             Pair location in the list of pairs on the parent filament.
@@ -86,7 +86,7 @@ class Actin(Protein):
         x : `float`
             X location of the actin within the tract. This is where the first
             pair will be located, with all others calculated in reference to it.
-        tract : `stress_fiber.space.Tract`, optional
+        tract : `flins.space.Tract`, optional
             1D tract that the actin lives in. Is the parent of the filament in
             organizational hierarchy.
         n_pair : `int`, optional
@@ -260,7 +260,7 @@ class Actin(Protein):
         """Take a timestep: move subject to force and diffusion
         As with α-actinin, we take free diffusion to be subject to an
         Einstein-Smoluchowski diffusive processes (as documented in
-        `stress_fiber.support.diffuse`).
+        `flins.support.diffuse`).
 
         When bound we treat the movement of actin as subject to equipartition of
         energy stored in each of the bound α-actinins. We first find the

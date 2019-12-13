@@ -9,8 +9,8 @@ import pytest
 
 import os
 import tempfile
-import stress_fiber as sf
-import stress_fiber.visualize
+import flins as fl
+import flins.visualize
 
 
 dirs = [None, tempfile.mkdtemp(), "non-existing_test_movie_dir"]
@@ -18,9 +18,9 @@ dirs = [None, tempfile.mkdtemp(), "non-existing_test_movie_dir"]
 
 @pytest.mark.parametrize("dir", dirs)
 def test_MovieGen(dir):
-    world = sf.construct.create_test_world(0, 2000, 1, 2, 2)
+    world = fl.construct.create_test_world(0, 2000, 1, 2, 2)
     quiet = False if dir is None else True
-    moviegen = sf.visualize.movie.MovieGen(temp_dir=dir, quiet=quiet)
+    moviegen = fl.visualize.movie.MovieGen(temp_dir=dir, quiet=quiet)
     moviegen.add_world(world)
     world.step()
     moviegen.add_world(world)

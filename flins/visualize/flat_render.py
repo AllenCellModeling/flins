@@ -5,7 +5,7 @@ timestep as an SVG. When changing this, [a list of named
 colors](https://www.december.com/html/spec/colorsvg.html) is useful.
 """
 
-import stress_fiber as sf  # noqa: F401
+import flins as fl  # noqa: F401
 
 import numpy as np
 import svgwrite
@@ -161,7 +161,7 @@ def plot_world(world, params={}):
     """Plot a world as a flat, unrolled, svg
     Parameters
     ---------
-    world: stress_fiber.construct.World
+    world: flins.construct.World
         World to render as svg
     params: dict keys in (y_span, y_sep, xm, ym)
         Set how tall tracts are (y_span), how far apart they are (y_sep), and

@@ -2,7 +2,7 @@
 """
 Make a world
 
-Each world tracks the execution of a run. 
+Each world tracks the execution of a run.
 """
 
 import numpy as np
@@ -16,7 +16,7 @@ class World:
 
         Parameters
         ----------
-        tractspace : `stress_fiber.space.space.TrackSpace`
+        tractspace : `flins.space.space.TrackSpace`
             Spatial component of the world
         random_state :
             The internal state of numpy's Mersenne Twister implementation as

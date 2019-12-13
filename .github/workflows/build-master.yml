@@ -52,4 +52,4 @@ jobs:
         pip install .[test]
     - name: Lint with flake8
       run: |
-        flake8 stress_fiber --count --verbose --max-line-length=88 --show-source --statistics
+        flake8 flins --count --verbose --max-line-length=88 --show-source --statistics
