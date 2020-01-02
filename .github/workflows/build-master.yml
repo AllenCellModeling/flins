@@ -30,7 +30,8 @@ jobs:
         pip install .[test]
     - name: Test with pytest
       run: |
-        pytest tests/
+        pytest --cov-report=xml --cov=flins tests/
+        codecov -t ${{ secrets.CODECOV_TOKEN }}
 
   lint:
     runs-on: ubuntu-latest
