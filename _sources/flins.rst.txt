@@ -10,6 +10,7 @@ Subpackages
    flins.proteins
    flins.space
    flins.support
+   flins.tests
    flins.visualize
 
 Submodules
