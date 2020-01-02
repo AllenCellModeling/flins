@@ -71,7 +71,7 @@ setup(
     include_package_data=True,
     keywords="flins",
     name="flins",
-    packages=find_packages(),
+    packages=find_packages(exclude=["tests", "*.tests", "*.tests.*"]),
     setup_requires=setup_requirements,
     test_suite="tests",
     tests_require=test_requirements,
