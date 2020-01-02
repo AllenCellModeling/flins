@@ -11,12 +11,9 @@ on:
     - cron: '0 18 * * 1'
 
 jobs:
+
   test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      max-parallel: 6
-      matrix:
-        os: [ubuntu-latest, macOS-latest]
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@master
