@@ -25,4 +25,16 @@ Overview
 
 As a spatially explicit simulation ``flins`` recreates the movement and force responses of its proteins by treating them as springs, subject to deformation and able to generate force with variable rest lengths. Connectivity and binding withing this system of proteins is controlled by binding sites distributed along the proteins that link springs together. The kinetics of these binding sites are dependent upon the forces their parent proteins are subjected to. This produces a network of springs that transmits and generates forces with connectivity that changes depending on stochastic kinetics and the current deformation within the system. 
   
+Minimal example::
+
+    import flins
+    world = flins.construct.create_test_world(
+        radius=1,     # how wide the world is
+        span=10000,   # how long
+        n_actin=5,    # actins per slice
+        n_actinin=20, # crosslinkers per slice
+        n_motors=10,  # motors per slice
+        )    
+    world.step()
+
 * Documentation: https://AllenCellModeling.github.io/flins
