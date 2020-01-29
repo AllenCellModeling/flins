@@ -1,7 +1,5 @@
-============
-flins
-============
-
+.. image:: https://raw.githubusercontent.com/AllenCellModeling/flins/master/imgs/logo.png
+   :alt: FLINS
 
 .. .. image:: https://img.shields.io/pypi/v/flins.svg
 ..         :target: https://pypi.python.org/pypi/flins
